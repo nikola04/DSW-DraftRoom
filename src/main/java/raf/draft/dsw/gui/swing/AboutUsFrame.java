@@ -28,8 +28,8 @@ public class AboutUsFrame extends JFrame {
         student1.setForeground(getForeground());
         student1.setMargin(new Insets(10, 10, 10, 10));
 
-        Image img1 = new ImageIcon(getClass().getResource("/images/aleksandar_image.jpeg")).getImage();
-        Image newImg1 = img1.getScaledInstance(200, 300, Image.SCALE_DEFAULT);
+        Image img1 = new ImageIcon(getClass().getResource("/images/nikola_image.jpg")).getImage();
+        Image newImg1 = img1.getScaledInstance(200, 270, Image.SCALE_SMOOTH);
         Icon icon1 = new ImageIcon(newImg1);
 
         JLabel imageLabel1 = new JLabel(icon1);
@@ -42,7 +42,7 @@ public class AboutUsFrame extends JFrame {
         student2.setMargin(new Insets(10, 10, 10, 10));
 
         Image img2 = new ImageIcon(getClass().getResource("/images/aleksandar_image.jpeg")).getImage();
-        Image newImg2 = img2.getScaledInstance(200, 300, Image.SCALE_DEFAULT);
+        Image newImg2 = img2.getScaledInstance(200, 270, Image.SCALE_DEFAULT);
         Icon icon2 = new ImageIcon(newImg2);
 
         JLabel imageLabel2 = new JLabel(icon2);
