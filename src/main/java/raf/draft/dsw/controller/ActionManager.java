@@ -1,5 +1,9 @@
 package raf.draft.dsw.controller;
 
-public class ActionManager {
+import raf.draft.dsw.controller.actions.AboutUsAction;
+import raf.draft.dsw.controller.actions.ExitAction;
 
+public class ActionManager {
+    AboutUsAction aboutUsAction;
+    ExitAction exitAction;
 }
