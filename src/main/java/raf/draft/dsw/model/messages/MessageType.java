@@ -1,4 +1,5 @@
 package raf.draft.dsw.model.messages;
 
-public class MessageType {
+public enum MessageType {
+    ERROR, WARNING, INFO
 }
