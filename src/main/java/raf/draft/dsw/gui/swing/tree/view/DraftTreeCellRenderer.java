@@ -13,7 +13,6 @@ public class DraftTreeCellRenderer extends DefaultTreeCellRenderer {
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
         super.getTreeCellRendererComponent(tree, value, sel,expanded, leaf, row, hasFocus);
         URL imageURL = null;
-
         if (((DraftTreeItem) value).getDraftNode() instanceof ProjectExplorer) {
             imageURL = getClass().getResource("/images/tdiagram.gif");
         }

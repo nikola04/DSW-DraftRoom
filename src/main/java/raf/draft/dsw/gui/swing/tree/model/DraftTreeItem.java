@@ -3,8 +3,6 @@ package raf.draft.dsw.gui.swing.tree.model;
 import raf.draft.dsw.model.nodes.DraftNode;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 public class DraftTreeItem extends DefaultMutableTreeNode {
     private DraftNode node;
@@ -15,6 +13,9 @@ public class DraftTreeItem extends DefaultMutableTreeNode {
     @Override
     public String toString() {
         return node.getName();
+    }
+    public void setName(String name){
+        node.setName(name);
     }
     public DraftNode getDraftNode() {
         return node;

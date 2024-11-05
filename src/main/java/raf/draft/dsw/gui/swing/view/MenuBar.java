@@ -1,7 +1,5 @@
 package raf.draft.dsw.gui.swing.view;
 
-import raf.draft.dsw.gui.swing.controller.ActionManager;
-
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
@@ -16,7 +14,8 @@ public class MenuBar extends JMenuBar {
         // Edit Menu
         JMenu editMenu = new JMenu("Edit");
         editMenu.setMnemonic(KeyEvent.VK_E);
-        editMenu.add(MainFrame.getInstance().getActionManager().getNewProjectAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getNewNodeAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getDeleteNodeAction());
 
         add(fileMenu);
         add(editMenu);

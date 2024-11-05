@@ -23,4 +23,8 @@ public abstract class DraftNode {
     public DraftNode getParent() {
         return parent;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

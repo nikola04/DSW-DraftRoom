@@ -9,26 +9,9 @@ import java.net.URL;
 public class ExitAction extends AbstractRoomAction {
     public ExitAction(){
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
-        putValue(SMALL_ICON, loadIcon("/images/exit.png"));
+        putValue(SMALL_ICON, loadIcon("/images/x.png"));
         putValue(NAME, "Exit");
         putValue(SHORT_DESCRIPTION, "Exit");
-    }
-
-    @Override
-    protected Icon loadIcon(String path){
-        Icon icon = null;
-        URL ImageURL = getClass().getResource(path);
-        if(ImageURL != null)
-        {
-            Image img = new ImageIcon(ImageURL).getImage();
-            Image newImg = img.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-            icon = new ImageIcon(newImg);
-        }
-        else
-        {
-            System.err.println("File " + "images/exit.png" + " not found");
-        }
-        return icon;
     }
 
     @Override

@@ -2,12 +2,14 @@ package raf.draft.dsw.gui.swing.controller;
 
 import raf.draft.dsw.gui.swing.controller.actions.AboutUsAction;
 import raf.draft.dsw.gui.swing.controller.actions.ExitAction;
-import raf.draft.dsw.gui.swing.tree.controller.NewProjectAction;
+import raf.draft.dsw.gui.swing.tree.controller.DeleteNodeAction;
+import raf.draft.dsw.gui.swing.tree.controller.NewNodeAction;
 
 public class ActionManager {
     AboutUsAction aboutUsAction;
     ExitAction exitAction;
-    NewProjectAction newProjectAction;
+    NewNodeAction newNodeAction;
+    DeleteNodeAction deleteNodeAction;
 
     public ActionManager() {
         initialize();
@@ -15,7 +17,8 @@ public class ActionManager {
     private void initialize() {
         this.aboutUsAction = new AboutUsAction();
         this.exitAction = new ExitAction();
-        this.newProjectAction = new NewProjectAction();
+        this.newNodeAction = new NewNodeAction();
+        this.deleteNodeAction = new DeleteNodeAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -23,7 +26,8 @@ public class ActionManager {
     public ExitAction getExitAction() {
         return exitAction;
     }
-    public NewProjectAction getNewProjectAction() {
-        return newProjectAction;
+    public NewNodeAction getNewNodeAction() {
+        return newNodeAction;
     }
+    public DeleteNodeAction getDeleteNodeAction() { return deleteNodeAction; }
 }

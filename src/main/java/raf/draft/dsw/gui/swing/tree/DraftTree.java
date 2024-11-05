@@ -6,8 +6,8 @@ import raf.draft.dsw.model.nodes.DraftNode;
 import raf.draft.dsw.model.structures.ProjectExplorer;
 
 public interface DraftTree {
-    void addChild(DraftTreeItem newNode, DraftNode parent);
-    void removeNode(DraftNode node);
+    void addChild(DraftTreeItem parent, String nodeName);
+    void removeNode(DraftTreeItem item);
     DraftTreeView generateTree(ProjectExplorer projectExplorer);
     DraftTreeItem getSelectedNode();
     DraftNode createNode(String nodeName, DraftNode parent);

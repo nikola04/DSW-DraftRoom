@@ -1,16 +1,19 @@
 package raf.draft.dsw.gui.swing.tree;
 
+import raf.draft.dsw.gui.swing.controller.messagegenerator.ConsoleLogger;
+import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;
+import raf.draft.dsw.model.messages.Message;
+import raf.draft.dsw.model.messages.MessageType;
 import raf.draft.dsw.model.nodes.DraftNode;
 import raf.draft.dsw.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.model.structures.Project;
 import raf.draft.dsw.model.structures.ProjectExplorer;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.Random;
+import java.time.LocalDateTime;
 
 public class DraftTreeImplementation implements DraftTree {
     private DraftTreeView treeView;
@@ -31,16 +34,31 @@ public class DraftTreeImplementation implements DraftTree {
     @Override
     public DraftNode createNode(String name, DraftNode parent){
         if (parent instanceof ProjectExplorer)
-            return new Project("Project" + new Random().nextInt(100), "", "", parent);
+            return new Project(name, "", "", parent);
         return null;
     }
 
     @Override
-    public void addChild(DraftTreeItem newNode, DraftNode parent) {
+    public void addChild(DraftTreeItem parent, String nodeName) {
+        if(!(parent.getDraftNode() instanceof DraftNodeComposite))
+            return;
+        DraftNode child = createNode(nodeName, parent.getDraftNode());
+        if(child == null) {
+            new ConsoleLogger().log(new Message("Parent is not valid parent", MessageType.WARNING, LocalDateTime.now()));
+            return;
+        }
+        parent.add(new DraftTreeItem(child));
+        parent.getDraftNode().addChild(child);
+        treeView.expandPath(treeView.getSelectionPath());
+        SwingUtilities.updateComponentTreeUI(treeView);
     }
 
     @Override
-    public void removeNode(DraftNode node) {
-
+    public void removeNode(DraftTreeItem item) {
+        if(item.getParent() == null)
+            return;
+        item.removeFromParent();
+        treeView.expandPath(treeView.getSelectionPath());
+        SwingUtilities.updateComponentTreeUI(treeView);
     }
 }
