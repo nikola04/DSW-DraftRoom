@@ -1,4 +1,4 @@
-package raf.draft.dsw.controller.actions;
+package raf.draft.dsw.controller.actions.messagegenerator;
 
 import raf.draft.dsw.controller.observer.IPublisher;
 import raf.draft.dsw.controller.observer.ISubscriber;
