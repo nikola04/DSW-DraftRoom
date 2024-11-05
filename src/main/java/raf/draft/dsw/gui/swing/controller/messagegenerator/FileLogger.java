@@ -1,4 +1,4 @@
-package raf.draft.dsw.controller.actions.messagegenerator;
+package raf.draft.dsw.gui.swing.controller.messagegenerator;
 
 import raf.draft.dsw.model.messages.Message;
 import java.io.FileWriter;

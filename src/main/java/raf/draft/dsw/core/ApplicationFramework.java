@@ -1,10 +1,11 @@
 package raf.draft.dsw.core;
 
-import raf.draft.dsw.gui.swing.MainFrame;
+import raf.draft.dsw.gui.swing.view.MainFrame;
 
 public class ApplicationFramework {
-    //buduca polja za model celog projekta
     private static ApplicationFramework instance;
+    protected DraftRoomRepository draftRoomRepository;
+    protected GUI gui;
 
     public static ApplicationFramework getInstance(){
         if(instance == null)
@@ -13,11 +14,22 @@ public class ApplicationFramework {
     }
 
     private ApplicationFramework(){
-        initialize();
     }
 
-    private void initialize(){
-        MainFrame mainFrame = MainFrame.getInstance();
-        mainFrame.setVisible(true);
+    public void initialize(GUI gui, DraftRoomRepository roomRepository) {
+        this.gui = gui;
+        this.draftRoomRepository = roomRepository;
+    }
+
+    public void run(){
+        gui.start();
+    }
+
+    public DraftRoomRepository getDraftRoomRepository() {
+        return draftRoomRepository;
+    }
+
+    public GUI getGui() {
+        return gui;
     }
 }

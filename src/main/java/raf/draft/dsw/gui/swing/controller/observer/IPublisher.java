@@ -1,4 +1,4 @@
-package raf.draft.dsw.controller.observer;
+package raf.draft.dsw.gui.swing.controller.observer;
 
 import raf.draft.dsw.model.messages.Message;
 

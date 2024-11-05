@@ -1,4 +1,23 @@
 package raf.draft.dsw.model.repository;
 
-public class DraftRoomExplorerImplementation {
+import raf.draft.dsw.core.DraftRoomRepository;
+import raf.draft.dsw.model.nodes.DraftNode;
+import raf.draft.dsw.model.nodes.DraftNodeComposite;
+import raf.draft.dsw.model.structures.ProjectExplorer;
+
+public class DraftRoomExplorerImplementation implements DraftRoomRepository {
+    private ProjectExplorer projectExplorer;
+    public DraftRoomExplorerImplementation() {
+        projectExplorer = new ProjectExplorer("My Explorer");
+    }
+
+    @Override
+    public ProjectExplorer getProjectExplorer() {
+        return projectExplorer;
+    }
+
+    @Override
+    public void addChild(DraftNodeComposite parent, DraftNode child) {
+
+    }
 }

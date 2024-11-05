@@ -1,4 +1,4 @@
-package raf.draft.dsw.gui.swing;
+package raf.draft.dsw.gui.swing.view;
 
 import javax.swing.*;
 import java.awt.*;

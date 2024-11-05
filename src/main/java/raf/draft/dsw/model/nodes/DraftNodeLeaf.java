@@ -17,9 +17,4 @@ public class DraftNodeLeaf extends DraftNode {
     public void removeChild(DraftNode node) {
         throw new UnsupportedOperationException("Leaf node cannot have children");
     }
-
-    @Override
-    public List<DraftNode> getChildren() {
-        return Collections.emptyList();
-    }
 }

@@ -1,6 +1,5 @@
 package raf.draft.dsw.model.nodes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DraftNode {
@@ -11,18 +10,16 @@ public abstract class DraftNode {
         this.name = name;
     }
 
-    public abstract void addChild(DraftNode node);
-    public abstract void removeChild(DraftNode node);
-    public abstract List<DraftNode> getChildren();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setParent(DraftNode parent) {
+    public DraftNode(String name, DraftNode parent) {
+        this.name = name;
         this.parent = parent;
     }
 
+    public abstract void addChild(DraftNode child);
+    public abstract void removeChild(DraftNode child);
+    public String getName() {
+        return name;
+    }
     public DraftNode getParent() {
         return parent;
     }
