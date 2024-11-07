@@ -6,9 +6,9 @@ import raf.draft.dsw.model.nodes.DraftNode;
 import raf.draft.dsw.model.structures.ProjectExplorer;
 
 public interface DraftTree {
-    void addChild(DraftTreeItem parent, String nodeName);
+    void addChild(DraftTreeItem parent);
     void removeNode(DraftTreeItem item);
     DraftTreeView generateTree(ProjectExplorer projectExplorer);
     DraftTreeItem getSelectedNode();
-    DraftNode createNode(String nodeName, DraftNode parent);
+    DraftNode createNode(DraftNode parent);
 }
