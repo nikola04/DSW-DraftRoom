@@ -7,4 +7,9 @@ public class ConsoleLogger implements Logger {
     public void log(Message message) {
         System.out.println(message.toString());
     }
+
+    @Override
+    public void update(Message message) {
+        log(message);
+    }
 }

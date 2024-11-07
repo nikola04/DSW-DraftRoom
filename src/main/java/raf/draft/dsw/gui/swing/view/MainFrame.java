@@ -6,7 +6,7 @@ import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.tree.DraftTree;
 import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
-import raf.draft.dsw.model.messages.Message;
+import raf.draft.dsw.gui.swing.model.messages.Message;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +15,10 @@ public class MainFrame extends JFrame implements ISubscriber {
     private static MainFrame instance;
     private ActionManager actionManager;
     private DraftTree draftTree;
-    private MessageGenerator messageGenerator;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
-        messageGenerator = new MessageGenerator();
-        messageGenerator.addSubscriber(this);
+        ApplicationFramework.getInstance().getMessageGenerator().addSubscriber(this);
     }
     private void initializeGUI(){
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -46,6 +44,9 @@ public class MainFrame extends JFrame implements ISubscriber {
         getContentPane().add(split,BorderLayout.CENTER);
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
+
+        TabPane tabPane = new TabPane();
+        getContentPane().add(tabPane,BorderLayout.EAST);
     }
 
     public ActionManager getActionManager() {
@@ -54,10 +55,6 @@ public class MainFrame extends JFrame implements ISubscriber {
 
     public DraftTree getDraftTree() {
         return draftTree;
-    }
-
-    public MessageGenerator getMessageGenerator() {
-        return messageGenerator;
     }
 
     @Override

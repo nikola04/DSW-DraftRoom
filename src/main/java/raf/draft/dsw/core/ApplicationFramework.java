@@ -1,11 +1,14 @@
 package raf.draft.dsw.core;
 
-import raf.draft.dsw.gui.swing.view.MainFrame;
+import raf.draft.dsw.gui.swing.controller.messagegenerator.Logger;
+import raf.draft.dsw.gui.swing.controller.messagegenerator.LoggerFactory;
+import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 
 public class ApplicationFramework {
     private static ApplicationFramework instance;
     protected DraftRoomRepository draftRoomRepository;
     protected GUI gui;
+    protected MessageGenerator messageGenerator;
 
     public static ApplicationFramework getInstance(){
         if(instance == null)
@@ -19,6 +22,12 @@ public class ApplicationFramework {
     public void initialize(GUI gui, DraftRoomRepository roomRepository) {
         this.gui = gui;
         this.draftRoomRepository = roomRepository;
+        messageGenerator = new MessageGenerator();
+
+        Logger consoleLogger = LoggerFactory.getLogger("console");
+        Logger fileLogger = LoggerFactory.getLogger("file");
+        messageGenerator.addSubscriber(consoleLogger);
+        messageGenerator.addSubscriber(fileLogger);
     }
 
     public void run(){
@@ -31,5 +40,9 @@ public class ApplicationFramework {
 
     public GUI getGui() {
         return gui;
+    }
+
+    public MessageGenerator getMessageGenerator() {
+        return messageGenerator;
     }
 }

@@ -15,4 +15,9 @@ public class FileLogger implements Logger {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void update(Message message) {
+        log(message);
+    }
 }

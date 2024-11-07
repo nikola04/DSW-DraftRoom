@@ -1,5 +1,6 @@
 package raf.draft.dsw.gui.swing.tree;
 
+import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;
 import raf.draft.dsw.gui.swing.view.MainFrame;
@@ -35,7 +36,7 @@ public class DraftTreeImplementation implements DraftTree {
         if(parent instanceof ProjectExplorer){
             String nodeName = JOptionPane.showInputDialog(null,"Enter project name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
             if(nodeName.length() < 2){
-                MainFrame.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
                 return null;
                 }
             return new Project(nodeName, "", "", parent);
@@ -45,7 +46,7 @@ public class DraftTreeImplementation implements DraftTree {
             int selected = JOptionPane.showOptionDialog(null, "Do you want to add Building or Room into Project", "Select Building or Room", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
             String nodeName = JOptionPane.showInputDialog(null, "Enter " + options[selected] + " name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
             if(nodeName.length() < 2) {
-                MainFrame.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
                 return null;
             }
             if(selected == 0)
@@ -55,7 +56,7 @@ public class DraftTreeImplementation implements DraftTree {
         if(parent instanceof Building){
             String nodeName = JOptionPane.showInputDialog(null, "Enter Room name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
             if(nodeName.length() < 2) {
-                MainFrame.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
                 return null;
             }
             return new Room(nodeName);
@@ -66,11 +67,11 @@ public class DraftTreeImplementation implements DraftTree {
     @Override
     public void addChild(DraftTreeItem parent) {
         if(parent == null) {
-            MainFrame.getInstance().getMessageGenerator().generateMessage("Please select Explorer, Building or Room first", MessageType.WARNING);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Please select Explorer, Building or Room first", MessageType.WARNING);
             return;
         }
         if(!(parent.getDraftNode() instanceof DraftNodeComposite)){
-            MainFrame.getInstance().getMessageGenerator().generateMessage("You cannot add anything here. Please select Explorer, Project or Building", MessageType.WARNING);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot add anything here. Please select Explorer, Project or Building", MessageType.WARNING);
             return;
         }
         DraftNode child = createNode(parent.getDraftNode());
@@ -87,26 +88,26 @@ public class DraftTreeImplementation implements DraftTree {
         String defaultName = item.getDraftNode().getName();
         String nodeName = JOptionPane.showInputDialog(null, "Enter new name:", "Enter Name", JOptionPane.PLAIN_MESSAGE, null, null, defaultName).toString();
         if(nodeName.length() < 2){
-            MainFrame.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.WARNING);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.WARNING);
             return;
         }
         item.setName(nodeName);
-        MainFrame.getInstance().getMessageGenerator().generateMessage("Name is changed successfully", MessageType.INFO);
+        ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is changed successfully", MessageType.INFO);
     }
 
     @Override
     public void removeNode(DraftTreeItem item) {
         if(item == null || item.getDraftNode() == null) {
-            MainFrame.getInstance().getMessageGenerator().generateMessage("Please select project, building or room first", MessageType.WARNING);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Please select project, building or room first", MessageType.WARNING);
             return;
         }
         if(item.getDraftNode() instanceof ProjectExplorer) {
-            MainFrame.getInstance().getMessageGenerator().generateMessage("You cannot delete project explorer", MessageType.WARNING);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot delete project explorer", MessageType.WARNING);
             return;
         }
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
-        MainFrame.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
+        ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
     }
 }
