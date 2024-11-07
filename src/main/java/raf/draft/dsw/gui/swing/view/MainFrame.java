@@ -15,6 +15,7 @@ public class MainFrame extends JFrame implements ISubscriber {
     private static MainFrame instance;
     private ActionManager actionManager;
     private DraftTree draftTree;
+    private TabPane tabPane;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
@@ -39,14 +40,15 @@ public class MainFrame extends JFrame implements ISubscriber {
         JTree projectExplorer = draftTree.generateTree(ApplicationFramework.getInstance().getDraftRoomRepository().getProjectExplorer());
         JPanel desktop = new JPanel();
         JScrollPane scroll = new JScrollPane(projectExplorer);
-        scroll.setMinimumSize(new Dimension(200,150));
+        scroll.setMinimumSize(new Dimension(180,150));
         JSplitPane split=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scroll,desktop);
         getContentPane().add(split,BorderLayout.CENTER);
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
 
-        TabPane tabPane = new TabPane();
-        getContentPane().add(tabPane,BorderLayout.EAST);
+        tabPane = new TabPane();
+        tabPane.setPreferredSize(new Dimension(screenWidth / 2 - 240, screenHeight / 2 - 150));
+        desktop.add(tabPane);
     }
 
     public ActionManager getActionManager() {
@@ -55,6 +57,10 @@ public class MainFrame extends JFrame implements ISubscriber {
 
     public DraftTree getDraftTree() {
         return draftTree;
+    }
+
+    public TabPane getTabPane() {
+        return tabPane;
     }
 
     @Override
@@ -71,6 +77,7 @@ public class MainFrame extends JFrame implements ISubscriber {
 
         JOptionPane.showMessageDialog(this, messageText, messageType, messageTypeJOptionPane, null);
     }
+
     private MainFrame() {
     }
     public static MainFrame getInstance() {

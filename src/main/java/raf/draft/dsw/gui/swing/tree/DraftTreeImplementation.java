@@ -14,6 +14,7 @@ import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.*;
 
 public class DraftTreeImplementation implements DraftTree {
     private DraftTreeView treeView;
@@ -77,6 +78,9 @@ public class DraftTreeImplementation implements DraftTree {
         DraftNode child = createNode(parent.getDraftNode());
         if(child == null)
             return;
+        if(child instanceof Room){
+            MainFrame.getInstance().getTabPane().addTab(child.getName(), ((Room) child).getPanel());
+        }
         parent.add(new DraftTreeItem(child));
         parent.getDraftNode().addChild(child);
         treeView.expandPath(treeView.getSelectionPath());
@@ -104,6 +108,9 @@ public class DraftTreeImplementation implements DraftTree {
         if(item.getDraftNode() instanceof ProjectExplorer) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot delete project explorer", MessageType.WARNING);
             return;
+        }
+        if(item.getDraftNode() instanceof Room) {
+            MainFrame.getInstance().getTabPane().remove(((Room) item.getDraftNode()).getPanel());
         }
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());
