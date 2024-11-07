@@ -1,4 +1,4 @@
-package raf.draft.dsw.model.nodes;
+package raf.draft.dsw.gui.swing.model.nodes;
 
 import java.util.ArrayList;
 import java.util.List;

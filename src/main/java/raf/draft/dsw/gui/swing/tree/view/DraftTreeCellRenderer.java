@@ -1,11 +1,11 @@
 package raf.draft.dsw.gui.swing.tree.view;
 
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
-import raf.draft.dsw.model.nodes.DraftNode;
-import raf.draft.dsw.model.structures.Building;
-import raf.draft.dsw.model.structures.Project;
-import raf.draft.dsw.model.structures.ProjectExplorer;
-import raf.draft.dsw.model.structures.Room;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
+import raf.draft.dsw.gui.swing.model.structures.Building;
+import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
+import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;

@@ -1,7 +1,7 @@
-package raf.draft.dsw.model.structures;
+package raf.draft.dsw.gui.swing.model.structures;
 
-import raf.draft.dsw.model.nodes.DraftNode;
-import raf.draft.dsw.model.nodes.DraftNodeComposite;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 
 public class Building extends DraftNodeComposite {
     private String path;

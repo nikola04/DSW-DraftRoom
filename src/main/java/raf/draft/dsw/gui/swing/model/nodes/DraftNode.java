@@ -1,6 +1,4 @@
-package raf.draft.dsw.model.nodes;
-
-import java.util.List;
+package raf.draft.dsw.gui.swing.model.nodes;
 
 public abstract class DraftNode {
     protected String name;

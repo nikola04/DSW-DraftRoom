@@ -2,8 +2,8 @@ package raf.draft.dsw.gui.swing.controller.messagegenerator;
 
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
-import raf.draft.dsw.model.messages.Message;
-import raf.draft.dsw.model.messages.MessageType;
+import raf.draft.dsw.gui.swing.model.messages.Message;
+import raf.draft.dsw.gui.swing.model.messages.MessageType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

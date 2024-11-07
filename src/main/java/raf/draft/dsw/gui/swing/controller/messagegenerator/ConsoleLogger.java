@@ -1,6 +1,6 @@
 package raf.draft.dsw.gui.swing.controller.messagegenerator;
 
-import raf.draft.dsw.model.messages.Message;
+import raf.draft.dsw.gui.swing.model.messages.Message;
 
 public class ConsoleLogger implements Logger {
     @Override

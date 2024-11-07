@@ -1,7 +1,4 @@
-package raf.draft.dsw.model.nodes;
-
-import java.util.Collections;
-import java.util.List;
+package raf.draft.dsw.gui.swing.model.nodes;
 
 public class DraftNodeLeaf extends DraftNode {
     public DraftNodeLeaf(String name) {

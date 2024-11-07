@@ -1,6 +1,6 @@
 package raf.draft.dsw.gui.swing.tree.model;
 
-import raf.draft.dsw.model.nodes.DraftNode;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

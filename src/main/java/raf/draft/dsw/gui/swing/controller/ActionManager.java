@@ -4,12 +4,14 @@ import raf.draft.dsw.gui.swing.controller.actions.AboutUsAction;
 import raf.draft.dsw.gui.swing.controller.actions.ExitAction;
 import raf.draft.dsw.gui.swing.tree.controller.DeleteNodeAction;
 import raf.draft.dsw.gui.swing.tree.controller.NewNodeAction;
+import raf.draft.dsw.gui.swing.tree.controller.RenameNodeAction;
 
 public class ActionManager {
     AboutUsAction aboutUsAction;
     ExitAction exitAction;
     NewNodeAction newNodeAction;
     DeleteNodeAction deleteNodeAction;
+    RenameNodeAction renameNodeAction;
 
     public ActionManager() {
         initialize();
@@ -19,6 +21,7 @@ public class ActionManager {
         this.exitAction = new ExitAction();
         this.newNodeAction = new NewNodeAction();
         this.deleteNodeAction = new DeleteNodeAction();
+        this.renameNodeAction = new RenameNodeAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -30,4 +33,5 @@ public class ActionManager {
         return newNodeAction;
     }
     public DeleteNodeAction getDeleteNodeAction() { return deleteNodeAction; }
+    public RenameNodeAction getRenameNodeAction() { return renameNodeAction; }
 }

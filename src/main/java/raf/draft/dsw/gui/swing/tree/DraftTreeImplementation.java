@@ -1,22 +1,18 @@
 package raf.draft.dsw.gui.swing.tree;
 
-import raf.draft.dsw.gui.swing.controller.messagegenerator.ConsoleLogger;
-import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;
 import raf.draft.dsw.gui.swing.view.MainFrame;
-import raf.draft.dsw.model.messages.Message;
-import raf.draft.dsw.model.messages.MessageType;
-import raf.draft.dsw.model.nodes.DraftNode;
-import raf.draft.dsw.model.nodes.DraftNodeComposite;
-import raf.draft.dsw.model.structures.Building;
-import raf.draft.dsw.model.structures.Project;
-import raf.draft.dsw.model.structures.ProjectExplorer;
-import raf.draft.dsw.model.structures.Room;
+import raf.draft.dsw.gui.swing.model.messages.MessageType;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
+import raf.draft.dsw.gui.swing.model.structures.Building;
+import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
+import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
-import java.time.LocalDateTime;
 
 public class DraftTreeImplementation implements DraftTree {
     private DraftTreeView treeView;
@@ -84,6 +80,18 @@ public class DraftTreeImplementation implements DraftTree {
         parent.getDraftNode().addChild(child);
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
+    }
+
+    @Override
+    public void renameNode(DraftTreeItem item){
+        String defaultName = item.getDraftNode().getName();
+        String nodeName = JOptionPane.showInputDialog(null, "Enter new name:", "Enter Name", JOptionPane.PLAIN_MESSAGE, null, null, defaultName).toString();
+        if(nodeName.length() < 2){
+            MainFrame.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.WARNING);
+            return;
+        }
+        item.setName(nodeName);
+        MainFrame.getInstance().getMessageGenerator().generateMessage("Name is changed successfully", MessageType.INFO);
     }
 
     @Override
