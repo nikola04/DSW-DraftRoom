@@ -19,8 +19,6 @@ public class DeleteNodeAction extends AbstractRoomAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
-        if(selected == null)
-            return;
         MainFrame.getInstance().getDraftTree().removeNode(selected);
     }
 }

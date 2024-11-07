@@ -2,6 +2,7 @@ package raf.draft.dsw.gui.swing.view;
 
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.ActionManager;
+import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.tree.DraftTree;
 import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
@@ -14,9 +15,12 @@ public class MainFrame extends JFrame implements ISubscriber {
     private static MainFrame instance;
     private ActionManager actionManager;
     private DraftTree draftTree;
+    private MessageGenerator messageGenerator;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
+        messageGenerator = new MessageGenerator();
+        messageGenerator.addSubscriber(this);
     }
     private void initializeGUI(){
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -52,11 +56,12 @@ public class MainFrame extends JFrame implements ISubscriber {
         return draftTree;
     }
 
+    public MessageGenerator getMessageGenerator() {
+        return messageGenerator;
+    }
+
     @Override
     public void update(Message message) {
-        showMessageDialog(message);
-    }
-    private void showMessageDialog(Message message){
         String messageType = message.getType().toString();
         String messageText = message.toString();
 
@@ -67,7 +72,7 @@ public class MainFrame extends JFrame implements ISubscriber {
             default -> JOptionPane.PLAIN_MESSAGE;
         };
 
-        JOptionPane.showMessageDialog(this, messageText, messageType, messageTypeJOptionPane);
+        JOptionPane.showMessageDialog(this, messageText, messageType, messageTypeJOptionPane, null);
     }
     private MainFrame() {
     }
