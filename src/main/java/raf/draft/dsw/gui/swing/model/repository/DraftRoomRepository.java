@@ -1,4 +1,4 @@
-package raf.draft.dsw.core;
+package raf.draft.dsw.gui.swing.model.repository;
 
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;

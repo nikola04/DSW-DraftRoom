@@ -39,7 +39,7 @@ public class DraftTreeImplementation implements DraftTree {
             if(nodeName.length() < 2){
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
                 return null;
-                }
+            }
             return new Project(nodeName, "", "", parent);
         }
         if(parent instanceof Project){
@@ -52,7 +52,7 @@ public class DraftTreeImplementation implements DraftTree {
             }
             if(selected == 0)
                 return new Building(nodeName, parent);
-            else return new Room(nodeName);
+            else return new Room(nodeName, parent);
         }
         if(parent instanceof Building){
             String nodeName = JOptionPane.showInputDialog(null, "Enter Room name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
@@ -60,7 +60,7 @@ public class DraftTreeImplementation implements DraftTree {
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
                 return null;
             }
-            return new Room(nodeName);
+            return new Room(nodeName, parent);
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package raf.draft.dsw.gui.swing.controller.messagegenerator;
+package raf.draft.dsw.gui.swing.model.messages;
 
 public class LoggerFactory {
     public static Logger getLogger(String type) {

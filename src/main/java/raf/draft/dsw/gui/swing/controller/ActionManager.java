@@ -2,9 +2,9 @@ package raf.draft.dsw.gui.swing.controller;
 
 import raf.draft.dsw.gui.swing.controller.actions.AboutUsAction;
 import raf.draft.dsw.gui.swing.controller.actions.ExitAction;
-import raf.draft.dsw.gui.swing.tree.controller.DeleteNodeAction;
-import raf.draft.dsw.gui.swing.tree.controller.NewNodeAction;
-import raf.draft.dsw.gui.swing.tree.controller.RenameNodeAction;
+import raf.draft.dsw.gui.swing.controller.actions.DeleteNodeAction;
+import raf.draft.dsw.gui.swing.controller.actions.NewNodeAction;
+import raf.draft.dsw.gui.swing.controller.actions.RenameNodeAction;
 
 public class ActionManager {
     AboutUsAction aboutUsAction;

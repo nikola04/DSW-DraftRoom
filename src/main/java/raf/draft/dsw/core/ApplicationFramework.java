@@ -1,8 +1,9 @@
 package raf.draft.dsw.core;
 
-import raf.draft.dsw.gui.swing.controller.messagegenerator.Logger;
-import raf.draft.dsw.gui.swing.controller.messagegenerator.LoggerFactory;
-import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
+import raf.draft.dsw.gui.swing.model.messages.Logger;
+import raf.draft.dsw.gui.swing.model.messages.LoggerFactory;
+import raf.draft.dsw.gui.swing.model.messages.MessageGenerator;
+import raf.draft.dsw.gui.swing.model.repository.DraftRoomRepository;
 
 public class ApplicationFramework {
     private static ApplicationFramework instance;

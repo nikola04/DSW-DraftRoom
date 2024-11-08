@@ -1,6 +1,5 @@
 package raf.draft.dsw.gui.swing.model.repository;
 
-import raf.draft.dsw.core.DraftRoomRepository;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;

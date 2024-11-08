@@ -4,7 +4,7 @@ import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.core.GUI;
 import raf.draft.dsw.gui.swing.SwingGUI;
 import raf.draft.dsw.gui.swing.model.repository.DraftRoomExplorerImplementation;
-import raf.draft.dsw.core.DraftRoomRepository;
+import raf.draft.dsw.gui.swing.model.repository.DraftRoomRepository;
 
 public class AppCore {
     public static void main(String[] args) {

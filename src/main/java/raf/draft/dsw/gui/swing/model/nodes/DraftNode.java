@@ -4,10 +4,6 @@ public abstract class DraftNode {
     protected String name;
     protected DraftNode parent;
 
-    public DraftNode(String name) {
-        this.name = name;
-    }
-
     public DraftNode(String name, DraftNode parent) {
         this.name = name;
         this.parent = parent;

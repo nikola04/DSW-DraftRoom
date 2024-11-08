@@ -2,7 +2,6 @@ package raf.draft.dsw.gui.swing.view;
 
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.ActionManager;
-import raf.draft.dsw.gui.swing.controller.messagegenerator.MessageGenerator;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.tree.DraftTree;
 import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
