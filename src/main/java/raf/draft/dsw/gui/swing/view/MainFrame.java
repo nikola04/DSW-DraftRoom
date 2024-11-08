@@ -63,7 +63,11 @@ public class MainFrame extends JFrame implements ISubscriber {
     }
 
     @Override
-    public void update(Message message) {
+    public void update(Object value) {
+        if(value instanceof Message message) displayEventMessage(message);
+    }
+
+    private void displayEventMessage(Message message) {
         String messageType = message.getType().toString();
         String messageText = message.toString();
 
@@ -71,7 +75,6 @@ public class MainFrame extends JFrame implements ISubscriber {
             case ERROR -> JOptionPane.ERROR_MESSAGE;
             case WARNING -> JOptionPane.WARNING_MESSAGE;
             case INFO -> JOptionPane.INFORMATION_MESSAGE;
-            default -> JOptionPane.PLAIN_MESSAGE;
         };
 
         JOptionPane.showMessageDialog(this, messageText, messageType, messageTypeJOptionPane, null);

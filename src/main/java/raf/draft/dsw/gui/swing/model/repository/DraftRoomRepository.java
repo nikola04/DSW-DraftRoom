@@ -6,5 +6,6 @@ import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
 
 public interface DraftRoomRepository {
     ProjectExplorer getProjectExplorer();
+    DraftNode createNodeFactory(String type, String name, DraftNode parent);
     void addChild(DraftNodeComposite parent, DraftNode child);
 }

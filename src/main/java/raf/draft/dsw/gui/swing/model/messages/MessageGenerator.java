@@ -24,9 +24,11 @@ public class MessageGenerator implements IPublisher {
     }
 
     @Override
-    public void publish(Message message) {
-        for (ISubscriber subscriber : subscribers) {
-            subscriber.update(message);
+    public void publish(Object value) {
+        if(value instanceof Message message) {
+            for (ISubscriber subscriber : subscribers) {
+                subscriber.update(message);
+            }
         }
     }
 

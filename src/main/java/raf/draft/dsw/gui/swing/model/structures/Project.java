@@ -13,6 +13,12 @@ public class Project extends DraftNodeComposite {
         this.path = path;
     }
 
+    public Project(String name, DraftNode parent) {
+        super(name, parent);
+        this.author = "";
+        this.path = "";
+    }
+
     public String getAuthor() {
         return author;
     }

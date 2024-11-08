@@ -9,7 +9,7 @@ public class ConsoleLogger implements Logger {
     }
 
     @Override
-    public void update(Message message) {
-        log(message);
+    public void update(Object value) {
+        if(value instanceof Message message) log(message);
     }
 }

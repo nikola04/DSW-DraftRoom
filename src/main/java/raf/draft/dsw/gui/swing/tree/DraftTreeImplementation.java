@@ -14,7 +14,6 @@ import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
-import java.awt.*;
 
 public class DraftTreeImplementation implements DraftTree {
     private DraftTreeView treeView;
@@ -31,38 +30,29 @@ public class DraftTreeImplementation implements DraftTree {
     public DraftTreeItem getSelectedNode() {
         return (DraftTreeItem) treeView.getLastSelectedPathComponent();
     }
-
     @Override
     public DraftNode createNode(DraftNode parent){
-        if(parent instanceof ProjectExplorer){
-            String nodeName = JOptionPane.showInputDialog(null,"Enter project name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
-            if(nodeName.length() < 2){
-                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
-                return null;
+        String type = switch (parent) {
+            case ProjectExplorer projectExplorer -> "Project";
+            case Project project -> {
+                String[] options = {"Building", "Room"};
+                int selected = JOptionPane.showOptionDialog(null, "Do you want to add Building or Room into Project", "Select Building or Room", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
+                if (selected == 0) yield "Building";
+                yield "Room";
             }
-            return new Project(nodeName, "", "", parent);
+            case Building building -> "Room";
+            default -> null;
+        };
+        if(type == null) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error while getting node type", MessageType.ERROR);
+            return null;
         }
-        if(parent instanceof Project){
-            String[] options = {"Building", "Room"};
-            int selected = JOptionPane.showOptionDialog(null, "Do you want to add Building or Room into Project", "Select Building or Room", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
-            String nodeName = JOptionPane.showInputDialog(null, "Enter " + options[selected] + " name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
-            if(nodeName.length() < 2) {
-                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
-                return null;
-            }
-            if(selected == 0)
-                return new Building(nodeName, parent);
-            else return new Room(nodeName, parent);
+        String nodeName = JOptionPane.showInputDialog(null,"Enter " + type + " name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
+        if(nodeName.isEmpty()){
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Node Name cannot be empty", MessageType.ERROR);
+            return null;
         }
-        if(parent instanceof Building){
-            String nodeName = JOptionPane.showInputDialog(null, "Enter Room name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
-            if(nodeName.length() < 2) {
-                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.ERROR);
-                return null;
-            }
-            return new Room(nodeName, parent);
-        }
-        return null;
+        return ApplicationFramework.getInstance().getDraftRoomRepository().createNodeFactory(type, nodeName, parent);
     }
 
     @Override
@@ -76,11 +66,9 @@ public class DraftTreeImplementation implements DraftTree {
             return;
         }
         DraftNode child = createNode(parent.getDraftNode());
-        if(child == null)
-            return;
-        if(child instanceof Room){
+        if(child == null) return;
+        if(child instanceof Room)
             MainFrame.getInstance().getTabPane().addTab(child.getName(), ((Room) child).getPanel());
-        }
         parent.add(new DraftTreeItem(child));
         parent.getDraftNode().addChild(child);
         treeView.expandPath(treeView.getSelectionPath());
@@ -91,8 +79,8 @@ public class DraftTreeImplementation implements DraftTree {
     public void renameNode(DraftTreeItem item){
         String defaultName = item.getDraftNode().getName();
         String nodeName = JOptionPane.showInputDialog(null, "Enter new name:", "Enter Name", JOptionPane.PLAIN_MESSAGE, null, null, defaultName).toString();
-        if(nodeName.length() < 2){
-            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is too short. Try with more that 2 chars", MessageType.WARNING);
+        if(nodeName.isEmpty()){
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Node Name cannot be empty", MessageType.ERROR);
             return;
         }
         item.setName(nodeName);
