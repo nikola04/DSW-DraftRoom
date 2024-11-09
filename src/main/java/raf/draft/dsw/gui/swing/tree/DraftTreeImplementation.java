@@ -11,6 +11,7 @@ import raf.draft.dsw.gui.swing.model.structures.Building;
 import raf.draft.dsw.gui.swing.model.structures.Project;
 import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
 import raf.draft.dsw.gui.swing.model.structures.Room;
+import raf.draft.dsw.gui.swing.view.Tab;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -48,6 +49,8 @@ public class DraftTreeImplementation implements DraftTree {
             return null;
         }
         String nodeName = JOptionPane.showInputDialog(null,"Enter " + type + " name:", "Enter Name", JOptionPane.PLAIN_MESSAGE);
+        if(nodeName == null)
+            return null; // no message on cancel
         if(nodeName.isEmpty()){
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Node Name cannot be empty", MessageType.ERROR);
             return null;
@@ -67,23 +70,33 @@ public class DraftTreeImplementation implements DraftTree {
         }
         DraftNode child = createNode(parent.getDraftNode());
         if(child == null) return;
-        if(child instanceof Room)
-            MainFrame.getInstance().getTabPane().addTab(child.getName(), ((Room) child).getPanel());
         parent.add(new DraftTreeItem(child));
         parent.getDraftNode().addChild(child);
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
+        if(child instanceof Room room){ // check if room is inside active project to update panel
+            Project activeProject = MainFrame.getInstance().getTabPaneModel().getProject();
+            if((parent.getDraftNode() instanceof Project project && project.equals(activeProject)) || parent.getParentProject().equals(activeProject)){
+                MainFrame.getInstance().getTabPaneModel().addTab(room);
+            }
+        }
     }
 
     @Override
     public void renameNode(DraftTreeItem item){
         String defaultName = item.getDraftNode().getName();
-        String nodeName = JOptionPane.showInputDialog(null, "Enter new name:", "Enter Name", JOptionPane.PLAIN_MESSAGE, null, null, defaultName).toString();
+        Object nodeNameObj = JOptionPane.showInputDialog(null, "Enter new name:", "Enter Name", JOptionPane.PLAIN_MESSAGE, null, null, defaultName);
+        if(nodeNameObj == null)
+            return; // no message on cancel
+        String nodeName = nodeNameObj.toString();
         if(nodeName.isEmpty()){
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Node Name cannot be empty", MessageType.ERROR);
             return;
         }
         item.setName(nodeName);
+        // update rooms in project
+        if(item.getDraftNode() instanceof Room room)
+            MainFrame.getInstance().getTabPaneModel().renameTabByRoom(room, nodeName);
         ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is changed successfully", MessageType.INFO);
     }
 
@@ -97,8 +110,21 @@ public class DraftTreeImplementation implements DraftTree {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot delete project explorer", MessageType.WARNING);
             return;
         }
-        if(item.getDraftNode() instanceof Room) {
-            MainFrame.getInstance().getTabPane().remove(((Room) item.getDraftNode()).getPanel());
+        if(item.getDraftNode() instanceof Room room) {
+            room.getParent().removeChild(room);
+            MainFrame.getInstance().getTabPaneModel().removeTabByRoom(room);
+        }
+        else if(item.getDraftNode() instanceof Building building) {
+            for (DraftNode node : building.getChildren())
+                if (node instanceof Room room)
+                    MainFrame.getInstance().getTabPaneModel().removeTabByRoom(room);
+            building.getParent().removeChild(building);
+        }
+        else if(item.getDraftNode() instanceof Project project) {
+            if (project.equals(MainFrame.getInstance().getTabPaneModel().getProject())) {
+                MainFrame.getInstance().getTabPaneModel().setProject(null);
+                project.getParent().removeChild(project);
+            }
         }
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());

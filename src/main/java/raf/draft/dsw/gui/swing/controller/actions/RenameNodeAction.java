@@ -5,11 +5,12 @@ import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class RenameNodeAction extends AbstractRoomAction {
     public RenameNodeAction() {
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
         putValue(NAME, "Rename Node");
         putValue(SMALL_ICON, loadIcon("/images/edit.png"));
         putValue(SHORT_DESCRIPTION, "Rename new node");

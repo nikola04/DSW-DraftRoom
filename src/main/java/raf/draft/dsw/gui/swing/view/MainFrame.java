@@ -3,6 +3,7 @@ package raf.draft.dsw.gui.swing.view;
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.ActionManager;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
+import raf.draft.dsw.gui.swing.model.tabs.TabPaneModel;
 import raf.draft.dsw.gui.swing.tree.DraftTree;
 import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
 import raf.draft.dsw.gui.swing.model.messages.Message;
@@ -15,17 +16,22 @@ public class MainFrame extends JFrame implements ISubscriber {
     private ActionManager actionManager;
     private DraftTree draftTree;
     private TabPane tabPane;
+    private TabPaneModel tabPaneModel;
+    private ProjectView projectView;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
+        tabPaneModel = new TabPaneModel();
+        projectView = new ProjectView();
         ApplicationFramework.getInstance().getMessageGenerator().addSubscriber(this);
+        tabPaneModel.addSubscriber(projectView);
     }
     private void initializeGUI(){
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
-        int screenHeight = screenSize.height;
-        int screenWidth = screenSize.width;
-        setSize(screenWidth / 2, screenHeight / 2);
+        int appWidth = screenSize.width * 3/4;
+        int appHeight = screenSize.height * 3/4;
+        setSize(appWidth, appHeight);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("DraftRoom");
@@ -37,17 +43,19 @@ public class MainFrame extends JFrame implements ISubscriber {
         add(toolBar, BorderLayout.NORTH);
 
         JTree projectExplorer = draftTree.generateTree(ApplicationFramework.getInstance().getDraftRoomRepository().getProjectExplorer());
-        JPanel desktop = new JPanel();
-        JScrollPane scroll = new JScrollPane(projectExplorer);
-        scroll.setMinimumSize(new Dimension(180,150));
-        JSplitPane split=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scroll,desktop);
+        JPanel desktop = new JPanel(new BorderLayout());
+        JScrollPane scrollPane = new JScrollPane(projectExplorer);
+        scrollPane.setMinimumSize(new Dimension(180,150));
+        JSplitPane split=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, desktop);
         getContentPane().add(split,BorderLayout.CENTER);
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
 
-        tabPane = new TabPane();
-        tabPane.setPreferredSize(new Dimension(screenWidth / 2 - 240, screenHeight / 2 - 150));
-        desktop.add(tabPane);
+        tabPane = new TabPane(tabPaneModel);
+        tabPane.setPreferredSize(new Dimension(appWidth - 240, appHeight - 150));
+        desktop.add(tabPane, BorderLayout.CENTER);
+        
+        getContentPane().add(projectView,BorderLayout.EAST);
     }
 
     public ActionManager getActionManager() {
@@ -60,6 +68,10 @@ public class MainFrame extends JFrame implements ISubscriber {
 
     public TabPane getTabPane() {
         return tabPane;
+    }
+
+    public TabPaneModel getTabPaneModel() {
+        return tabPaneModel;
     }
 
     @Override

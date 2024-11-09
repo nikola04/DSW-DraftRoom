@@ -3,6 +3,8 @@ package raf.draft.dsw.gui.swing.model.structures;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 
+import java.util.ArrayList;
+
 public class Project extends DraftNodeComposite {
     private String author;
     private String path;
@@ -17,6 +19,20 @@ public class Project extends DraftNodeComposite {
         super(name, parent);
         this.author = "";
         this.path = "";
+    }
+
+    public ArrayList<Room> getAllRooms() {
+        ArrayList<Room> rooms = new ArrayList<>();
+        for (DraftNode node : getChildren()) {
+            if(node instanceof Building building) {
+                for (DraftNode buildingNode : building.getChildren())
+                    if (buildingNode instanceof Room room)
+                        rooms.add(room);
+            }
+            if(node instanceof Room room)
+                rooms.add(room);
+        }
+        return rooms;
     }
 
     public String getAuthor() {

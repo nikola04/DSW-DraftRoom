@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tab extends JPanel {
-    private Room room;
+    private final Room room;
     public Tab(Room room) {
         this.room = room;
         initialize();
@@ -15,8 +15,12 @@ public class Tab extends JPanel {
     private void initialize(){
         if(this.room.getParent() instanceof Building building) {
             setBackground(building.getColor());
-        }
+        }else setBackground(Color.WHITE);
         this.setName(this.room.getName());
         this.setLayout(new BorderLayout());
+    }
+
+    public Room getRoom() {
+        return room;
     }
 }

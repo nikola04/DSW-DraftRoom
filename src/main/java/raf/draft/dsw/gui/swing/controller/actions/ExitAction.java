@@ -3,12 +3,13 @@ package raf.draft.dsw.gui.swing.controller.actions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 
 public class ExitAction extends AbstractRoomAction {
     public ExitAction(){
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_DOWN_MASK));
         putValue(SMALL_ICON, loadIcon("/images/x.png"));
         putValue(NAME, "Exit");
         putValue(SHORT_DESCRIPTION, "Exit");
