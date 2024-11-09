@@ -34,6 +34,7 @@ public class TabPaneModel implements IPublisher {
                 Tab newTab = new Tab(room);
                 openedTabs.add(newTab);
             }
+        setActiveTab(null);
         publish(new EventModel(EventType.PROJECT_SET, project));
     }
     public void removeTabByRoom(Room room) {
@@ -59,6 +60,7 @@ public class TabPaneModel implements IPublisher {
     }
     public void setActiveTab(Tab tab) {
         activeTab = tab;
+        publish(new EventModel(EventType.TAB_SELECTED, activeTab));
     }
     @Override
     public void addSubscriber(ISubscriber subscriber) {

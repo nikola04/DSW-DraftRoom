@@ -1,18 +1,25 @@
 package raf.draft.dsw.gui.swing.view;
 
-import raf.draft.dsw.gui.swing.controller.ActionManager;
-import raf.draft.dsw.gui.swing.controller.actions.ExitAction;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class ToolBar extends JToolBar {
     public ToolBar() {
         super(HORIZONTAL);
         setFloatable(false);
+        setBorderPainted(false);
 
         add(MainFrame.getInstance().getActionManager().getExitAction());
         add(MainFrame.getInstance().getActionManager().getNewNodeAction());
         add(MainFrame.getInstance().getActionManager().getRenameNodeAction());
+        add(MainFrame.getInstance().getActionManager().getChangeNodePathAction());
+        add(MainFrame.getInstance().getActionManager().getChangeNodeAuthorAction());
         add(MainFrame.getInstance().getActionManager().getDeleteNodeAction());
+
+        for (Component component : getComponents()) {
+            if (component instanceof AbstractButton button) {
+                button.setBorderPainted(false);
+            }
+        }
     }
 }

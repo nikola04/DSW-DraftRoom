@@ -1,30 +1,52 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
+import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
+import raf.draft.dsw.gui.swing.model.events.EventModel;
+import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class Building extends DraftNodeComposite {
-    private String path;
+public class Building extends DraftNodeComposite implements IPublisher {
+    List<ISubscriber> subscribers = new ArrayList<>();
     private Color color;
     public Building(String name, DraftNode parent) {
         super(name, parent);
-        this.path = "";
         initialize();
     }
-    public Building(String name, String path, DraftNode parent) {
-        super(name, parent);
-        this.path = path;
-        initialize();
-    }
-    private void initialize(){
+    private void initialize() {
         Random rnd = new Random();
         this.color = new Color(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
     }
 
+    public void setName(String name){
+        this.name = name;
+        publish(new EventModel(EventType.BUILDING_NAME, name));
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public void addSubscriber(ISubscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    @Override
+    public void removeSubscriber(ISubscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    @Override
+    public void publish(Object value) {
+        for (ISubscriber subscriber : subscribers) {
+            subscriber.update(value);
+        }
     }
 }

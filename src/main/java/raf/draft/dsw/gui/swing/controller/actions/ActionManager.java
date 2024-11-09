@@ -1,17 +1,13 @@
-package raf.draft.dsw.gui.swing.controller;
-
-import raf.draft.dsw.gui.swing.controller.actions.AboutUsAction;
-import raf.draft.dsw.gui.swing.controller.actions.ExitAction;
-import raf.draft.dsw.gui.swing.controller.actions.DeleteNodeAction;
-import raf.draft.dsw.gui.swing.controller.actions.NewNodeAction;
-import raf.draft.dsw.gui.swing.controller.actions.RenameNodeAction;
+package raf.draft.dsw.gui.swing.controller.actions;
 
 public class ActionManager {
-    AboutUsAction aboutUsAction;
-    ExitAction exitAction;
-    NewNodeAction newNodeAction;
-    DeleteNodeAction deleteNodeAction;
-    RenameNodeAction renameNodeAction;
+    private AboutUsAction aboutUsAction;
+    private ExitAction exitAction;
+    private NewNodeAction newNodeAction;
+    private DeleteNodeAction deleteNodeAction;
+    private RenameNodeAction renameNodeAction;
+    private ChangeNodePathAction changeNodePathAction;
+    private ChangeNodeAuthorAction changeNodeAuthorAction;
 
     public ActionManager() {
         initialize();
@@ -22,6 +18,8 @@ public class ActionManager {
         this.newNodeAction = new NewNodeAction();
         this.deleteNodeAction = new DeleteNodeAction();
         this.renameNodeAction = new RenameNodeAction();
+        this.changeNodePathAction = new ChangeNodePathAction();
+        this.changeNodeAuthorAction = new ChangeNodeAuthorAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -34,4 +32,6 @@ public class ActionManager {
     }
     public DeleteNodeAction getDeleteNodeAction() { return deleteNodeAction; }
     public RenameNodeAction getRenameNodeAction() { return renameNodeAction; }
+    public ChangeNodePathAction getChangeNodePathAction() { return changeNodePathAction; }
+    public ChangeNodeAuthorAction getChangeNodeAuthorAction() { return changeNodeAuthorAction; }
 }
