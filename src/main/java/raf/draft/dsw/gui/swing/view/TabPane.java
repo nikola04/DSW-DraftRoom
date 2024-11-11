@@ -10,7 +10,7 @@ import raf.draft.dsw.gui.swing.model.tabs.TabPaneModel;
 import javax.swing.*;
 
 public class TabPane extends JTabbedPane implements ISubscriber {
-    private TabPaneModel model;
+    private final TabPaneModel model;
     public TabPane(TabPaneModel model) {
         this.model = model;
         initialize();
@@ -21,8 +21,11 @@ public class TabPane extends JTabbedPane implements ISubscriber {
     }
     public void refresh(){
         removeAll();
-        for(Tab tab : model.getOpenedTabs())
+        int ind = 0;
+        for(Tab tab : model.getOpenedTabs()) {
             add(tab);
+            setBackgroundAt(ind++, tab.getColor());
+        }
     }
 
     @Override
@@ -31,8 +34,10 @@ public class TabPane extends JTabbedPane implements ISubscriber {
             if (event.getType() == EventType.PROJECT_SET)
                 refresh();
             if(event.getType() == EventType.TAB_ADD){
-                JComponent component = (JComponent) event.getValue();
+                Tab component = (Tab) event.getValue();
                 add(component);
+                int index = indexOfComponent(component);
+                setBackgroundAt(index, component.getColor());
             }
             if(event.getType() == EventType.TAB_RENAME){
                 JComponent component = (JComponent) event.getValue();

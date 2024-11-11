@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DraftNodeComposite extends DraftNode {
-    private List<DraftNode> children = new ArrayList<>();
+    private final List<DraftNode> children = new ArrayList<>();
 
     public DraftNodeComposite(String name) {
         super(name, null);

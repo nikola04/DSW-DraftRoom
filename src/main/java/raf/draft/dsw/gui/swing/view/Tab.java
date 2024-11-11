@@ -13,13 +13,15 @@ public class Tab extends JPanel {
         initialize();
     }
     private void initialize(){
-        if(this.room.getParent() instanceof Building building) {
-            setBackground(building.getColor());
-        }else setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
         this.setName(this.room.getName());
         this.setLayout(new BorderLayout());
     }
-
+    public Color getColor() {
+        if(this.room.getParent() instanceof Building building)
+            return building.getColor();
+        return Color.WHITE;
+    }
     public Room getRoom() {
         return room;
     }
