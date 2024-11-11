@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabPaneModel implements IPublisher {
-    private List<ISubscriber> subscribers;
+    private final List<ISubscriber> subscribers;
     private Project project;
-    private List<Tab> openedTabs;
+    private final List<Tab> openedTabs;
     private Tab activeTab;
 
     public TabPaneModel() {

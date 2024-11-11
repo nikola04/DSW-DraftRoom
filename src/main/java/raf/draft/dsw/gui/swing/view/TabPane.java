@@ -1,6 +1,6 @@
 package raf.draft.dsw.gui.swing.view;
 
-import raf.draft.dsw.gui.swing.controller.changes.TabPaneChangeListener;
+import raf.draft.dsw.gui.swing.controller.listeners.TabPaneChangeListener;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;

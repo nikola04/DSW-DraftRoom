@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends DraftNodeComposite implements IPublisher {
-    List<ISubscriber> subscribers = new ArrayList<>();
+    private final List<ISubscriber> subscribers = new ArrayList<>();
     private String author;
     private String path;
 

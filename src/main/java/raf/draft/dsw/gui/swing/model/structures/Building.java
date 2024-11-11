@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Building extends DraftNodeComposite implements IPublisher {
-    List<ISubscriber> subscribers = new ArrayList<>();
+    private final List<ISubscriber> subscribers = new ArrayList<>();
     private Color color;
     public Building(String name, DraftNode parent) {
         super(name, parent);

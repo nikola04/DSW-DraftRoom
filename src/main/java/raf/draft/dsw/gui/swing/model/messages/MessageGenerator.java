@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageGenerator implements IPublisher {
-    private List<ISubscriber> subscribers = new ArrayList<>();
+    private final List<ISubscriber> subscribers = new ArrayList<>();
 
 
     @Override

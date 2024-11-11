@@ -1,12 +1,10 @@
-package raf.draft.dsw.gui.swing.controller.changes;
+package raf.draft.dsw.gui.swing.controller.listeners;
 import raf.draft.dsw.gui.swing.model.tabs.TabPaneModel;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.view.Tab;
-import raf.draft.dsw.gui.swing.view.TabPane;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 
 public class TabPaneChangeListener implements ChangeListener {
     TabPaneModel tabPaneModel;

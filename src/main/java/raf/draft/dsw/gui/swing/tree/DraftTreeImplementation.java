@@ -94,8 +94,6 @@ public class DraftTreeImplementation implements DraftTree {
             return;
         }
         item.setName(nodeName);
-//        item.getDraftNode().setName(nodeName);
-        // update rooms in project
         if(item.getDraftNode() instanceof Room room)
             MainFrame.getInstance().getTabPaneModel().renameTabByRoom(room, nodeName);
         ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Name is changed successfully", MessageType.INFO);
