@@ -1,5 +1,6 @@
 package raf.draft.dsw.gui.swing.tree.view;
 
+import raf.draft.dsw.gui.swing.model.structures.elements.RoomElement;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.structures.Building;
@@ -25,6 +26,8 @@ public class DraftTreeCellRenderer extends DefaultTreeCellRenderer {
             imageURL = getClass().getResource("/images/building.png");
         else if(draftNode instanceof Room)
             imageURL = getClass().getResource("/images/room.png");
+        else if(draftNode instanceof RoomElement)
+            imageURL = getClass().getResource("/images/room.png"); //temp
 
         Icon icon = null;
         if (imageURL != null)

@@ -27,7 +27,6 @@ public class TabPaneModel implements IPublisher {
 
     public void setProject(Project project) {
         this.project = project;
-        publish(project);
         openedTabs.clear();
         if(project != null)
             for(Room room : project.getAllRooms()){
