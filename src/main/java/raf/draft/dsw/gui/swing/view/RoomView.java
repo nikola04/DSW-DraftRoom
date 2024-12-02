@@ -10,62 +10,28 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RoomView extends JPanel implements ISubscriber {
-    private Room room;
-    private JLabel labelBuilding;
-    public RoomView() {
+    private final Room room;
+    public RoomView(Room room) {
+        this.room = room;
         initialize();
-        initializeGUI();
     }
     private void initialize(){
-        MainFrame.getInstance().getTabPaneModel().addSubscriber(this);
+        setBackground(Color.WHITE);
+        this.setName(this.room.getName());
+        this.setLayout(new BorderLayout());
+        this.room.addSubscriber(this);
     }
-    private void initializeGUI(){
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setAlignmentX(LEFT_ALIGNMENT);
-        labelBuilding = new JLabel();
-        updateBuildingLabel();
-        add(labelBuilding);
+
+    public Color getColor() {
+        if(this.room.getParent() instanceof Building building)
+            return building.getColor();
+        return Color.WHITE;
     }
-    private void updateBuildingLabel(){
-        String buildingName = "/";
-        if(this.room != null && this.room.getParent() instanceof Building building)
-            buildingName = building.getName();
-        labelBuilding.setText("Building: " + buildingName);
+    public Room getRoom() {
+        return room;
     }
-    private void setRoom(Room room){
-        if(this.room != null) {
-            if (this.room.getParent() instanceof Building building)
-                building.removeSubscriber(this);
-        }
-        this.room = room;
-        if(this.room != null){
-            if(this.room.getParent() instanceof Building building)
-                building.addSubscriber(this);
-        }
-    }
-    public void refresh(){
-        updateBuildingLabel();
-    }
+
     @Override
     public void update(Object value) {
-        if(value instanceof EventModel event){
-            if(event.getType() == EventType.TAB_SELECTED){
-                if(event.getValue() instanceof Tab tab) {
-                    setRoom(tab.getRoom());
-                }else if(event.getValue() == null)
-                    setRoom(null);
-                refresh();
-            }
-            if(event.getType() == EventType.TAB_DELETE){
-                if(event.getValue() instanceof Tab deletedTab) {
-                    if(deletedTab.getRoom() != null && deletedTab.getRoom() == this.room){
-                        this.room = null;
-                        refresh();
-                    }
-                }
-            }
-            if(event.getType() == EventType.BUILDING_NAME)
-                updateBuildingLabel();
-        }
     }
 }

@@ -11,7 +11,6 @@ import raf.draft.dsw.gui.swing.model.structures.Building;
 import raf.draft.dsw.gui.swing.model.structures.Project;
 import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
 import raf.draft.dsw.gui.swing.model.structures.Room;
-import raf.draft.dsw.gui.swing.view.Tab;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;

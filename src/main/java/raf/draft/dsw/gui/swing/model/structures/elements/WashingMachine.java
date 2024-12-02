@@ -3,8 +3,8 @@ package raf.draft.dsw.gui.swing.model.structures.elements;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 
 public class WashingMachine extends RoomElement{
-    public WashingMachine(String name, DraftNode parent) {
-        super(name, parent);
+    public WashingMachine(DraftNode parent) {
+        super(parent);
     }
     public WashingMachine(WashingMachine source) {
         super(source);
