@@ -17,6 +17,7 @@ public class Tab extends JPanel {
         this.setName(this.room.getName());
         this.setLayout(new BorderLayout());
     }
+
     public Color getColor() {
         if(this.room.getParent() instanceof Building building)
             return building.getColor();
