@@ -5,42 +5,42 @@ import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
 
 public abstract class RoomElement extends DraftNodeLeaf implements ElementPrototype {
     private static int counter = 0;
-    private int locationX, locationY;
-    private int dimensionX, dimensionY;
-    private int rotateRation; // od 0 do 3
-    public RoomElement(String name, DraftNode parent) {
-        super(name, parent);
+    private int x, y;
+    private int width, height;
+    private int rotateRatio; // od 0 do 3
+    public RoomElement(DraftNode parent) {
+        super("Element " + RoomElement.getCounter(), parent);
     }
     public RoomElement(RoomElement source) {
         super(source.getName(), source.getParent());
-        this.locationX = source.getLocationX();
-        this.locationY = source.getLocationY();
-        this.dimensionX = source.getDimensionX();
-        this.dimensionY = source.getDimensionY();
-        this.rotateRation = source.getRotateRation();
+        this.x = source.getX();
+        this.y = source.getY();
+        this.width = source.getWidth();
+        this.height = source.getHeight();
+        this.rotateRatio = source.getRotateRatio();
     }
     public static int getCounter(){
         return counter++;
     }
     public abstract ElementPrototype clone();
 
-    public int getLocationX() {
-        return locationX;
+    public int getX() {
+        return x;
     }
 
-    public int getLocationY() {
-        return locationY;
+    public int getY() {
+        return y;
     }
 
-    public int getDimensionX() {
-        return dimensionX;
+    public int getWidth() {
+        return width;
     }
 
-    public int getDimensionY() {
-        return dimensionY;
+    public int getHeight() {
+        return height;
     }
 
-    public int getRotateRation() {
-        return rotateRation;
+    public int getRotateRatio() {
+        return rotateRatio;
     }
 }
