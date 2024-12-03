@@ -24,7 +24,7 @@ public class TabPane extends JTabbedPane implements ISubscriber {
         int ind = 0;
         for(RoomView tab : model.getOpenedTabs()) {
             add(tab);
-            setBackgroundAt(ind++, tab.getColor());
+            setBackgroundAt(ind++, tab.getRoom().getColor());
         }
     }
 
@@ -37,7 +37,7 @@ public class TabPane extends JTabbedPane implements ISubscriber {
                 RoomView component = (RoomView) event.getValue();
                 add(component);
                 int index = indexOfComponent(component);
-                setBackgroundAt(index, component.getColor());
+                setBackgroundAt(index, component.getRoom().getColor());
             }
             if(event.getType() == EventType.TAB_RENAME){
                 JComponent component = (JComponent) event.getValue();

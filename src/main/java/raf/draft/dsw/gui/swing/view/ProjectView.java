@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.view;
 
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
+import raf.draft.dsw.gui.swing.controller.states.StateManager;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.structures.Building;
@@ -8,10 +9,12 @@ import raf.draft.dsw.gui.swing.model.structures.Project;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ProjectView extends JPanel implements ISubscriber {
     private Project project;
     private Room room;
+    private StateManager stateManager;
     private JLabel labelProject;
     private JLabel labelProjectAuthor;
     private JLabel labelBuilding;
@@ -22,6 +25,7 @@ public class ProjectView extends JPanel implements ISubscriber {
     private void initialize() {
         updateProject(MainFrame.getInstance().getTabPaneModel().getProject());
         MainFrame.getInstance().getTabPaneModel().addSubscriber(this);
+        this.stateManager = new StateManager();
     }
     private void initializeGUI(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -35,6 +39,9 @@ public class ProjectView extends JPanel implements ISubscriber {
         add(labelProject);
         add(labelProjectAuthor);
         add(labelBuilding);
+    }
+    public void onMouseClick(RoomView roomView, Point point) {
+        this.stateManager.getCurrentState().handleMouseClick(roomView, point);
     }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";

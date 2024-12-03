@@ -77,6 +77,10 @@ public class MainFrame extends JFrame implements ISubscriber {
         return tabPaneModel;
     }
 
+    public ProjectView getProjectView() {
+        return projectView;
+    }
+
     @Override
     public void update(Object value) {
         if(value instanceof Message message) displayEventMessage(message);

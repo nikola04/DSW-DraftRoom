@@ -5,9 +5,9 @@ import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
 
 public abstract class RoomElement extends DraftNodeLeaf implements ElementPrototype {
     private static int counter = 0;
-    private int x, y;
-    private int width, height;
-    private int rotateRatio; // od 0 do 3
+    protected int x, y;
+    protected int width, height;
+    protected int rotateRatio; // od 0 do 3
     public RoomElement(DraftNode parent) {
         super("Element " + RoomElement.getCounter(), parent);
     }
