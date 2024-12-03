@@ -1,6 +1,8 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
+import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.states.State;
+import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import javax.swing.*;
@@ -16,7 +18,7 @@ public class EditRoomState implements State {
             int height = Integer.parseInt(heightStr);
             roomView.getRoom().setDimensions(width, height, roomView.getWidth(), roomView.getHeight());
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid dimensions. Please enter positive integers.");
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);
         }
     }
 }
