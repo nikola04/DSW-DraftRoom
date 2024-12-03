@@ -19,13 +19,11 @@ public class MainFrame extends JFrame implements ISubscriber {
     private TabPane tabPane;
     private TabPaneModel tabPaneModel;
     private ProjectView projectView;
-    private RoomView roomView;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
         tabPaneModel = new TabPaneModel();
         projectView = new ProjectView();
-        roomView = new RoomView();
         ApplicationFramework.getInstance().getMessageGenerator().addSubscriber(this);
     }
     private void initializeGUI(){
@@ -60,7 +58,6 @@ public class MainFrame extends JFrame implements ISubscriber {
         sidePanels.setLayout(new BoxLayout(sidePanels, BoxLayout.Y_AXIS));
         sidePanels.setAlignmentX(Component.LEFT_ALIGNMENT);
         sidePanels.add(projectView);
-        sidePanels.add(roomView);
         desktop.add(sidePanels,BorderLayout.EAST);
     }
 
@@ -78,6 +75,10 @@ public class MainFrame extends JFrame implements ISubscriber {
 
     public TabPaneModel getTabPaneModel() {
         return tabPaneModel;
+    }
+
+    public ProjectView getProjectView() {
+        return projectView;
     }
 
     @Override

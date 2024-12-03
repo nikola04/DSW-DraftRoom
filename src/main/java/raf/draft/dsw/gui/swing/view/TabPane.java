@@ -22,9 +22,9 @@ public class TabPane extends JTabbedPane implements ISubscriber {
     public void refresh(){
         removeAll();
         int ind = 0;
-        for(Tab tab : model.getOpenedTabs()) {
+        for(RoomView tab : model.getOpenedTabs()) {
             add(tab);
-            setBackgroundAt(ind++, tab.getColor());
+            setBackgroundAt(ind++, tab.getRoom().getColor());
         }
     }
 
@@ -34,15 +34,13 @@ public class TabPane extends JTabbedPane implements ISubscriber {
             if (event.getType() == EventType.PROJECT_SET)
                 refresh();
             if(event.getType() == EventType.TAB_ADD){
-                Tab component = (Tab) event.getValue();
+                RoomView component = (RoomView) event.getValue();
                 add(component);
                 int index = indexOfComponent(component);
-                setBackgroundAt(index, component.getColor());
+                setBackgroundAt(index, component.getRoom().getColor());
             }
             if(event.getType() == EventType.TAB_RENAME){
                 JComponent component = (JComponent) event.getValue();
-                component.revalidate();
-                component.repaint();
                 int index = indexOfComponent(component);
                 setTitleAt(index, component.getName());
             }

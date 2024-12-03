@@ -1,16 +1,23 @@
 package raf.draft.dsw.gui.swing.view;
 
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
+import raf.draft.dsw.gui.swing.controller.states.StateManager;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
+import raf.draft.dsw.gui.swing.model.structures.Building;
 import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ProjectView extends JPanel implements ISubscriber {
     private Project project;
+    private Room room;
+    private StateManager stateManager;
     private JLabel labelProject;
     private JLabel labelProjectAuthor;
+    private JLabel labelBuilding;
     public ProjectView() {
         initialize();
         initializeGUI();
@@ -18,16 +25,23 @@ public class ProjectView extends JPanel implements ISubscriber {
     private void initialize() {
         updateProject(MainFrame.getInstance().getTabPaneModel().getProject());
         MainFrame.getInstance().getTabPaneModel().addSubscriber(this);
+        this.stateManager = new StateManager();
     }
     private void initializeGUI(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setAlignmentX(LEFT_ALIGNMENT);
         this.labelProject = new JLabel();
         this.labelProjectAuthor = new JLabel();
+        labelBuilding = new JLabel();
         updateProjectLabel();
         updateProjectAuthorLabel();
+        updateBuildingLabel();
         add(labelProject);
         add(labelProjectAuthor);
+        add(labelBuilding);
+    }
+    public void onMouseClick(RoomView roomView, Point point) {
+        this.stateManager.getCurrentState().handleMouseClick(roomView, point);
     }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";
@@ -38,6 +52,12 @@ public class ProjectView extends JPanel implements ISubscriber {
         String projectAuthor = project != null ? project.getAuthor() : "/";
         labelProjectAuthor.setText("Author: " + projectAuthor);
     }
+    private void updateBuildingLabel(){
+        String buildingName = "/";
+        if(this.room != null && this.room.getParent() instanceof Building building)
+            buildingName = building.getName();
+        labelBuilding.setText("Building: " + buildingName);
+    }
     private void updateProject(Project newProject){
         if(this.project != null)
             this.project.removeSubscriber(this);
@@ -45,9 +65,21 @@ public class ProjectView extends JPanel implements ISubscriber {
         if(this.project != null)
             this.project.addSubscriber(this);
     }
+    private void setRoom(Room room){
+        if(this.room != null) {
+            if (this.room.getParent() instanceof Building building)
+                building.removeSubscriber(this);
+        }
+        this.room = room;
+        if(this.room != null){
+            if(this.room.getParent() instanceof Building building)
+                building.addSubscriber(this);
+        }
+    }
     public void refresh(){
         updateProjectLabel();
         updateProjectAuthorLabel();
+        updateBuildingLabel();
     }
     @Override
     public void update(Object value) {
@@ -63,6 +95,23 @@ public class ProjectView extends JPanel implements ISubscriber {
                 updateProjectLabel();
             else if (event.getType() == EventType.PROJECT_AUTHOR)
                 updateProjectAuthorLabel();
+            else if(event.getType() == EventType.TAB_SELECTED){
+                if(event.getValue() instanceof RoomView tab) {
+                    setRoom(tab.getRoom());
+                }else if(event.getValue() == null)
+                    setRoom(null);
+                refresh();
+            }
+            else if(event.getType() == EventType.TAB_DELETE){
+                if(event.getValue() instanceof RoomView deletedTab) {
+                    if(deletedTab.getRoom() != null && deletedTab.getRoom() == this.room){
+                        this.room = null;
+                        refresh();
+                    }
+                }
+            }
+            else if(event.getType() == EventType.BUILDING_NAME)
+                updateBuildingLabel();
         }
     }
 }

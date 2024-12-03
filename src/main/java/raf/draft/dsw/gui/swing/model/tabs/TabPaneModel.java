@@ -6,17 +6,16 @@ import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.structures.Project;
 import raf.draft.dsw.gui.swing.model.structures.Room;
-import raf.draft.dsw.gui.swing.view.Tab;
+import raf.draft.dsw.gui.swing.view.RoomView;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabPaneModel implements IPublisher {
     private final List<ISubscriber> subscribers;
     private Project project;
-    private final List<Tab> openedTabs;
-    private Tab activeTab;
+    private final List<RoomView> openedTabs;
+    private RoomView activeTab;
 
     public TabPaneModel() {
         subscribers = new ArrayList<>();
@@ -30,14 +29,14 @@ public class TabPaneModel implements IPublisher {
         openedTabs.clear();
         if(project != null)
             for(Room room : project.getAllRooms()){
-                Tab newTab = new Tab(room);
+                RoomView newTab = new RoomView(room);
                 openedTabs.add(newTab);
             }
         setActiveTab(null);
         publish(new EventModel(EventType.PROJECT_SET, project));
     }
     public void removeTabByRoom(Room room) {
-        for(Tab tab : openedTabs){
+        for(RoomView tab : openedTabs){
             if(!tab.getRoom().equals(room)) continue;
             openedTabs.remove(tab);
             publish(new EventModel(EventType.TAB_DELETE, tab));
@@ -45,19 +44,19 @@ public class TabPaneModel implements IPublisher {
         }
     }
     public void addTab(Room room) {
-        Tab newTab = new Tab(room);
+        RoomView newTab = new RoomView(room);
         openedTabs.add(newTab);
         publish(new EventModel(EventType.TAB_ADD, newTab));
     }
     public void renameTabByRoom(Room room, String newName) {
-        for(Tab tab : openedTabs){
+        for(RoomView tab : openedTabs){
             if(!tab.getRoom().equals(room)) continue;
             if(tab.getName().equals(newName)) return;
             tab.setName(newName);
             publish(new EventModel(EventType.TAB_RENAME, tab));
         }
     }
-    public void setActiveTab(Tab tab) {
+    public void setActiveTab(RoomView tab) {
         activeTab = tab;
         publish(new EventModel(EventType.TAB_SELECTED, activeTab));
     }
@@ -78,11 +77,11 @@ public class TabPaneModel implements IPublisher {
         }
     }
 
-    public List<Tab> getOpenedTabs() {
+    public List<RoomView> getOpenedTabs() {
         return openedTabs;
     }
 
-    public Tab getActiveTab() {
+    public RoomView getActiveTab() {
         return activeTab;
     }
 
