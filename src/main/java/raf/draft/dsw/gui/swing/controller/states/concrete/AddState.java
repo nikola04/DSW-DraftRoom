@@ -34,7 +34,6 @@ public class AddState implements State{
             element.setY(p.y);
             element.setWidth(width);
             element.setHeight(height);
-            element.setRotateRatio(1);
             MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, element);
             room.addChild(element);
         } catch (NumberFormatException ex) {

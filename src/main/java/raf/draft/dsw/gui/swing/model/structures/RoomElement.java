@@ -8,7 +8,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     private static int counter = 0;
     protected int x, y;
     protected int width, height;
-    protected int rotateRatio; // od 0 do 3
+    protected int rotateRatio = 0; // od 0 do 3
     public RoomElement(DraftNode parent) {
         super("Element " + RoomElement.getCounter(), parent);
     }

@@ -9,6 +9,7 @@ import raf.draft.dsw.gui.swing.view.painters.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,21 @@ public class RoomView extends JPanel implements ISubscriber {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        int roomWidth = (int) (room.getWidth() * room.getScaleFactor());
-        int roomHeight = (int) (room.getHeight() * room.getScaleFactor());
-        g2d.drawRect((getWidth() - roomWidth) / 2, (getHeight() - roomHeight) / 2, roomWidth, roomHeight);
+        AffineTransform original = g2d.getTransform();
+        double scaleFactor = room.getScaleFactor();
+        int scaledWidth = (int) (room.getWidth() * scaleFactor);
+        int scaledHeight = (int) (room.getHeight() * scaleFactor);
+
+        // Calculate translation to center the scaled room
+        int translateX = (getWidth() - scaledWidth) / 2;
+        int translateY = (getHeight() - scaledHeight) / 2;
+        g2d.translate(translateX, translateY);
+        g2d.scale(scaleFactor, scaleFactor);
+        g2d.drawRect(0, 0, room.getWidth(), room.getHeight());
         for(ElementPainter p : painters) {
             p.paint(g);
         }
+        g2d.setTransform(original);
     }
 
     public void refresh(){
