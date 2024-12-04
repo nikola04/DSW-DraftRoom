@@ -1,6 +1,6 @@
 package raf.draft.dsw.gui.swing.tree.view;
 
-import raf.draft.dsw.gui.swing.model.structures.elements.RoomElement;
+import raf.draft.dsw.gui.swing.model.structures.RoomElement;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.structures.Building;

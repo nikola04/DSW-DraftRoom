@@ -1,6 +1,6 @@
 package raf.draft.dsw.gui.swing.view.painters;
 
-import raf.draft.dsw.gui.swing.model.structures.elements.RoomElement;
+import raf.draft.dsw.gui.swing.model.structures.RoomElement;
 
 import java.awt.*;
 

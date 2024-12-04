@@ -11,6 +11,10 @@ import java.awt.*;
 public class EditRoomState implements State {
     @Override
     public void handleMouseClick(RoomView roomView, Point p) {
+        if(roomView.getRoom().isDimensionsSet()) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Dimensions are already set", MessageType.INFO);
+            return;
+        }
         String widthStr = JOptionPane.showInputDialog("Enter width:");
         String heightStr = JOptionPane.showInputDialog("Enter height:");
         try {

@@ -1,7 +1,8 @@
-package raf.draft.dsw.gui.swing.model.structures.elements;
+package raf.draft.dsw.gui.swing.model.structures;
 
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
+import raf.draft.dsw.gui.swing.model.structures.elements.ElementPrototype;
 
 public abstract class RoomElement extends DraftNodeLeaf implements ElementPrototype {
     private static int counter = 0;
@@ -23,6 +24,31 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
         return counter++;
     }
     public abstract ElementPrototype clone();
+
+    @Override
+    public Room getParent() {
+        return (Room) super.getParent();
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setRotateRatio(int rotateRatio) {
+        this.rotateRatio = rotateRatio;
+    }
 
     public int getX() {
         return x;

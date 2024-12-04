@@ -43,11 +43,13 @@ public class ProjectView extends JPanel implements ISubscriber {
     public void onMouseClick(RoomView roomView, Point point) {
         this.stateManager.getCurrentState().handleMouseClick(roomView, point);
     }
+    public void startAddAction(){
+        this.stateManager.setAddState();
+    }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";
         labelProject.setText("Project: " + projectName);
     }
-
     private void updateProjectAuthorLabel(){
         String projectAuthor = project != null ? project.getAuthor() : "/";
         labelProjectAuthor.setText("Author: " + projectAuthor);

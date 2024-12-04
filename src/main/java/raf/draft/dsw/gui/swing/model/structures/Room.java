@@ -6,7 +6,6 @@ import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
-import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private final List<ISubscriber> subscribers = new ArrayList<>();
     private int width, height; //cm
     private double scaleFactor = 1.0;
+    private boolean dimensionsSet = false;
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
@@ -23,12 +23,22 @@ public class Room extends DraftNodeComposite implements IPublisher {
         this.width = width;
         this.height = height;
         this.scaleFactor = calculateScaleFactor(panelWidth, panelHeight);
+        this.dimensionsSet = true;
         publish(new EventModel(EventType.DIMENSION_CHANGE, null));
     }
     private double calculateScaleFactor(int panelWidth, int panelHeight) {
         double scaleFactorX = (double) panelWidth / width;
         double scaleFactorY = (double) panelHeight / height;
         return Math.min(scaleFactorX, scaleFactorY);
+    }
+    public boolean isDimensionsSet() {
+        return dimensionsSet;
+    }
+
+    @Override
+    public void addChild(DraftNode node) {
+        super.addChild(node);
+        publish(null);
     }
 
     @Override

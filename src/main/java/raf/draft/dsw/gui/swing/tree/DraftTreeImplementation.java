@@ -1,19 +1,17 @@
 package raf.draft.dsw.gui.swing.tree;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.model.structures.*;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
-import raf.draft.dsw.gui.swing.model.structures.Building;
-import raf.draft.dsw.gui.swing.model.structures.Project;
-import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
-import raf.draft.dsw.gui.swing.model.structures.Room;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 
 public class DraftTreeImplementation implements DraftTree {
     private DraftTreeView treeView;
@@ -63,7 +61,7 @@ public class DraftTreeImplementation implements DraftTree {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Please select Explorer, Building or Room first", MessageType.WARNING);
             return;
         }
-        if(!(parent.getDraftNode() instanceof DraftNodeComposite)){
+        if(!(parent.getDraftNode() instanceof DraftNodeComposite) || (parent.getDraftNode() instanceof Room)) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot add anything here. Please select Explorer, Project or Building", MessageType.WARNING);
             return;
         }
@@ -79,6 +77,19 @@ public class DraftTreeImplementation implements DraftTree {
                 MainFrame.getInstance().getTabPaneModel().addTab(room);
             }
         }
+    }
+
+    @Override
+    public void addChild(DraftTreeItem parent, RoomElement element) {
+        if(!(parent.getDraftNode() instanceof Room)) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You must select Room if you want to add element", MessageType.ERROR);
+            return;
+        }
+
+        parent.add(new DraftTreeItem(element));
+        parent.getDraftNode().addChild(element);
+        treeView.expandPath(treeView.getSelectionPath());
+        SwingUtilities.updateComponentTreeUI(treeView);
     }
 
     @Override
@@ -128,5 +139,26 @@ public class DraftTreeImplementation implements DraftTree {
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
         ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
+    }
+
+    public DraftTreeItem findTreeItem(DraftNode node) {
+        TreeNode root = (TreeNode) treeModel.getRoot();
+        return findTreeItemRecursive(root, node);
+    }
+
+    private DraftTreeItem findTreeItemRecursive(TreeNode currentNode, DraftNode targetNode) {
+        if (currentNode instanceof DraftTreeItem treeItem) {
+            if (treeItem.getDraftNode().equals(targetNode)) {
+                return treeItem;
+            }
+        }
+        for (int i = 0; i < currentNode.getChildCount(); i++) {
+            TreeNode childNode = currentNode.getChildAt(i);
+            DraftTreeItem result = findTreeItemRecursive(childNode, targetNode);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
     }
 }

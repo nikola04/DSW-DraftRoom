@@ -8,6 +8,7 @@ public class ActionManager {
     private RenameNodeAction renameNodeAction;
     private ChangeNodePathAction changeNodePathAction;
     private ChangeNodeAuthorAction changeNodeAuthorAction;
+    private AddElementAction addElementAction;
 
     public ActionManager() {
         initialize();
@@ -20,6 +21,7 @@ public class ActionManager {
         this.renameNodeAction = new RenameNodeAction();
         this.changeNodePathAction = new ChangeNodePathAction();
         this.changeNodeAuthorAction = new ChangeNodeAuthorAction();
+        this.addElementAction = new AddElementAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -34,4 +36,5 @@ public class ActionManager {
     public RenameNodeAction getRenameNodeAction() { return renameNodeAction; }
     public ChangeNodePathAction getChangeNodePathAction() { return changeNodePathAction; }
     public ChangeNodeAuthorAction getChangeNodeAuthorAction() { return changeNodeAuthorAction; }
+    public AddElementAction getAddElementAction() { return addElementAction; }
 }

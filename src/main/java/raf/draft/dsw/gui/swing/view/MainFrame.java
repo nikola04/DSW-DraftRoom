@@ -9,7 +9,6 @@ import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
 import raf.draft.dsw.gui.swing.model.messages.Message;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class MainFrame extends JFrame implements ISubscriber {
@@ -19,11 +18,13 @@ public class MainFrame extends JFrame implements ISubscriber {
     private TabPane tabPane;
     private TabPaneModel tabPaneModel;
     private ProjectView projectView;
+    private RoomToolBar roomToolBar;
     private void initialize(){
         actionManager = new ActionManager();
         draftTree = new DraftTreeImplementation();
         tabPaneModel = new TabPaneModel();
         projectView = new ProjectView();
+        roomToolBar = new RoomToolBar(actionManager);
         ApplicationFramework.getInstance().getMessageGenerator().addSubscriber(this);
     }
     private void initializeGUI(){
@@ -59,6 +60,7 @@ public class MainFrame extends JFrame implements ISubscriber {
         sidePanels.setAlignmentX(Component.LEFT_ALIGNMENT);
         sidePanels.add(projectView);
         desktop.add(sidePanels,BorderLayout.EAST);
+        desktop.add(roomToolBar,BorderLayout.WEST);
     }
 
     public ActionManager getActionManager() {
