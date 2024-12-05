@@ -43,8 +43,20 @@ public class ProjectView extends JPanel implements ISubscriber {
     public void onMouseClick(RoomView roomView, Point point) {
         this.stateManager.getCurrentState().handleMouseClick(roomView, point);
     }
-    public void startAddAction(){
-        this.stateManager.setAddState();
+    public void onMouseWheel(RoomView roomView, double rotation) {
+        this.stateManager.getCurrentState().handleMouseWheel(roomView, rotation);
+    }
+    public void startAddState(){
+        if(room.isDimensionsSet())
+            this.stateManager.setAddState();
+    }
+    public void startSelectionState(){
+        if(room.isDimensionsSet())
+            this.stateManager.setSelectState();
+    }
+    public void startZoomState(){
+        if(room.isDimensionsSet())
+            this.stateManager.setZoomState();
     }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";
@@ -77,6 +89,7 @@ public class ProjectView extends JPanel implements ISubscriber {
             if(this.room.getParent() instanceof Building building)
                 building.addSubscriber(this);
         }
+        this.stateManager = new StateManager();
     }
     public void refresh(){
         updateProjectLabel();

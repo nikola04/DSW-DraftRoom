@@ -15,6 +15,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private final List<ISubscriber> subscribers = new ArrayList<>();
     private int width, height; //cm
     private double scaleFactor = 1.0;
+    private double initialScaleFactor = 1.0;
     private boolean dimensionsSet = false;
     public Room(String name, DraftNode parent) {
         super(name, parent);
@@ -23,6 +24,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         this.width = width;
         this.height = height;
         this.scaleFactor = calculateScaleFactor(panelWidth, panelHeight);
+        this.initialScaleFactor = scaleFactor;
         this.dimensionsSet = true;
         publish(new EventModel(EventType.DIMENSION_CHANGE, null));
     }
@@ -66,6 +68,13 @@ public class Room extends DraftNodeComposite implements IPublisher {
 
     public double getScaleFactor() {
         return scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        double min = 0.01 + initialScaleFactor / 10;
+        double max = initialScaleFactor * 10;
+        scaleFactor = Math.max(min, Math.min(scaleFactor, max));
+        this.scaleFactor = scaleFactor;
     }
 
     @Override

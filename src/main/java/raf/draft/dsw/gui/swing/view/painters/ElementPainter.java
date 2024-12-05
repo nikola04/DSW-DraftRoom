@@ -17,4 +17,7 @@ public abstract class ElementPainter {
         AffineTransform rotation = AffineTransform.getRotateInstance(rotateAngle, element.getX() + (double) element.getWidth() / 2, element.getY() + (double) element.getHeight() / 2);
         g2d.transform(rotation);
     }
+    public void elementAt(){
+
+    }
 }

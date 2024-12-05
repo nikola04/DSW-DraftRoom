@@ -40,4 +40,20 @@ public class AddState implements State{
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);
         }
     }
+
+    @Override
+    public void handleMouseWheel(RoomView roomView, double preciseRotation) {
+    }
+
+    @Override
+    public void handleMousePress(RoomView roomView, Point p) {
+    }
+
+    @Override
+    public void handleMouseRelease(RoomView roomView, Point p) {
+    }
+
+    @Override
+    public void handleMouseDrag(RoomView roomView, Point p) {
+    }
 }

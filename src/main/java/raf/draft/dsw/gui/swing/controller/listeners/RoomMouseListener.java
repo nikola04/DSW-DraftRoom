@@ -1,23 +1,31 @@
 package raf.draft.dsw.gui.swing.controller.listeners;
 
+import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
-public class RoomMouseListener implements MouseListener, MouseMotionListener {
+public class RoomMouseListener implements MouseListener, MouseWheelListener, MouseMotionListener {
     RoomView roomView;
     public RoomMouseListener(RoomView room) {
         this.roomView = room;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        double scaleFactor = roomView.getRoom().getScaleFactor();
-        Point p = new Point(e.getX() / (int) scaleFactor, e.getY() / (int) scaleFactor);
-        MainFrame.getInstance().getProjectView().onMouseClick(roomView, p);
+        Room room = roomView.getRoom();
+        double scaleFactor = room.getScaleFactor();
+        int scaledWidth = (int) (room.getWidth() * scaleFactor);
+        int scaledHeight = (int) (room.getHeight() * scaleFactor);
+        int translateX = (roomView.getWidth() - scaledWidth) / 2;
+        int translateY = (roomView.getHeight() - scaledHeight) / 2;
+        int adjustedX = e.getX() - translateX;
+        int adjustedY = e.getY() - translateY;
+
+        int logicalX = (int) (adjustedX / scaleFactor);
+        int logicalY = (int) (adjustedY / scaleFactor);
+        MainFrame.getInstance().getProjectView().onMouseClick(roomView, new Point(logicalX, logicalY));
     }
 
     @Override
@@ -48,5 +56,10 @@ public class RoomMouseListener implements MouseListener, MouseMotionListener {
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        MainFrame.getInstance().getProjectView().onMouseWheel(roomView, e.getPreciseWheelRotation() * (-1));
     }
 }

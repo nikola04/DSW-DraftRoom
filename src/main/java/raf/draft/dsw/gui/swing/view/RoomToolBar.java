@@ -12,6 +12,10 @@ public class RoomToolBar extends JToolBar {
         setBorderPainted(false);
 
         add(actionManager.getAddElementAction());
+        add(actionManager.getSelectElementsAction());
+        add(actionManager.getZoomElementsAction());
+        add(actionManager.getRotateElementRightAction());
+        add(actionManager.getRotateElementLeftAction());
 
         for (Component component : getComponents()) {
             if (component instanceof AbstractButton button) {

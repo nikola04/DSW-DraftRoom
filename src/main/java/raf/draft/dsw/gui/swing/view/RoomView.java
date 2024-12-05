@@ -25,7 +25,9 @@ public class RoomView extends JPanel implements ISubscriber {
         this.setName(this.room.getName());
         this.setLayout(new BorderLayout());
         this.room.addSubscriber(this);
-        this.addMouseListener(new RoomMouseListener(this));
+        RoomMouseListener mouseListener = new RoomMouseListener(this);
+        this.addMouseListener(mouseListener);
+        this.addMouseWheelListener(mouseListener);
     }
 
     @Override

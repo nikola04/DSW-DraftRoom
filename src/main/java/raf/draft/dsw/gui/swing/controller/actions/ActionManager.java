@@ -9,6 +9,10 @@ public class ActionManager {
     private ChangeNodePathAction changeNodePathAction;
     private ChangeNodeAuthorAction changeNodeAuthorAction;
     private AddElementAction addElementAction;
+    private ZoomElementsAction zoomElementsAction;
+    private RotateElementLeftAction rotateElementLeftAction;
+    private RotateElementRightAction rotateElementRightAction;
+    private SelectElementsAction selectElementsAction;
 
     public ActionManager() {
         initialize();
@@ -22,6 +26,10 @@ public class ActionManager {
         this.changeNodePathAction = new ChangeNodePathAction();
         this.changeNodeAuthorAction = new ChangeNodeAuthorAction();
         this.addElementAction = new AddElementAction();
+        this.zoomElementsAction = new ZoomElementsAction();
+        this.rotateElementLeftAction = new RotateElementLeftAction();
+        this.rotateElementRightAction = new RotateElementRightAction();
+        this.selectElementsAction = new SelectElementsAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -37,4 +45,8 @@ public class ActionManager {
     public ChangeNodePathAction getChangeNodePathAction() { return changeNodePathAction; }
     public ChangeNodeAuthorAction getChangeNodeAuthorAction() { return changeNodeAuthorAction; }
     public AddElementAction getAddElementAction() { return addElementAction; }
+    public ZoomElementsAction getZoomElementsAction() { return zoomElementsAction; }
+    public RotateElementLeftAction getRotateElementLeftAction() { return rotateElementLeftAction; }
+    public RotateElementRightAction getRotateElementRightAction() { return rotateElementRightAction; }
+    public SelectElementsAction getSelectElementsAction() { return selectElementsAction; }
 }
