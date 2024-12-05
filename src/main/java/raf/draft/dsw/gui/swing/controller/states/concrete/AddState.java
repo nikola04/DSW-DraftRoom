@@ -30,12 +30,12 @@ public class AddState implements State{
             int width = Integer.parseInt(widthStr);
             int height = Integer.parseInt(heightStr);
             RoomElement element = ElementFactory.getRoomElement(type, room);
-            element.setX(p.x);
-            element.setY(p.y);
-            element.setWidth(width);
-            element.setHeight(height);
+            element.initialize(p.x, p.y, width, height);
+            if(!room.canPlaceElement(element)) {
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Element is already placed there", MessageType.WARNING);
+                return;
+            }
             MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, element);
-            room.addChild(element);
         } catch (NumberFormatException ex) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);
         }

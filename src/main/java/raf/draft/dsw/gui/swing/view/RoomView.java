@@ -27,6 +27,7 @@ public class RoomView extends JPanel implements ISubscriber {
         this.room.addSubscriber(this);
         RoomMouseListener mouseListener = new RoomMouseListener(this);
         this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
         this.addMouseWheelListener(mouseListener);
     }
 
@@ -63,6 +64,7 @@ public class RoomView extends JPanel implements ISubscriber {
             if(element instanceof Toilet toilet) painters.add(new ToiletPainter(toilet));
             if(element instanceof Wardrobe wardrobe) painters.add(new WardrobePainter(wardrobe));
             if(element instanceof WashingMachine washingMachine) painters.add(new WashingMachinePainter(washingMachine));
+            if(element instanceof Selection selection) painters.add(new SelectionPainter(selection));
         }
         repaint();
     }

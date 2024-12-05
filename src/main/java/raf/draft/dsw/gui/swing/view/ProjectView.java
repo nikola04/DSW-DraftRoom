@@ -43,6 +43,15 @@ public class ProjectView extends JPanel implements ISubscriber {
     public void onMouseClick(RoomView roomView, Point point) {
         this.stateManager.getCurrentState().handleMouseClick(roomView, point);
     }
+    public void onMousePress(RoomView roomView, Point point) {
+        this.stateManager.getCurrentState().handleMousePress(roomView, point);
+    }
+    public void onMouseDrag(RoomView roomView, Point point) {
+        this.stateManager.getCurrentState().handleMouseDrag(roomView, point);
+    }
+    public void onMouseRelease(RoomView roomView, Point point) {
+        this.stateManager.getCurrentState().handleMouseRelease(roomView, point);
+    }
     public void onMouseWheel(RoomView roomView, double rotation) {
         this.stateManager.getCurrentState().handleMouseWheel(roomView, rotation);
     }
@@ -120,7 +129,7 @@ public class ProjectView extends JPanel implements ISubscriber {
             else if(event.getType() == EventType.TAB_DELETE){
                 if(event.getValue() instanceof RoomView deletedTab) {
                     if(deletedTab.getRoom() != null && deletedTab.getRoom() == this.room){
-                        this.room = null;
+                        setRoom(null);
                         refresh();
                     }
                 }

@@ -15,42 +15,33 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     @Override
     public void mouseClicked(MouseEvent e) {
         Room room = roomView.getRoom();
-        double scaleFactor = room.getScaleFactor();
-        int scaledWidth = (int) (room.getWidth() * scaleFactor);
-        int scaledHeight = (int) (room.getHeight() * scaleFactor);
-        int translateX = (roomView.getWidth() - scaledWidth) / 2;
-        int translateY = (roomView.getHeight() - scaledHeight) / 2;
-        int adjustedX = e.getX() - translateX;
-        int adjustedY = e.getY() - translateY;
-
-        int logicalX = (int) (adjustedX / scaleFactor);
-        int logicalY = (int) (adjustedY / scaleFactor);
-        MainFrame.getInstance().getProjectView().onMouseClick(roomView, new Point(logicalX, logicalY));
+        MainFrame.getInstance().getProjectView().onMouseClick(roomView, calculateLogicalCoordinates(e.getPoint(), room));
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        Room room = roomView.getRoom();
+        MainFrame.getInstance().getProjectView().onMousePress(roomView, calculateLogicalCoordinates(e.getPoint(), room));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        Room room = roomView.getRoom();
+        MainFrame.getInstance().getProjectView().onMouseRelease(roomView, calculateLogicalCoordinates(e.getPoint(), room));
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        Room room = roomView.getRoom();
+        MainFrame.getInstance().getProjectView().onMouseDrag(roomView, calculateLogicalCoordinates(e.getPoint(), room));
     }
 
     @Override
@@ -61,5 +52,18 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         MainFrame.getInstance().getProjectView().onMouseWheel(roomView, e.getPreciseWheelRotation() * (-1));
+    }
+    private Point calculateLogicalCoordinates(Point p, Room room) {
+        double scaleFactor = room.getScaleFactor();
+        int scaledWidth = (int) (room.getWidth() * scaleFactor);
+        int scaledHeight = (int) (room.getHeight() * scaleFactor);
+        int translateX = (roomView.getWidth() - scaledWidth) / 2;
+        int translateY = (roomView.getHeight() - scaledHeight) / 2;
+        int adjustedX = (int) p.getX() - translateX;
+        int adjustedY = (int) p.getY() - translateY;
+
+        int logicalX = (int) (adjustedX / scaleFactor);
+        int logicalY = (int) (adjustedY / scaleFactor);
+        return new Point(logicalX, logicalY);
     }
 }

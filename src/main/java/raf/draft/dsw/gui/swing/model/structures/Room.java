@@ -6,6 +6,7 @@ import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
+import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private double scaleFactor = 1.0;
     private double initialScaleFactor = 1.0;
     private boolean dimensionsSet = false;
+    private Selection selectionElement = null;
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
@@ -33,14 +35,50 @@ public class Room extends DraftNodeComposite implements IPublisher {
         double scaleFactorY = (double) panelHeight / height;
         return Math.min(scaleFactorX, scaleFactorY);
     }
+    public boolean canPlaceElement(RoomElement newElement) {
+        for (DraftNode node : this.getChildren()) {
+            RoomElement element = (RoomElement) node;
+            if (element.overlaps(newElement.getX(), newElement.getY(), newElement.getWidth(), newElement.getHeight())) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void resetSelected(){
+        for(DraftNode node : super.getChildren()) {
+            if(node instanceof RoomElement element) element.setSelected(false);
+        }
+        publish(null);
+    }
+    public List<RoomElement> overlappedElements(int x1, int y1, int width, int height) {
+        List<RoomElement> elements = new ArrayList<>();
+        for (DraftNode node : super.getChildren()) {
+            System.out.println(node);
+            RoomElement element = (RoomElement) node;
+            if (element.overlaps(x1, y1, width, height)) elements.add(element);
+        }
+        return elements;
+    }
     public boolean isDimensionsSet() {
         return dimensionsSet;
+    }
+
+    public void setSelectionElement(Selection selectionElement) {
+        this.selectionElement = selectionElement;
+        publish(null);
     }
 
     @Override
     public void addChild(DraftNode node) {
         super.addChild(node);
         publish(null);
+    }
+
+    @Override
+    public List<DraftNode> getChildren() {
+        List<DraftNode> children = new ArrayList<>(super.getChildren());
+        if(selectionElement != null) children.add(selectionElement);
+        return children;
     }
 
     @Override
