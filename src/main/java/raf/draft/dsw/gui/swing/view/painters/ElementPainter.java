@@ -14,7 +14,7 @@ public abstract class ElementPainter {
     public abstract void paint(Graphics g);
     protected void applySelectionBorder(Graphics2D g2d) {
         if (!element.isSelected()) return;
-        g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, new float[]{5, 5}, 0));
+        g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, new float[]{5, 3}, 0));
         g2d.setColor(new Color(0, 122, 255));
         int x = element.getX() - 1;
         int y = element.getY() - 1;

@@ -23,9 +23,7 @@ public class SelectState implements State{
     @Override
     public void handleMousePress(RoomView roomView, Point p) {
         roomView.getRoom().resetSelected();
-        Room room = roomView.getRoom();
         this.selection = new Selection(null, null, p.x, p.y, 0, 0);
-        room.setSelectionElement(this.selection);
         selectionStart = p;
     }
 
@@ -50,6 +48,7 @@ public class SelectState implements State{
     public void handleMouseDrag(RoomView roomView, Point p) {
         List<Point> points = getOrderedSelectionPoints(p);
         if (points == null) return;
+        if(roomView.getRoom().getSelectionElement() == null) roomView.getRoom().setSelectionElement(this.selection);
         Point p1 = points.get(0);
         Point p2 = points.get(1);
         this.selection.initialize(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);

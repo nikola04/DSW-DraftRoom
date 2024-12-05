@@ -68,6 +68,10 @@ public class Room extends DraftNodeComposite implements IPublisher {
         publish(null);
     }
 
+    public Selection getSelectionElement() {
+        return selectionElement;
+    }
+
     @Override
     public void addChild(DraftNode node) {
         super.addChild(node);

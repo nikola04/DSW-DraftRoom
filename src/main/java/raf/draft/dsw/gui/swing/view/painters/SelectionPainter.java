@@ -17,7 +17,7 @@ public class SelectionPainter extends ElementPainter {
         g2d.fillRect(element.getX(), element.getY(), element.getWidth(), element.getHeight());
 
         g2d.setColor(new Color(0, 122, 255)); // RGB
-        g2d.setStroke(new BasicStroke(2)); // Set stroke width to 2px
+        g2d.setStroke(new BasicStroke(1)); // Set stroke width to 2px
         g2d.drawRect(element.getX(), element.getY(), element.getWidth(), element.getHeight());
         g2d.drawRect(element.getX(), element.getY(), element.getWidth(), element.getHeight());
     }
