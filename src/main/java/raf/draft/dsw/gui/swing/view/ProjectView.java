@@ -67,6 +67,9 @@ public class ProjectView extends JPanel implements ISubscriber {
         if(room.isDimensionsSet())
             this.stateManager.setZoomState();
     }
+    public void rotateSelectedElements(int rotation){
+        room.rotateSelectedElements(rotation);
+    }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";
         labelProject.setText("Project: " + projectName);

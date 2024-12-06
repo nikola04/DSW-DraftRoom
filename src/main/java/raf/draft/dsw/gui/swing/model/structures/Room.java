@@ -19,6 +19,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private double initialScaleFactor = 1.0;
     private boolean dimensionsSet = false;
     private Selection selectionElement = null;
+    private List<RoomElement> selectedElements = new ArrayList<>();
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
@@ -47,12 +48,6 @@ public class Room extends DraftNodeComposite implements IPublisher {
         }
         return true;
     }
-    public void resetSelected(){
-        for(DraftNode node : super.getChildren()) {
-            if(node instanceof RoomElement element) element.setSelected(false);
-        }
-        publish(null);
-    }
     public List<RoomElement> overlappedElements(int x1, int y1, int width, int height) {
         List<RoomElement> elements = new ArrayList<>();
         for (DraftNode node : super.getChildren()) {
@@ -62,15 +57,33 @@ public class Room extends DraftNodeComposite implements IPublisher {
         }
         return elements;
     }
-    public boolean isDimensionsSet() {
-        return dimensionsSet;
+    public void rotateSelectedElements(int rotation) {
+        for (RoomElement element : selectedElements) {
+            element.setRotateRatio(element.getRotateRatio() + rotation);
+        }
+        publish(new EventModel(EventType.REPAINT, null));
     }
-
+    public void setSelectedElements(List<RoomElement> selectedElements) {
+        this.selectedElements = selectedElements;
+        for (RoomElement element : selectedElements) {
+            element.setSelected(true);
+        }
+        publish(new EventModel(EventType.REPAINT, null));
+    }
+    public void resetSelected(){
+        for (RoomElement element : selectedElements) {
+            element.setSelected(false);
+        }
+        selectedElements.clear();
+        publish(new EventModel(EventType.REPAINT, null));
+    }
     public void setSelectionElement(Selection selectionElement) {
         this.selectionElement = selectionElement;
         publish(null);
     }
-
+    public boolean isDimensionsSet() {
+        return dimensionsSet;
+    }
     public Selection getSelectionElement() {
         return selectionElement;
     }

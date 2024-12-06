@@ -2,6 +2,8 @@ package raf.draft.dsw.gui.swing.view;
 
 import raf.draft.dsw.gui.swing.controller.listeners.RoomMouseListener;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
+import raf.draft.dsw.gui.swing.model.events.EventModel;
+import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.elements.*;
@@ -71,6 +73,12 @@ public class RoomView extends JPanel implements ISubscriber {
 
     @Override
     public void update(Object value) {
+        if(value instanceof EventModel event){
+            if(event.getType() == EventType.REPAINT){
+                repaint();
+                return;
+            }
+        }
         refresh();
     }
     public Room getRoom() {

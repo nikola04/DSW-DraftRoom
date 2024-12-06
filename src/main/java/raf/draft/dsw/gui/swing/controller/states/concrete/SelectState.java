@@ -38,10 +38,7 @@ public class SelectState implements State{
         Point p1 = points.get(0);
         Point p2 = points.get(1);
         List<RoomElement> selectedElements = room.overlappedElements(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
-        for(RoomElement element : selectedElements) {
-            element.setSelected(true);
-        }
-        roomView.repaint();
+        room.setSelectedElements(selectedElements);
     }
 
     @Override

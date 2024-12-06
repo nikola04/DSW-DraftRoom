@@ -10,12 +10,12 @@ public class RotateElementLeftAction extends AbstractRoomAction {
     public RotateElementLeftAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
         putValue(NAME, "Rotate Left");
-        putValue(SMALL_ICON, loadIcon("/images/location.png"));
+        putValue(SMALL_ICON, loadIcon("/images/rotate-left.png"));
         putValue(SHORT_DESCRIPTION, "Rotate Element Left");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        MainFrame.getInstance().getProjectView().rotateLeft();
+        MainFrame.getInstance().getProjectView().rotateSelectedElements(-1);
     }
 }
