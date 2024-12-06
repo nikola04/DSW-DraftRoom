@@ -13,6 +13,7 @@ public class ActionManager {
     private RotateElementLeftAction rotateElementLeftAction;
     private RotateElementRightAction rotateElementRightAction;
     private SelectElementsAction selectElementsAction;
+    private DeleteElementAction deleteElementAction;
 
     public ActionManager() {
         initialize();
@@ -30,6 +31,7 @@ public class ActionManager {
         this.rotateElementLeftAction = new RotateElementLeftAction();
         this.rotateElementRightAction = new RotateElementRightAction();
         this.selectElementsAction = new SelectElementsAction();
+        this.deleteElementAction = new DeleteElementAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -49,4 +51,5 @@ public class ActionManager {
     public RotateElementLeftAction getRotateElementLeftAction() { return rotateElementLeftAction; }
     public RotateElementRightAction getRotateElementRightAction() { return rotateElementRightAction; }
     public SelectElementsAction getSelectElementsAction() { return selectElementsAction; }
+    public DeleteElementAction getDeleteElementAction() { return deleteElementAction; }
 }

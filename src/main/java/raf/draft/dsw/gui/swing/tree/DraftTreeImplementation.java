@@ -134,11 +134,18 @@ public class DraftTreeImplementation implements DraftTree {
                 MainFrame.getInstance().getTabPaneModel().setProject(null);
                 project.getParent().removeChild(project);
             }
-        }
+        }else item.getDraftNode().getParent().removeChild(item.getDraftNode());
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
         ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
+    }
+    public void removeNodeSilently(DraftTreeItem item) {
+        if(item == null || item.getDraftNode() == null) return;
+        if(item.getDraftNode() instanceof ProjectExplorer) return;
+        item.removeFromParent();
+        treeView.expandPath(treeView.getSelectionPath());
+        SwingUtilities.updateComponentTreeUI(treeView);
     }
 
     public DraftTreeItem findTreeItem(DraftNode node) {

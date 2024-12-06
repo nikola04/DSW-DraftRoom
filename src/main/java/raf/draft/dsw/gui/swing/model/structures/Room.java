@@ -1,12 +1,16 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
+import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
+import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
+import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -77,6 +81,15 @@ public class Room extends DraftNodeComposite implements IPublisher {
         selectedElements.clear();
         publish(new EventModel(EventType.REPAINT, null));
     }
+    public void deleteSelectedElements() {
+        for(RoomElement element : selectedElements) {
+            DraftTreeItem item = MainFrame.getInstance().getDraftTree().findTreeItem(element);
+            if(item != null) MainFrame.getInstance().getDraftTree().removeNodeSilently(item);
+            this.removeChild(element);
+        }
+        if(!selectedElements.isEmpty()) ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
+        this.selectedElements.clear();
+    }
     public void setSelectionElement(Selection selectionElement) {
         this.selectionElement = selectionElement;
         publish(null);
@@ -86,6 +99,16 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
     public Selection getSelectionElement() {
         return selectionElement;
+    }
+
+    public List<RoomElement> getSelectedElements() {
+        return selectedElements;
+    }
+
+    @Override
+    public void removeChild(DraftNode node) {
+        super.removeChild(node);
+        publish(null);
     }
 
     @Override

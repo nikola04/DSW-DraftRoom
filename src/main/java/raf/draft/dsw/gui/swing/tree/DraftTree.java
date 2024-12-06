@@ -11,6 +11,7 @@ public interface DraftTree {
     void addChild(DraftTreeItem parent, RoomElement element);
     void renameNode(DraftTreeItem item);
     void removeNode(DraftTreeItem item);
+    void removeNodeSilently(DraftTreeItem item);
     DraftTreeItem findTreeItem(DraftNode node);
     DraftTreeView generateTree(ProjectExplorer projectExplorer);
     DraftTreeItem getSelectedNode();

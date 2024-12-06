@@ -59,6 +59,12 @@ public class ProjectView extends JPanel implements ISubscriber {
         if(room.isDimensionsSet())
             this.stateManager.setAddState();
     }
+    public void startDeleteState(){
+        if(room.isDimensionsSet()) {
+            this.room.deleteSelectedElements();
+            this.stateManager.setDeleteState();
+        }
+    }
     public void startSelectionState(){
         if(room.isDimensionsSet())
             this.stateManager.setSelectState();

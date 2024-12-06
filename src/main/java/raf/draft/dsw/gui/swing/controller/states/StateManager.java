@@ -1,25 +1,22 @@
 package raf.draft.dsw.gui.swing.controller.states;
 
-import raf.draft.dsw.gui.swing.controller.states.concrete.AddState;
-import raf.draft.dsw.gui.swing.controller.states.concrete.EditRoomState;
-import raf.draft.dsw.gui.swing.controller.states.concrete.SelectState;
-import raf.draft.dsw.gui.swing.controller.states.concrete.ZoomState;
+import raf.draft.dsw.gui.swing.controller.states.concrete.*;
 
 public class StateManager {
     private State currentState;
-    private EditRoomState editRoomState;
     private AddState addState;
     private SelectState selectState;
     private ZoomState zoomState;
+    private DeleteState deleteState;
     public StateManager() {
         initialize();
     }
     public void initialize() {
-        this.editRoomState = new EditRoomState();
         this.addState = new AddState();
         this.zoomState = new ZoomState();
         this.selectState = new SelectState();
-        currentState = editRoomState;
+        this.deleteState = new DeleteState();
+        currentState = new EditRoomState();
     }
     public State getCurrentState() {
         return currentState;
@@ -32,5 +29,8 @@ public class StateManager {
     }
     public void setAddState() {
         currentState = addState;
+    }
+    public void setDeleteState() {
+        currentState = deleteState;
     }
 }
