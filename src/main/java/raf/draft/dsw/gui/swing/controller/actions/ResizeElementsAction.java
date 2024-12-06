@@ -16,6 +16,6 @@ public class ResizeElementsAction extends AbstractRoomAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        MainFrame.getInstance().getProjectView().startResizeState();
+        MainFrame.getInstance().getProjectView().startResizeState();
     }
 }

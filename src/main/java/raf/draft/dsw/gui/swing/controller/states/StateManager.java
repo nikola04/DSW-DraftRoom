@@ -8,6 +8,7 @@ public class StateManager {
     private SelectState selectState;
     private ZoomState zoomState;
     private DeleteState deleteState;
+    private ResizeState resizeState;
     public StateManager() {
         initialize();
     }
@@ -16,6 +17,7 @@ public class StateManager {
         this.zoomState = new ZoomState();
         this.selectState = new SelectState();
         this.deleteState = new DeleteState();
+        this.resizeState = new ResizeState();
         currentState = new EditRoomState();
     }
     public State getCurrentState() {
@@ -32,5 +34,8 @@ public class StateManager {
     }
     public void setDeleteState() {
         currentState = deleteState;
+    }
+    public void setResizeState() {
+        currentState = resizeState;
     }
 }

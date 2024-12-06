@@ -56,7 +56,6 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public List<RoomElement> overlappedElements(int x1, int y1, int width, int height) {
         List<RoomElement> elements = new ArrayList<>();
         for (DraftNode node : super.getChildren()) {
-            System.out.println(node);
             RoomElement element = (RoomElement) node;
             if (element.overlaps(x1, y1, width, height)) elements.add(element);
         }
@@ -123,6 +122,10 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
     public Selection getSelectionElement() {
         return selectionElement;
+    }
+
+    public List<RoomElement> getSelectedElements() {
+        return selectedElements;
     }
 
     @Override
