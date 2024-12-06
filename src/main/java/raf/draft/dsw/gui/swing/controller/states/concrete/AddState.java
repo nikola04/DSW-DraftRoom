@@ -17,8 +17,12 @@ public class AddState implements State{
     @Override
     public void handleMouseClick(RoomView roomView, Point p) {
         Room room = roomView.getRoom();
+        if(!room.isPointInsideRoom(p)){
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You can only place elements inside room.", MessageType.WARNING);
+            return;
+        }
         DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(room);
-        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Bed", "Bath", "Boiler","Sink","Table","Toilet","Wardrobe","WashingMachine"});
+        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Bed", "Bath", "Boiler","Sink", "Door","Table","Toilet","Wardrobe","WashingMachine"});
         JPanel box = new JPanel(new BorderLayout());
         box.add(comboBox);
         int selected = JOptionPane.showConfirmDialog(null, box, "Choose Element", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -31,6 +35,10 @@ public class AddState implements State{
             int height = Integer.parseInt(heightStr);
             RoomElement element = ElementFactory.getRoomElement(type, room);
             element.initialize(p.x, p.y, width, height);
+            if(!room.isPointInsideRoom(new Point(p.x + width, p.y + height))) {
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You can only place elements inside room.", MessageType.WARNING);
+                return;
+            }
             if(!room.canPlaceElement(element)) {
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Element is already placed there", MessageType.WARNING);
                 return;

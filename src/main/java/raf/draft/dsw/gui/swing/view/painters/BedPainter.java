@@ -19,7 +19,7 @@ public class BedPainter extends ElementPainter {
         int pillowWidth = element.getWidth() / 3;
         int pillowHeight = element.getHeight() / 4;
         int pillowX = element.getX() + (element.getWidth() - pillowWidth) / 2;
-        int pillowY = element.getY();
+        int pillowY = element.getY() + element.getHeight() / 10;
         g.drawRect(pillowX, pillowY, pillowWidth, pillowHeight);
         applySelectionBorder(g2d);
         g2d.setTransform(originalTransform);

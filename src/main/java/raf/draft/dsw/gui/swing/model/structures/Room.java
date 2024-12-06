@@ -35,6 +35,9 @@ public class Room extends DraftNodeComposite implements IPublisher {
         double scaleFactorY = (double) panelHeight / height;
         return Math.min(scaleFactorX, scaleFactorY);
     }
+    public boolean isPointInsideRoom(Point point) {
+        return point.x >= 0 && point.x < width && point.y >= 0 && point.y < height;
+    }
     public boolean canPlaceElement(RoomElement newElement) {
         for (DraftNode node : this.getChildren()) {
             RoomElement element = (RoomElement) node;

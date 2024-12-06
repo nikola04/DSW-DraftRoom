@@ -58,7 +58,7 @@ public class RoomView extends JPanel implements ISubscriber {
             if(element instanceof Bath bath) painters.add(new BathPainter(bath));
             if(element instanceof Bed bed) painters.add(new BedPainter(bed));
             if(element instanceof Boiler boiler) painters.add(new BoilerPainter(boiler));
-            if(element instanceof Bed bed) painters.add(new DoorPainter(bed));
+            if(element instanceof Door door) painters.add(new DoorPainter(door));
             if(element instanceof Sink sink) painters.add(new SinkPainter(sink));
             if(element instanceof Table table) painters.add(new TablePainter(table));
             if(element instanceof Toilet toilet) painters.add(new ToiletPainter(toilet));
