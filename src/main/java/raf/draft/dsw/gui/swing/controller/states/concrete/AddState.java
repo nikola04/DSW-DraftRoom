@@ -44,6 +44,7 @@ public class AddState implements State{
                 return;
             }
             MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, element);
+            room.addChild(element);
         } catch (NumberFormatException ex) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);
         }

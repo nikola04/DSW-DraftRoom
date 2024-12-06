@@ -11,7 +11,7 @@ public class Table extends RoomElement {
         super(source);
     }
     @Override
-    public ElementPrototype clone() {
+    public RoomElement clone() {
         return new Table(this);
     }
 }

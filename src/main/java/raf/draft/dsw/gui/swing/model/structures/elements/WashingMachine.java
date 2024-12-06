@@ -12,7 +12,7 @@ public class WashingMachine extends RoomElement {
     }
 
     @Override
-    public ElementPrototype clone() {
+    public RoomElement clone() {
         return new WashingMachine(this);
     }
 

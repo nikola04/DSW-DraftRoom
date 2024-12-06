@@ -14,6 +14,8 @@ public class ActionManager {
     private RotateElementRightAction rotateElementRightAction;
     private SelectElementsAction selectElementsAction;
     private DeleteElementAction deleteElementAction;
+    private CopyElementAction copyElementAction;
+    private PasteElementAction pasteElementAction;
 
     public ActionManager() {
         initialize();
@@ -32,6 +34,8 @@ public class ActionManager {
         this.rotateElementRightAction = new RotateElementRightAction();
         this.selectElementsAction = new SelectElementsAction();
         this.deleteElementAction = new DeleteElementAction();
+        this.copyElementAction = new CopyElementAction();
+        this.pasteElementAction = new PasteElementAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -52,4 +56,6 @@ public class ActionManager {
     public RotateElementRightAction getRotateElementRightAction() { return rotateElementRightAction; }
     public SelectElementsAction getSelectElementsAction() { return selectElementsAction; }
     public DeleteElementAction getDeleteElementAction() { return deleteElementAction; }
+    public CopyElementAction getCopyElementAction() { return copyElementAction; }
+    public PasteElementAction getPasteElementAction() { return pasteElementAction; }
 }

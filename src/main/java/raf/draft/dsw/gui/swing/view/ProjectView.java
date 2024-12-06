@@ -73,8 +73,17 @@ public class ProjectView extends JPanel implements ISubscriber {
         if(room.isDimensionsSet())
             this.stateManager.setZoomState();
     }
+    public void pasteCopiedElements(){
+        if(room.isDimensionsSet())
+            room.cloneCopiedElements();
+    }
     public void rotateSelectedElements(int rotation){
-        room.rotateSelectedElements(rotation);
+        if(room.isDimensionsSet())
+            room.rotateSelectedElements(rotation);
+    }
+    public void copySelectedElements() {
+        if(room.isDimensionsSet())
+            room.copySelectedElements();
     }
     private void updateProjectLabel(){
         String projectName = project != null ? project.getName() : "/";

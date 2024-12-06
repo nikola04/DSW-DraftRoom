@@ -34,7 +34,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     public static int getCounter(){
         return counter++;
     }
-    public abstract ElementPrototype clone();
+    public abstract RoomElement clone();
 
     public boolean overlaps(int x, int y, int width, int height) {
         if(!isRecognizable) return false;

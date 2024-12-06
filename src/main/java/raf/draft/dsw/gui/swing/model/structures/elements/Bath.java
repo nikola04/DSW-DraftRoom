@@ -12,7 +12,7 @@ public class Bath extends RoomElement {
     }
 
     @Override
-    public ElementPrototype clone() {
+    public RoomElement clone() {
         return new Bath(this);
     }
 }

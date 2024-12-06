@@ -85,9 +85,7 @@ public class DraftTreeImplementation implements DraftTree {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You must select Room if you want to add element", MessageType.ERROR);
             return;
         }
-
         parent.add(new DraftTreeItem(element));
-        parent.getDraftNode().addChild(element);
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
     }
@@ -134,7 +132,7 @@ public class DraftTreeImplementation implements DraftTree {
                 MainFrame.getInstance().getTabPaneModel().setProject(null);
                 project.getParent().removeChild(project);
             }
-        }else item.getDraftNode().getParent().removeChild(item.getDraftNode());
+        }else if(item.getDraftNode() instanceof RoomElement element) element.getParent().removeChild(element);
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);

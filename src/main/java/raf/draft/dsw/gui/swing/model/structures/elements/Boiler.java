@@ -12,7 +12,7 @@ public class Boiler extends RoomElement {
     }
 
     @Override
-    public ElementPrototype clone() {
+    public RoomElement clone() {
         return new Boiler(this);
     }
 }

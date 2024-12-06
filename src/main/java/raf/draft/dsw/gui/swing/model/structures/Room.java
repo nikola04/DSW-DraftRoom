@@ -24,6 +24,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private boolean dimensionsSet = false;
     private Selection selectionElement = null;
     private List<RoomElement> selectedElements = new ArrayList<>();
+    private List<RoomElement> copiedElements = new ArrayList<>();
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
@@ -85,10 +86,33 @@ public class Room extends DraftNodeComposite implements IPublisher {
         for(RoomElement element : selectedElements) {
             DraftTreeItem item = MainFrame.getInstance().getDraftTree().findTreeItem(element);
             if(item != null) MainFrame.getInstance().getDraftTree().removeNodeSilently(item);
-            this.removeChild(element);
+            super.removeChild(element);
         }
-        if(!selectedElements.isEmpty()) ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
+        if(!selectedElements.isEmpty()) {
+            publish(null);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
+        }
         this.selectedElements.clear();
+    }
+    public void copySelectedElements() {
+        copiedElements.clear();
+        copiedElements.addAll(selectedElements);
+    }
+    public void cloneCopiedElements(){
+        for(RoomElement element : copiedElements) {
+            RoomElement clonedElement = element.clone();
+            int offsetX = 20, offsetY = 20;
+            if(element.getX() + element.getWidth() + 20 > width)
+                offsetX *= -1;
+            if(element.getY() + element.getHeight() + 20 > height)
+                offsetY *= -1;
+            clonedElement.setX(element.getX() + offsetX);
+            clonedElement.setY(element.getY() + offsetY);
+            DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(this);
+            MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, clonedElement);
+            super.addChild(clonedElement);
+        }
+        publish(null);
     }
     public void setSelectionElement(Selection selectionElement) {
         this.selectionElement = selectionElement;
@@ -99,10 +123,6 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
     public Selection getSelectionElement() {
         return selectionElement;
-    }
-
-    public List<RoomElement> getSelectedElements() {
-        return selectedElements;
     }
 
     @Override

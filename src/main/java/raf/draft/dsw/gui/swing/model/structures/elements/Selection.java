@@ -10,7 +10,7 @@ public class Selection extends RoomElement {
     }
 
     @Override
-    public ElementPrototype clone() {
+    public RoomElement clone() {
         return null;
     }
 }

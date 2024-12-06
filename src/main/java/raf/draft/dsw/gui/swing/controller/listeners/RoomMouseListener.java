@@ -14,20 +14,17 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        Room room = roomView.getRoom();
-        MainFrame.getInstance().getProjectView().onMouseClick(roomView, calculateLogicalCoordinates(e.getPoint(), room));
+        MainFrame.getInstance().getProjectView().onMouseClick(roomView, calculateLogicalCoordinates(e.getPoint()));
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Room room = roomView.getRoom();
-        MainFrame.getInstance().getProjectView().onMousePress(roomView, calculateLogicalCoordinates(e.getPoint(), room));
+        MainFrame.getInstance().getProjectView().onMousePress(roomView, calculateLogicalCoordinates(e.getPoint()));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Room room = roomView.getRoom();
-        MainFrame.getInstance().getProjectView().onMouseRelease(roomView, calculateLogicalCoordinates(e.getPoint(), room));
+        MainFrame.getInstance().getProjectView().onMouseRelease(roomView, calculateLogicalCoordinates(e.getPoint()));
     }
 
     @Override
@@ -41,7 +38,7 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     @Override
     public void mouseDragged(MouseEvent e) {
         Room room = roomView.getRoom();
-        MainFrame.getInstance().getProjectView().onMouseDrag(roomView, calculateLogicalCoordinates(e.getPoint(), room));
+        MainFrame.getInstance().getProjectView().onMouseDrag(roomView, calculateLogicalCoordinates(e.getPoint()));
     }
 
     @Override
@@ -53,7 +50,8 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     public void mouseWheelMoved(MouseWheelEvent e) {
         MainFrame.getInstance().getProjectView().onMouseWheel(roomView, e.getPreciseWheelRotation() * (-1));
     }
-    private Point calculateLogicalCoordinates(Point p, Room room) {
+    private Point calculateLogicalCoordinates(Point p) {
+        Room room = roomView.getRoom();
         double scaleFactor = room.getScaleFactor();
         int scaledWidth = (int) (room.getWidth() * scaleFactor);
         int scaledHeight = (int) (room.getHeight() * scaleFactor);

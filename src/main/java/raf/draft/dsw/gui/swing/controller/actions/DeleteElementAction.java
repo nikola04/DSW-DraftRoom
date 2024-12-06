@@ -13,7 +13,7 @@ public class DeleteElementAction extends AbstractRoomAction {
     public DeleteElementAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
         putValue(NAME, "Delete Element");
-        putValue(SMALL_ICON, loadIcon("/images/location.png"));
+        putValue(SMALL_ICON, loadIcon("/images/trash-can.png"));
         putValue(SHORT_DESCRIPTION, "Delete room element");
     }
 
