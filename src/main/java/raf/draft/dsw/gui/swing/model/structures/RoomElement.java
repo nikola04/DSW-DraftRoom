@@ -18,7 +18,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     }
     public RoomElement(RoomElement source) {
         super(source.getName(), source.getParent());
-        initialize(source.getX(), source.getY(), source.getWidth(), source.getHeight());
+        initialize(source.getLogicalX(), source.getLogicalY(), source.getLogicalWidth(), source.getLogicalHeight());
         this.isRecognizable = source.isRecognizable();
         this.rotateRatio = source.getRotateRatio();
         this.selected = false;

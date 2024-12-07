@@ -19,7 +19,7 @@ public class ResizeState implements State{
         selectedElement = null;
         if(selectedElements.size() != 1) return;
         selectedElement = selectedElements.getFirst();
-        int threshold = 10; // * calculatedValueForScale,
+        int threshold = (int)(10 / roomView.getRoom().getPxConversionRatio());
         Point corner = new Point(selectedElement.getLogicalX() + selectedElement.getLogicalWidth(), selectedElement.getLogicalY() + selectedElement.getLogicalHeight());
         Rectangle draggableRect = new Rectangle(corner.x - threshold, corner.y - threshold, threshold * 2, threshold * 2);
         if(!draggableRect.contains(p))

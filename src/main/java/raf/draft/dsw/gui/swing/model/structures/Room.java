@@ -100,13 +100,21 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public void cloneCopiedElements(){
         for(RoomElement element : copiedElements) {
             RoomElement clonedElement = element.clone();
-            int offsetX = 20, offsetY = 20;
-            if(element.getX() + element.getWidth() + 20 > width)
+            int offsetX = element.getLogicalWidth() / 10, offsetY = element.getLogicalHeight() / 10;
+            if(element.getLogicalX() + element.getLogicalWidth() + offsetX > width) { // if new element is beyond room
                 offsetX *= -1;
-            if(element.getY() + element.getHeight() + 20 > height)
+                if(element.getLogicalX() + offsetX < 0) // try opposite offset or set to x=0
+                    clonedElement.setX(0);
+                else clonedElement.setX(element.getLogicalX() + offsetX);
+            }else clonedElement.setX(element.getLogicalX() + offsetX);
+            if(element.getLogicalY() + element.getLogicalHeight() + offsetY > height) {
                 offsetY *= -1;
-            clonedElement.setX(element.getX() + offsetX);
-            clonedElement.setY(element.getY() + offsetY);
+                if(element.getLogicalY() + offsetY < 0)
+                    clonedElement.setY(0);
+                else clonedElement.setX(element.getLogicalY() + offsetY);
+            }
+
+            clonedElement.setY(element.getLogicalY() + offsetY);
             DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(this);
             MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, clonedElement);
             super.addChild(clonedElement);
