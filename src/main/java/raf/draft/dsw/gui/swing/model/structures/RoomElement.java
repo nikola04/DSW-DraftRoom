@@ -38,21 +38,20 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     }
     public abstract RoomElement clone();
 
-    public boolean overlaps(int x, int y, int width, int height) {
+    public boolean overlaps(Rectangle rect) {
         if (!isRecognizable) return false;
         Rectangle rotatedBounds = getRotatedBounds();
 
         int thisRight = rotatedBounds.x + rotatedBounds.width;
         int thisBottom = rotatedBounds.y + rotatedBounds.height;
-        int otherRight = x + width;
-        int otherBottom = y + height;
-        System.out.println(x + ":"+ y + " "+ width + ":" + height);
-        System.out.println(rotatedBounds);
-        return rotatedBounds.x < otherRight && thisRight > x &&
-                rotatedBounds.y < otherBottom && thisBottom > y;
+        int otherRight = rect.x + rect.width;
+        int otherBottom = rect.y + rect.height;
+        return rotatedBounds.x < otherRight && thisRight > rect.x &&
+                rotatedBounds.y < otherBottom && thisBottom > rect.y;
     }
-    private Rectangle getRotatedBounds() {
-        if(rotateRatio == 1 || rotateRatio == 3)
+
+    public Rectangle getRotatedBounds() {
+        if(Math.abs(rotateRatio) == 1 || Math.abs(rotateRatio) == 3)
             return new Rectangle(x + width / 2 - height / 2, y + height / 2 - width / 2, height, width);
         return new Rectangle(x, y, width, height); // 180deg or 360deg
     }
@@ -63,19 +62,19 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     }
 
     public int getX() {
-        return (int)(this.x * getParent().getPxConversionRatio()) - 1;
+        return (int)(this.x * getParent().getPxConversionRatio());
     }
 
     public int getY() {
-        return (int)(this.y * getParent().getPxConversionRatio()) - 1;
+        return (int)(this.y * getParent().getPxConversionRatio());
     }
 
     public int getWidth() {
-        return (int)(this.width * getParent().getPxConversionRatio()) - 1;
+        return (int)(this.width * getParent().getPxConversionRatio());
     }
 
     public int getHeight() {
-        return (int)(this.height * getParent().getPxConversionRatio()) - 1;
+        return (int)(this.height * getParent().getPxConversionRatio());
     }
     public int getLogicalX(){
         return this.x;

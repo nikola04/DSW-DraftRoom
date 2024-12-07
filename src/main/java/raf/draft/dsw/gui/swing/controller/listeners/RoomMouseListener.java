@@ -55,11 +55,11 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
         double scaleFactor = room.getScaleFactor();
         double pxRatio = room.getPxConversionRatio();
 
-        // Calculate translation to center the room
+        // translation to center
         int translateX = (roomView.getWidth() - (int) (room.getWidth() * pxRatio * scaleFactor)) / 2;
         int translateY = (roomView.getHeight() - (int) (room.getHeight() * pxRatio * scaleFactor)) / 2;
 
-        // Adjust for scaling and translation
+        // scaling and translation
         int adjustedX = (int) (((p.getX() - translateX) / (scaleFactor)) / room.getPxConversionRatio());
         int adjustedY = (int) (((p.getY() - translateY) / (scaleFactor)) / room.getPxConversionRatio());
         return new Point(adjustedX, adjustedY);

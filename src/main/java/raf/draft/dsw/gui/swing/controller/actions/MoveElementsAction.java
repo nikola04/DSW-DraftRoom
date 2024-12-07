@@ -9,13 +9,13 @@ import java.awt.event.KeyEvent;
 public class MoveElementsAction extends AbstractRoomAction {
     public MoveElementsAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-        putValue(NAME, "Move elements");
-        putValue(SMALL_ICON, loadIcon("/images/location.png"));
-        putValue(SHORT_DESCRIPTION, "Move elements");
+        putValue(NAME, "Move Elements");
+        putValue(SMALL_ICON, loadIcon("/images/move.png"));
+        putValue(SHORT_DESCRIPTION, "Move selected elements");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        MainFrame.getInstance().getProjectView().startAddAction();
+        MainFrame.getInstance().getProjectView().startMoveState();
     }
 }

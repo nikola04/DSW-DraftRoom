@@ -47,23 +47,27 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public boolean canPlaceElement(RoomElement newElement) {
         for (DraftNode node : this.getChildren()) {
             RoomElement element = (RoomElement) node;
-            if (element.overlaps(newElement.getX(), newElement.getY(), newElement.getWidth(), newElement.getHeight())) {
+            if(element.equals(newElement)) continue;
+            if (element.overlaps(newElement.getRotatedBounds())) {
                 return false;
             }
         }
         return true;
     }
-    public List<RoomElement> overlappedElements(int x1, int y1, int width, int height) {
+    public List<RoomElement> overlappedElements(Rectangle rect) {
         List<RoomElement> elements = new ArrayList<>();
         for (DraftNode node : super.getChildren()) {
             RoomElement element = (RoomElement) node;
-            if (element.overlaps(x1, y1, width, height)) elements.add(element);
+            if (element.overlaps(rect)) elements.add(element);
         }
         return elements;
     }
     public void rotateSelectedElements(int rotation) {
         for (RoomElement element : selectedElements) {
             element.setRotateRatio(element.getRotateRatio() + rotation);
+            if(!canPlaceElement(element) ||
+                    (element.getRotatedBounds().x < 0 || element.getRotatedBounds().y < 0 || element.getRotatedBounds().x + element.getRotatedBounds().width > width || element.getRotatedBounds().y + element.getRotatedBounds().height > height)
+            ) element.setRotateRatio(element.getRotateRatio() + rotation); // rotate by another 90 to reverse because cant fit or overlap
         }
         publish(new EventModel(EventType.REPAINT, null));
     }

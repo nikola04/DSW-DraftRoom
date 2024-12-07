@@ -14,7 +14,7 @@ public class DeleteState implements State {
     @Override
     public void handleMouseClick(RoomView roomView, Point p) {
         Room room = roomView.getRoom();
-        List<RoomElement> selected = room.overlappedElements(p.x, p.y, 0, 0);
+        List<RoomElement> selected = room.overlappedElements(new Rectangle(p.x, p.y, 0, 0));
         if(selected.isEmpty()) return;
         RoomElement selectedElement = selected.getFirst();
         DraftTreeItem treeItem = MainFrame.getInstance().getDraftTree().findTreeItem(selectedElement);

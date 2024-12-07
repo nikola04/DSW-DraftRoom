@@ -10,9 +10,9 @@ import java.awt.event.KeyEvent;
 public class ZoomElementsAction extends AbstractRoomAction {
     public ZoomElementsAction() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-        putValue(NAME, "Add Element");
+        putValue(NAME, "Zoom");
         putValue(SMALL_ICON, loadIcon("/images/zoom.png"));
-        putValue(SHORT_DESCRIPTION, "Resize elements");
+        putValue(SHORT_DESCRIPTION, "Zoom");
     }
 
     @Override
