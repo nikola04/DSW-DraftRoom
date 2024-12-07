@@ -39,15 +39,16 @@ public class RoomView extends JPanel implements ISubscriber {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform original = g2d.getTransform();
         double scaleFactor = room.getScaleFactor();
-        int scaledWidth = (int) (room.getWidth() * scaleFactor);
-        int scaledHeight = (int) (room.getHeight() * scaleFactor);
+        double pxRatio = room.getPxConversionRatio();
+        int scaledWidth = (int) (room.getWidth() * pxRatio * scaleFactor);
+        int scaledHeight = (int) (room.getHeight() * pxRatio * scaleFactor);
 
         // Calculate translation to center the scaled room
         int translateX = (getWidth() - scaledWidth) / 2;
         int translateY = (getHeight() - scaledHeight) / 2;
         g2d.translate(translateX, translateY);
         g2d.scale(scaleFactor, scaleFactor);
-        g2d.drawRect(0, 0, room.getWidth(), room.getHeight());
+        g2d.drawRect(0, 0, (int)(room.getWidth() * pxRatio), (int)(room.getHeight() * pxRatio));
         for(ElementPainter p : painters) {
             p.paint(g);
         }

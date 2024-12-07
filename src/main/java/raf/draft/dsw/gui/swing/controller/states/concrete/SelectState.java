@@ -23,7 +23,7 @@ public class SelectState implements State{
     @Override
     public void handleMousePress(RoomView roomView, Point p) {
         roomView.getRoom().resetSelected();
-        this.selection = new Selection(null, null, p.x, p.y, 0, 0);
+        this.selection = new Selection(roomView.getRoom(), null, p.x, p.y, 0, 0);
         selectionStart = p;
     }
 

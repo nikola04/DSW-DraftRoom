@@ -53,15 +53,15 @@ public class RoomMouseListener implements MouseListener, MouseWheelListener, Mou
     private Point calculateLogicalCoordinates(Point p) {
         Room room = roomView.getRoom();
         double scaleFactor = room.getScaleFactor();
-        int scaledWidth = (int) (room.getWidth() * scaleFactor);
-        int scaledHeight = (int) (room.getHeight() * scaleFactor);
-        int translateX = (roomView.getWidth() - scaledWidth) / 2;
-        int translateY = (roomView.getHeight() - scaledHeight) / 2;
-        int adjustedX = (int) p.getX() - translateX;
-        int adjustedY = (int) p.getY() - translateY;
+        double pxRatio = room.getPxConversionRatio();
 
-        int logicalX = (int) (adjustedX / scaleFactor);
-        int logicalY = (int) (adjustedY / scaleFactor);
-        return new Point(logicalX, logicalY);
+        // Calculate translation to center the room
+        int translateX = (roomView.getWidth() - (int) (room.getWidth() * pxRatio * scaleFactor)) / 2;
+        int translateY = (roomView.getHeight() - (int) (room.getHeight() * pxRatio * scaleFactor)) / 2;
+
+        // Adjust for scaling and translation
+        int adjustedX = (int) (((p.getX() - translateX) / (scaleFactor)) / room.getPxConversionRatio());
+        int adjustedY = (int) (((p.getY() - translateY) / (scaleFactor)) / room.getPxConversionRatio());
+        return new Point(adjustedX, adjustedY);
     }
 }

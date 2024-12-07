@@ -56,37 +56,37 @@ public class ProjectView extends JPanel implements ISubscriber {
         this.stateManager.getCurrentState().handleMouseWheel(roomView, rotation);
     }
     public void startAddState(){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             this.stateManager.setAddState();
     }
     public void startResizeState(){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             this.stateManager.setResizeState();
     }
     public void startDeleteState(){
-        if(room.isDimensionsSet()) {
+        if(room != null && room.isDimensionsSet()) {
             this.room.deleteSelectedElements();
             this.stateManager.setDeleteState();
         }
     }
     public void startSelectionState(){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             this.stateManager.setSelectState();
     }
     public void startZoomState(){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             this.stateManager.setZoomState();
     }
     public void pasteCopiedElements(){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             room.cloneCopiedElements();
     }
     public void rotateSelectedElements(int rotation){
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             room.rotateSelectedElements(rotation);
     }
     public void copySelectedElements() {
-        if(room.isDimensionsSet())
+        if(room != null && room.isDimensionsSet())
             room.copySelectedElements();
     }
     private void updateProjectLabel(){

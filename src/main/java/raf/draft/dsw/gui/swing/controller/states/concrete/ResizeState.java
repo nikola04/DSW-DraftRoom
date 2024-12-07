@@ -20,7 +20,7 @@ public class ResizeState implements State{
         if(selectedElements.size() != 1) return;
         selectedElement = selectedElements.getFirst();
         int threshold = 10; // * calculatedValueForScale,
-        Point corner = new Point(selectedElement.getX() + selectedElement.getWidth(), selectedElement.getY() + selectedElement.getHeight());
+        Point corner = new Point(selectedElement.getLogicalX() + selectedElement.getLogicalWidth(), selectedElement.getLogicalY() + selectedElement.getLogicalHeight());
         Rectangle draggableRect = new Rectangle(corner.x - threshold, corner.y - threshold, threshold * 2, threshold * 2);
         if(!draggableRect.contains(p))
             selectedElement = null;
@@ -32,8 +32,10 @@ public class ResizeState implements State{
         int resizeX = p.x - lastPoint.x;
         int resizeY = p.y - lastPoint.y;
         lastPoint = p;
-        if(selectedElement.getWidth() + resizeX > 10) selectedElement.setWidth(selectedElement.getWidth() + resizeX);
-        if(selectedElement.getHeight() + resizeY > 10) selectedElement.setHeight(selectedElement.getHeight() + resizeY);
+        if((selectedElement.getLogicalWidth() + resizeX) * selectedElement.getParent().getPxConversionRatio() > 5) // check if width is more than 5px
+            selectedElement.setWidth(selectedElement.getLogicalWidth() + resizeX);
+        if((selectedElement.getLogicalHeight() + resizeY) * selectedElement.getParent().getPxConversionRatio() > 5) // check if height is more than 5px
+            selectedElement.setHeight(selectedElement.getLogicalHeight() + resizeY);
         roomView.repaint();
     }
     @Override

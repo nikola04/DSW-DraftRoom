@@ -4,6 +4,8 @@ import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
 import raf.draft.dsw.gui.swing.model.structures.elements.ElementPrototype;
 
+import java.awt.*;
+
 public abstract class RoomElement extends DraftNodeLeaf implements ElementPrototype {
     private static int counter = 0;
     protected int x, y;
@@ -37,13 +39,22 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     public abstract RoomElement clone();
 
     public boolean overlaps(int x, int y, int width, int height) {
-        if(!isRecognizable) return false;
-        int thisRight = this.x + this.width;
-        int thisBottom = this.y + this.height;
+        if (!isRecognizable) return false;
+        Rectangle rotatedBounds = getRotatedBounds();
+
+        int thisRight = rotatedBounds.x + rotatedBounds.width;
+        int thisBottom = rotatedBounds.y + rotatedBounds.height;
         int otherRight = x + width;
         int otherBottom = y + height;
-        return this.x < otherRight && thisRight > x &&
-                this.y < otherBottom && thisBottom > y;
+        System.out.println(x + ":"+ y + " "+ width + ":" + height);
+        System.out.println(rotatedBounds);
+        return rotatedBounds.x < otherRight && thisRight > x &&
+                rotatedBounds.y < otherBottom && thisBottom > y;
+    }
+    private Rectangle getRotatedBounds() {
+        if(rotateRatio == 1 || rotateRatio == 3)
+            return new Rectangle(x + width / 2 - height / 2, y + height / 2 - width / 2, height, width);
+        return new Rectangle(x, y, width, height); // 180deg or 360deg
     }
 
     @Override
@@ -51,6 +62,33 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
         return (Room) super.getParent();
     }
 
+    public int getX() {
+        return (int)(this.x * getParent().getPxConversionRatio()) - 1;
+    }
+
+    public int getY() {
+        return (int)(this.y * getParent().getPxConversionRatio()) - 1;
+    }
+
+    public int getWidth() {
+        return (int)(this.width * getParent().getPxConversionRatio()) - 1;
+    }
+
+    public int getHeight() {
+        return (int)(this.height * getParent().getPxConversionRatio()) - 1;
+    }
+    public int getLogicalX(){
+        return this.x;
+    }
+    public int getLogicalY(){
+        return this.y;
+    }
+    public int getLogicalWidth(){
+        return this.width;
+    }
+    public int getLogicalHeight(){
+        return this.height;
+    }
     public boolean isSelected() {
         return selected;
     }
@@ -80,23 +118,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
     }
 
     public void setRotateRatio(int rotateRatio) {
-        this.rotateRatio = rotateRatio;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+        this.rotateRatio = rotateRatio % 4;
     }
 
     public int getRotateRatio() {

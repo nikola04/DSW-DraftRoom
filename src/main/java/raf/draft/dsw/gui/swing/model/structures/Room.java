@@ -20,9 +20,9 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private final List<ISubscriber> subscribers = new ArrayList<>();
     private int width, height; //cm
     private double scaleFactor = 1.0;
-    private double initialScaleFactor = 1.0;
     private boolean dimensionsSet = false;
     private Selection selectionElement = null;
+    private double pxConversionRatio = 1;
     private List<RoomElement> selectedElements = new ArrayList<>();
     private List<RoomElement> copiedElements = new ArrayList<>();
     public Room(String name, DraftNode parent) {
@@ -31,15 +31,15 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public void setDimensions(int width, int height, int panelWidth, int panelHeight) {
         this.width = width;
         this.height = height;
-        this.scaleFactor = calculateScaleFactor(panelWidth, panelHeight);
-        this.initialScaleFactor = scaleFactor;
+        this.scaleFactor = 1;
+        this.pxConversionRatio = calculatePxRatio(panelWidth, panelHeight);
         this.dimensionsSet = true;
         publish(new EventModel(EventType.DIMENSION_CHANGE, null));
     }
-    private double calculateScaleFactor(int panelWidth, int panelHeight) {
-        double scaleFactorX = (double) panelWidth / width;
-        double scaleFactorY = (double) panelHeight / height;
-        return Math.min(scaleFactorX, scaleFactorY);
+    private double calculatePxRatio(int panelWidth, int panelHeight) {
+        double ratioX = (double) panelWidth / width;
+        double ratioY = (double) panelHeight / height;
+        return Math.min(ratioX, ratioY);
     }
     public boolean isPointInsideRoom(Point point) {
         return point.x >= 0 && point.x < width && point.y >= 0 && point.y < height;
@@ -166,6 +166,10 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return width;
     }
 
+    public double getPxConversionRatio() {
+        return pxConversionRatio;
+    }
+
     public int getHeight() {
         return height;
     }
@@ -175,10 +179,9 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
 
     public void setScaleFactor(double scaleFactor) {
-        double min = 0.01 + initialScaleFactor / 10;
-        double max = initialScaleFactor * 10;
-        scaleFactor = Math.max(min, Math.min(scaleFactor, max));
-        this.scaleFactor = scaleFactor;
+        double min = 0.05;
+        double max =  20;
+        this.scaleFactor = Math.max(min, Math.min(scaleFactor, max));
     }
 
     @Override

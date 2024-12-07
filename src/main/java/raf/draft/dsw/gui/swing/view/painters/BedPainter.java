@@ -15,11 +15,13 @@ public class BedPainter extends ElementPainter {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform originalTransform = g2d.getTransform();
         applyTransformations(g2d);
-        g2d.drawRect(element.getX(), element.getY(), element.getWidth(), element.getHeight());
-        int pillowWidth = element.getWidth() / 3;
-        int pillowHeight = element.getHeight() / 4;
-        int pillowX = element.getX() + (element.getWidth() - pillowWidth) / 2;
-        int pillowY = element.getY() + element.getHeight() / 10;
+        int width = element.getWidth();
+        int height = element.getHeight();
+        g2d.drawRect(element.getX(), element.getY(), width, height);
+        int pillowWidth = width / 3;
+        int pillowHeight = height / 4;
+        int pillowX = element.getX() + (width - pillowWidth) / 2;
+        int pillowY = element.getY() + height / 10;
         g.drawRect(pillowX, pillowY, pillowWidth, pillowHeight);
         applySelectionBorder(g2d);
         g2d.setTransform(originalTransform);
