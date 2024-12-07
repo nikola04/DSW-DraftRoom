@@ -10,6 +10,7 @@ public class StateManager {
     private DeleteState deleteState;
     private ResizeState resizeState;
     private MoveState moveState;
+    private EditState editState;
     public StateManager() {
         initialize();
     }
@@ -20,6 +21,7 @@ public class StateManager {
         this.deleteState = new DeleteState();
         this.resizeState = new ResizeState();
         this.moveState = new MoveState();
+        this.editState = new EditState();
         currentState = new EditRoomState();
     }
     public State getCurrentState() {
@@ -42,5 +44,8 @@ public class StateManager {
     }
     public void setMoveState() {
         currentState = moveState;
+    }
+    public void setEditState() {
+        currentState = editState;
     }
 }

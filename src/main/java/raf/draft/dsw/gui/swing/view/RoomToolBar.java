@@ -20,6 +20,7 @@ public class RoomToolBar extends JToolBar {
         add(actionManager.getRotateElementLeftAction());
         add(actionManager.getCopyElementAction());
         add(actionManager.getPasteElementAction());
+        add(actionManager.getEditElementAction());
         add(actionManager.getDeleteElementAction());
 
         for (Component component : getComponents()) {

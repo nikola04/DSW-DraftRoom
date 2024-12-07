@@ -18,6 +18,7 @@ public class ActionManager {
     private PasteElementAction pasteElementAction;
     private ResizeElementsAction resizeElementsAction;
     private MoveElementsAction moveElementsAction;
+    private EditElementAction editElementAction;
 
     public ActionManager() {
         initialize();
@@ -40,6 +41,7 @@ public class ActionManager {
         this.pasteElementAction = new PasteElementAction();
         this.resizeElementsAction = new ResizeElementsAction();
         this.moveElementsAction = new MoveElementsAction();
+        this.editElementAction = new EditElementAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -64,4 +66,5 @@ public class ActionManager {
     public PasteElementAction getPasteElementAction() { return pasteElementAction; }
     public ResizeElementsAction getResizeElementsAction() { return resizeElementsAction; }
     public MoveElementsAction getMoveElementsAction() { return moveElementsAction; }
+    public EditElementAction getEditElementAction() { return editElementAction; }
 }

@@ -81,6 +81,10 @@ public class ProjectView extends JPanel implements ISubscriber {
         if(room != null && room.isDimensionsSet())
             this.stateManager.setMoveState();
     }
+    public void startEditState() {
+        if (room != null && room.isDimensionsSet())
+            this.stateManager.setEditState();
+    }
     public void pasteCopiedElements(){
         if(room != null && room.isDimensionsSet())
             room.cloneCopiedElements();
