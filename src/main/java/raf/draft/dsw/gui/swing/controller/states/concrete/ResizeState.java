@@ -56,8 +56,7 @@ public class ResizeState implements State{
         selectedElement.setWidth(originalWidth + resizeX);
         selectedElement.setHeight(originalHeight + resizeY);
 
-        if((selectedElement.getRotatedBounds().x + selectedElement.getRotatedBounds().width > room.getWidth()) ||
-                (selectedElement.getRotatedBounds().y + selectedElement.getRotatedBounds().height > room.getHeight())) {
+        if(!room.isInsideRoom(selectedElement)) {
             selectedElement.setWidth(originalWidth);
             selectedElement.setHeight(originalHeight);
             return;

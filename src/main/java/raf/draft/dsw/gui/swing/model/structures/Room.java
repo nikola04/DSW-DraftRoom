@@ -54,6 +54,12 @@ public class Room extends DraftNodeComposite implements IPublisher {
         }
         return true;
     }
+    public boolean isInsideRoom(RoomElement element) {
+        Rectangle rotatedBounds = element.getRotatedBounds();
+        if((rotatedBounds.x + rotatedBounds.width > this.getWidth()) || (rotatedBounds.y + rotatedBounds.height > this.getHeight()))
+            return false;
+        return true;
+    }
     public List<RoomElement> overlappedElements(Rectangle rect) {
         List<RoomElement> elements = new ArrayList<>();
         for (DraftNode node : super.getChildren()) {

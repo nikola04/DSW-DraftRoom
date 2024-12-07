@@ -27,7 +27,7 @@ public class EditState implements State {
         JTextField heightField = new JTextField(String.valueOf(selectedElement.getLogicalHeight()), 5);
 
         JSpinner rotateRatioSpinner = new JSpinner(
-                new SpinnerNumberModel(0, 0, 3, 1)
+                new SpinnerNumberModel(Math.abs(selectedElement.getRotateRatio()), 0, 3, 1)
         );
 
         JPanel panel = new JPanel(new GridLayout(5, 2, 5, 5));
@@ -58,11 +58,27 @@ public class EditState implements State {
                 int height = Integer.parseInt(heightField.getText());
                 int rotateRatio = (int) rotateRatioSpinner.getValue();
 
+                int originalX = selectedElement.getLogicalX();
+                int originalY = selectedElement.getLogicalY();
+                int originalWidth = selectedElement.getLogicalWidth();
+                int originalHeight = selectedElement.getLogicalHeight();
+                int originalRotateRatio = selectedElement.getRotateRatio();
+
+
                 selectedElement.setX(x);
                 selectedElement.setY(y);
                 selectedElement.setWidth(width);
                 selectedElement.setHeight(height);
                 selectedElement.setRotateRatio(rotateRatio);
+                if (!room.canPlaceElement(selectedElement) || !room.isInsideRoom(selectedElement)) {
+                    selectedElement.setX(originalX);
+                    selectedElement.setY(originalY);
+                    selectedElement.setWidth(originalWidth);
+                    selectedElement.setHeight(originalHeight);
+                    selectedElement.setRotateRatio(originalRotateRatio);
+                    ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Position values not valid", MessageType.WARNING);
+                    return;
+                }
                 roomView.repaint();
             } catch (NumberFormatException e) {
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Please enter valid Integers.", MessageType.WARNING);
