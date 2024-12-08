@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.gui.swing.controller.states.State;
+import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
@@ -17,9 +18,42 @@ public class MoveState implements State{
     }
     @Override
     public void handleMouseDrag(RoomView roomView, Point p) {
-        List<RoomElement> selectedElements = roomView.getRoom().getSelectedElements();
+        Room room = roomView.getRoom();
+        List<RoomElement> selectedElements = room.getSelectedElements();
         if(selectedElements.isEmpty()) return;
+        int moveX = p.x - lastPoint.x;
+        int moveY = p.y - lastPoint.y;
         lastPoint = p;
+        for(RoomElement element : selectedElements) {
+            int originalX = element.getLogicalX();
+            int originalY = element.getLogicalY();
+            int width = element.getLogicalWidth();
+            int height = element.getLogicalHeight();
+            int rotateRatio = Math.abs(element.getRotateRatio());
+            double pxRatio = room.getPxConversionRatio();
+            boolean isRotated = (rotateRatio == 1 || rotateRatio == 3);
+            Rectangle rotatedBounds = element.getRotatedBounds();
+
+            // Handle X sticking
+            if (moveX < 0 && (rotatedBounds.getMinX() + moveX) * pxRatio <= 10) {
+                if(isRotated) element.setX((height - width) / 2);
+                else element.setX(0);
+            } else if (moveX > 0 && (rotatedBounds.getMaxX() + moveX) * pxRatio >= room.getWidth() * pxRatio - 10) {
+                if(isRotated) element.setX(room.getWidth() - rotatedBounds.width + (height - width) / 2);
+                else element.setX(room.getWidth() - rotatedBounds.width);
+            } else element.setX(originalX + moveX);
+            if (!room.canPlaceElement(element)) element.setX(originalX); // Revert X if overlaps
+
+            // Handle Y sticking
+            if (moveY < 0 && (rotatedBounds.getMinY() + moveY) * pxRatio <= 10) {
+                if(isRotated) element.setY((width - height) / 2);
+                else element.setY(0);
+            } else if (moveY > 0 && (rotatedBounds.getMaxY() + moveY) * pxRatio >= room.getHeight() * pxRatio - 10) {
+                if(isRotated) element.setY(room.getHeight() - rotatedBounds.height + (width - height) / 2);
+                else element.setY(room.getHeight() - rotatedBounds.height);
+            } else element.setY(originalY + moveY);
+            if (!room.canPlaceElement(element)) element.setY(originalY); // Revert Y if overlaps
+        }
         roomView.repaint();
     }
     @Override
