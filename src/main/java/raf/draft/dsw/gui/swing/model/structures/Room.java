@@ -165,6 +165,13 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return children;
     }
 
+    public List<RoomElement> getElements() {
+        List<RoomElement> elements = new ArrayList<>();
+        for(DraftNode node : super.getChildren())
+            elements.add((RoomElement) node);
+        return elements;
+    }
+
     @Override
     public void addSubscriber(ISubscriber subscriber) {
         subscribers.add(subscriber);
