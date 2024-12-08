@@ -1,14 +1,11 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.gui.swing.controller.states.State;
-import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
-import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 public class ResizeState implements State{
@@ -20,7 +17,7 @@ public class ResizeState implements State{
         selectedElement = null;
         if(selectedElements.size() != 1) return;
         selectedElement = selectedElements.getFirst();
-        int threshold = (int)(10 / roomView.getRoom().getPxConversionRatio());
+        int threshold = Math.max((int)(10 / roomView.getRoom().getPxConversionRatio()), 1);
         Rectangle rotatedElement = selectedElement.getRotatedBounds();
         Point corner = new Point(rotatedElement.x + rotatedElement.width, rotatedElement.y + rotatedElement.height);
         Rectangle draggableRect = new Rectangle(corner.x - threshold, corner.y - threshold, threshold * 2, threshold * 2);
@@ -35,34 +32,25 @@ public class ResizeState implements State{
         int resizeX = p.x - lastPoint.x;
         int resizeY = p.y - lastPoint.y;
         lastPoint = p;
+        double pxRatio = room.getPxConversionRatio();
+        int rotateRatio = Math.abs(selectedElement.getRotateRatio());
+        boolean isRotated = rotateRatio == 1 || rotateRatio == 3;
         int originalWidth = selectedElement.getLogicalWidth();
-        int newWidth = originalWidth + resizeX;
         int originalHeight = selectedElement.getLogicalHeight();
-        int newHeight = originalHeight + resizeY;
+        Rectangle rotatedBounds = selectedElement.getRotatedBounds();
 
-        if(newWidth * selectedElement.getParent().getPxConversionRatio() <= 5) {
-            resizeX = 0;
-//            if(selectedElement.getRotateRatio() == 0 || selectedElement.getRotateRatio() == 2) // not actually working :(
-//                selectedElement.setWidth(selectedElement.getLogicalWidth() + resizeX);
-//            else selectedElement.setHeight(selectedElement.getLogicalHeight() + resizeX);
-        }
-        if(newHeight * selectedElement.getParent().getPxConversionRatio() <= 5) {
-            resizeY = 0;
-//            if(selectedElement.getRotateRatio() == 0 || selectedElement.getRotateRatio() == 2)
-//                selectedElement.setHeight(selectedElement.getLogicalHeight() + resizeY);
-//            else selectedElement.setWidth(selectedElement.getLogicalWidth() + resizeY);
+        if((rotatedBounds.width + resizeX) * pxRatio <= 5) resizeX = 0;
+        if((rotatedBounds.height + resizeY) * pxRatio <= 5) resizeY = 0;
+        if(resizeX == 0 && resizeY == 0) return;
+        if(isRotated) {
+            selectedElement.setHeight(originalHeight + resizeX);
+            selectedElement.setWidth(originalWidth + resizeY);
+        }else {
+            selectedElement.setWidth(originalWidth + resizeX);
+            selectedElement.setHeight(originalHeight + resizeY);
         }
 
-        selectedElement.setWidth(originalWidth + resizeX);
-        selectedElement.setHeight(originalHeight + resizeY);
-
-        if(!room.isInsideRoom(selectedElement)) {
-            selectedElement.setWidth(originalWidth);
-            selectedElement.setHeight(originalHeight);
-            return;
-        }
-
-        if (!room.canPlaceElement(selectedElement)) { // checks for overlap
+        if (room.isNotInsideRoom(selectedElement) || !room.canPlaceElement(selectedElement)) { // checks for overlap or room bounds
             selectedElement.setWidth(originalWidth);
             selectedElement.setHeight(originalHeight);
             return;

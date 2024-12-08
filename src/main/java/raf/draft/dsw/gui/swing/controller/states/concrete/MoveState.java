@@ -44,6 +44,7 @@ public class MoveState implements State{
             Rectangle rotatedBounds = element.getRotatedBounds();
 
             // Handle X sticking
+            boolean isNotBlocked = room.canPlaceElement(element);
             if (moveX < 0 && (rotatedBounds.getMinX() + moveX) * pxRatio <= stickyOffset) {
                 if(isRotated) element.setX((height - width) / 2);
                 else element.setX(0);
@@ -51,7 +52,7 @@ public class MoveState implements State{
                 if(isRotated) element.setX(room.getWidth() - rotatedBounds.width + (height - width) / 2);
                 else element.setX(room.getWidth() - rotatedBounds.width);
             } else element.setX(originalX + moveX);
-            if (!room.canPlaceElement(element)) element.setX(originalX); // Revert X if overlaps
+            if (isNotBlocked && !room.canPlaceElement(element)) element.setX(originalX); // Revert X if overlaps
 
             // Handle Y sticking
             if (moveY < 0 && (rotatedBounds.getMinY() + moveY) * pxRatio <= stickyOffset) {
@@ -61,7 +62,7 @@ public class MoveState implements State{
                 if(isRotated) element.setY(room.getHeight() - rotatedBounds.height + (width - height) / 2);
                 else element.setY(room.getHeight() - rotatedBounds.height);
             } else element.setY(originalY + moveY);
-            if (!room.canPlaceElement(element)) element.setY(originalY); // Revert Y if overlaps
+            if (isNotBlocked && !room.canPlaceElement(element)) element.setY(originalY); // Revert Y if overlaps
         }
         roomView.repaint();
     }

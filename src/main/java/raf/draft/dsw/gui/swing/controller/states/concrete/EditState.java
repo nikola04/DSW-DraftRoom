@@ -5,7 +5,6 @@ import raf.draft.dsw.gui.swing.controller.states.State;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import javax.swing.*;
@@ -17,8 +16,10 @@ public class EditState implements State {
     public void handleMouseClick(RoomView roomView, Point p) {
         Room room = roomView.getRoom();
         List<RoomElement> selectedElements = room.overlappedElements(new Rectangle(p.x, p.y, 0, 0));
-        if (selectedElements.size() != 1)
+        if (selectedElements.size() != 1) {
+            if(!selectedElements.isEmpty()) ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You cannot edit more than one element at a time.", MessageType.WARNING);
             return;
+        }
         RoomElement selectedElement = selectedElements.getFirst();
 
         JTextField xField = new JTextField(String.valueOf(selectedElement.getLogicalX()), 5);
@@ -26,9 +27,7 @@ public class EditState implements State {
         JTextField widthField = new JTextField(String.valueOf(selectedElement.getLogicalWidth()), 5);
         JTextField heightField = new JTextField(String.valueOf(selectedElement.getLogicalHeight()), 5);
 
-        JSpinner rotateRatioSpinner = new JSpinner(
-                new SpinnerNumberModel(Math.abs(selectedElement.getRotateRatio()), 0, 3, 1)
-        );
+        JSpinner rotateRatioSpinner = new JSpinner(new SpinnerNumberModel(Math.abs(selectedElement.getRotateRatio()), 0, 3, 1));
 
         JPanel panel = new JPanel(new GridLayout(5, 2, 5, 5));
         panel.add(new JLabel("X:"));
@@ -42,13 +41,7 @@ public class EditState implements State {
         panel.add(new JLabel("Rotate Ratio (0-3):"));
         panel.add(rotateRatioSpinner);
 
-        int result = JOptionPane.showConfirmDialog(
-                null,
-                panel,
-                "Enter Element Details",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE
-        );
+        int result = JOptionPane.showConfirmDialog(null, panel, "Enter Element Details", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
             try {
@@ -64,13 +57,13 @@ public class EditState implements State {
                 int originalHeight = selectedElement.getLogicalHeight();
                 int originalRotateRatio = selectedElement.getRotateRatio();
 
-
                 selectedElement.setX(x);
                 selectedElement.setY(y);
                 selectedElement.setWidth(width);
                 selectedElement.setHeight(height);
                 selectedElement.setRotateRatio(rotateRatio);
-                if (!room.canPlaceElement(selectedElement) || !room.isInsideRoom(selectedElement)) {
+
+                if (!room.canPlaceElement(selectedElement) || room.isNotInsideRoom(selectedElement)) {
                     selectedElement.setX(originalX);
                     selectedElement.setY(originalY);
                     selectedElement.setWidth(originalWidth);
