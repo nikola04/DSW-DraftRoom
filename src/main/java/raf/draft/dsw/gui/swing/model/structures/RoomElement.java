@@ -2,11 +2,11 @@ package raf.draft.dsw.gui.swing.model.structures;
 
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
-import raf.draft.dsw.gui.swing.model.structures.elements.ElementPrototype;
+import raf.draft.dsw.gui.swing.model.structures.elements.ClonePrototype;
 
 import java.awt.*;
 
-public abstract class RoomElement extends DraftNodeLeaf implements ElementPrototype {
+public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototype {
     private static int counter = 0;
     protected int x, y;
     protected int width, height;
@@ -33,10 +33,10 @@ public abstract class RoomElement extends DraftNodeLeaf implements ElementProtot
         this.width = width;
         this.height = height;
     }
+    public abstract ClonePrototype clone();
     public static int getCounter(){
         return counter++;
     }
-    public abstract RoomElement clone();
 
     public boolean overlaps(Rectangle rect) {
         if (!isRecognizable) return false;

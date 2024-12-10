@@ -12,7 +12,7 @@ public class Sink extends RoomElement {
     }
 
     @Override
-    public RoomElement clone() {
+    public ClonePrototype clone() {
         return new Sink(this);
     }
 }

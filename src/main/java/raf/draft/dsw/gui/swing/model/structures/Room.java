@@ -107,7 +107,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
     public void cloneCopiedElements(){
         for(RoomElement element : copiedElements) {
-            RoomElement clonedElement = element.clone();
+            RoomElement clonedElement = (RoomElement) element.clone();
             int offsetX = element.getLogicalWidth() / 10, offsetY = element.getLogicalHeight() / 10;
             if(element.getLogicalX() + element.getLogicalWidth() + offsetX > width) { // if new element is beyond room
                 offsetX *= -1;

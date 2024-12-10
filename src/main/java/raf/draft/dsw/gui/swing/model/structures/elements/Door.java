@@ -11,7 +11,7 @@ public class Door extends RoomElement {
         super(source);
     }
     @Override
-    public RoomElement clone() {
+    public ClonePrototype clone() {
         return new Door(this);
     }
 }
