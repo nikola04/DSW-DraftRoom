@@ -21,15 +21,8 @@ public class DoorPainter extends ElementPainter {
         int width = element.getWidth();
         int height = element.getHeight();
 
-        int arcDiameter = Math.min(width, height) * 2;
-        g2d.drawArc(x - (arcDiameter / 2) / 2, y - (arcDiameter / 2) / 2, arcDiameter, arcDiameter, 90, 90);
-
-        int xStart = x + width / 2;
-        int yStart = y - (arcDiameter / 2) / 2;
-        int xEnd = xStart;
-        int yEnd = y + height / 2;
-
-        g2d.drawLine(xStart, yStart, xEnd, yEnd);
+        g2d.drawArc(x, y, width * 2, height * 2, 90, 90);
+        g2d.drawLine(x + width, y, x + width, y + height);
 
         applySelectionBorder(g2d);
         g2d.setTransform(originalTransform);
