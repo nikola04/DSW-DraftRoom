@@ -15,6 +15,8 @@ public class ToolBar extends JToolBar {
         add(MainFrame.getInstance().getActionManager().getChangeNodePathAction());
         add(MainFrame.getInstance().getActionManager().getChangeNodeAuthorAction());
         add(MainFrame.getInstance().getActionManager().getDeleteNodeAction());
+        add(MainFrame.getInstance().getActionManager().getUndoAction());
+        add(MainFrame.getInstance().getActionManager().getRedoAction());
 
         for (Component component : getComponents()) {
             if (component instanceof AbstractButton button) {

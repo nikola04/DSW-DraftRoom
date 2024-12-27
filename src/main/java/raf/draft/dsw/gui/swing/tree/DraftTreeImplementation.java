@@ -28,6 +28,12 @@ public class DraftTreeImplementation implements DraftTree {
     public DraftTreeItem getSelectedNode() {
         return (DraftTreeItem) treeView.getLastSelectedPathComponent();
     }
+
+    @Override
+    public DraftTreeView getTreeView() {
+        return this.treeView;
+    }
+
     @Override
     public DraftNode createNode(DraftNode parent){
         String type = switch (parent) {

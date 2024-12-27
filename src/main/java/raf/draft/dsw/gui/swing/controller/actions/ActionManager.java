@@ -19,6 +19,8 @@ public class ActionManager {
     private ResizeElementsAction resizeElementsAction;
     private MoveElementsAction moveElementsAction;
     private EditElementAction editElementAction;
+    private UndoAction undoAction;
+    private RedoAction redoAction;
 
     public ActionManager() {
         initialize();
@@ -42,6 +44,8 @@ public class ActionManager {
         this.resizeElementsAction = new ResizeElementsAction();
         this.moveElementsAction = new MoveElementsAction();
         this.editElementAction = new EditElementAction();
+        this.undoAction = new UndoAction();
+        this.redoAction = new RedoAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -67,4 +71,6 @@ public class ActionManager {
     public ResizeElementsAction getResizeElementsAction() { return resizeElementsAction; }
     public MoveElementsAction getMoveElementsAction() { return moveElementsAction; }
     public EditElementAction getEditElementAction() { return editElementAction; }
+    public UndoAction getUndoAction() { return undoAction; }
+    public RedoAction getRedoAction() { return redoAction; }
 }

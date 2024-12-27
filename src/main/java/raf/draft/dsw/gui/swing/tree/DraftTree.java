@@ -15,5 +15,6 @@ public interface DraftTree {
     DraftTreeItem findTreeItem(DraftNode node);
     DraftTreeView generateTree(ProjectExplorer projectExplorer);
     DraftTreeItem getSelectedNode();
+    DraftTreeView getTreeView();
     DraftNode createNode(DraftNode parent);
 }
