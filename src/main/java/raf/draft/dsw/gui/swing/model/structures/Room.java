@@ -2,6 +2,7 @@ package raf.draft.dsw.gui.swing.model.structures;
 
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.PasteCopiedCommand;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
@@ -103,6 +104,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         copiedElements.addAll(selectedElements);
     }
     public void cloneCopiedElements(){
+        List<RoomElement> clones = new ArrayList<>();
         for(RoomElement element : copiedElements) {
             RoomElement clonedElement = (RoomElement) element.clone();
             int offsetX = element.getLogicalWidth() / 10, offsetY = element.getLogicalHeight() / 10;
@@ -118,13 +120,13 @@ public class Room extends DraftNodeComposite implements IPublisher {
                     clonedElement.setY(0);
                 else clonedElement.setX(element.getLogicalY() + offsetY);
             }
-
             clonedElement.setY(element.getLogicalY() + offsetY);
-            DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(this);
-            MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, clonedElement);
-            super.addChild(clonedElement);
+
+            clones.add(clonedElement);
         }
-        publish(null);
+        PasteCopiedCommand pasteCommand = new PasteCopiedCommand(this, clones);
+        ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(pasteCommand);
+//        publish(null);
     }
     public void setSelectionElement(Selection selectionElement) {
         this.selectionElement = selectionElement;
