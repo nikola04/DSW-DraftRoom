@@ -66,8 +66,8 @@ public class Room extends DraftNodeComposite implements IPublisher {
         }
         return elements;
     }
-    public void rotateSelectedElements(int rotation) {
-        for (RoomElement element : selectedElements) {
+    public void rotateElements(List<RoomElement> roomElements, int rotation) {
+        for (RoomElement element : roomElements) {
             element.setRotateRatio(element.getRotateRatio() + rotation);
             if(!canPlaceElement(element) ||
                     (element.getRotatedBounds().x < 0 || element.getRotatedBounds().y < 0 || element.getRotatedBounds().x + element.getRotatedBounds().width > width || element.getRotatedBounds().y + element.getRotatedBounds().height > height)
