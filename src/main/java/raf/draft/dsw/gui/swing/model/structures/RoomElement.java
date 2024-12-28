@@ -61,6 +61,11 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
         return (Room) super.getParent();
     }
 
+    public boolean isRotated(){
+        int rotateRatio = Math.abs(this.getRotateRatio());
+        return rotateRatio == 1 || rotateRatio == 3;
+    }
+
     public int getX() {
         return (int)(this.x * getParent().getPxConversionRatio());
     }
@@ -114,6 +119,16 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void setAdjustedWidth(int dim) {
+        if(isRotated()) this.height = dim;
+        else this.width = dim;
+    }
+
+    public void setAdjustedHeight(int dim) {
+        if(isRotated()) this.width = dim;
+        this.height = dim;
     }
 
     public void setRotateRatio(int rotateRatio) {

@@ -1,6 +1,8 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.PasteCopiedCommand;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
@@ -24,7 +26,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private Selection selectionElement = null;
     private double pxConversionRatio = 1;
     private List<RoomElement> selectedElements = new ArrayList<>();
-    private List<RoomElement> copiedElements = new ArrayList<>();
+    private final List<RoomElement> copiedElements = new ArrayList<>();
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
@@ -66,8 +68,8 @@ public class Room extends DraftNodeComposite implements IPublisher {
         }
         return elements;
     }
-    public void rotateSelectedElements(int rotation) {
-        for (RoomElement element : selectedElements) {
+    public void rotateElements(List<RoomElement> roomElements, int rotation) {
+        for (RoomElement element : roomElements) {
             element.setRotateRatio(element.getRotateRatio() + rotation);
             if(!canPlaceElement(element) ||
                     (element.getRotatedBounds().x < 0 || element.getRotatedBounds().y < 0 || element.getRotatedBounds().x + element.getRotatedBounds().width > width || element.getRotatedBounds().y + element.getRotatedBounds().height > height)
@@ -90,13 +92,9 @@ public class Room extends DraftNodeComposite implements IPublisher {
         publish(new EventModel(EventType.REPAINT, null));
     }
     public void deleteSelectedElements() {
-        for(RoomElement element : selectedElements) {
-            DraftTreeItem item = MainFrame.getInstance().getDraftTree().findTreeItem(element);
-            if(item != null) MainFrame.getInstance().getDraftTree().removeNodeSilently(item);
-            super.removeChild(element);
-        }
         if(!selectedElements.isEmpty()) {
-            publish(null);
+            DeleteCommand deleteCommand = new DeleteCommand(selectedElements, this);
+            ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(deleteCommand);
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
         }
         this.selectedElements.clear();
@@ -106,6 +104,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         copiedElements.addAll(selectedElements);
     }
     public void cloneCopiedElements(){
+        List<RoomElement> clones = new ArrayList<>();
         for(RoomElement element : copiedElements) {
             RoomElement clonedElement = (RoomElement) element.clone();
             int offsetX = element.getLogicalWidth() / 10, offsetY = element.getLogicalHeight() / 10;
@@ -121,13 +120,13 @@ public class Room extends DraftNodeComposite implements IPublisher {
                     clonedElement.setY(0);
                 else clonedElement.setX(element.getLogicalY() + offsetY);
             }
-
             clonedElement.setY(element.getLogicalY() + offsetY);
-            DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(this);
-            MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, clonedElement);
-            super.addChild(clonedElement);
+
+            clones.add(clonedElement);
         }
-        publish(null);
+        PasteCopiedCommand pasteCommand = new PasteCopiedCommand(this, clones);
+        ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(pasteCommand);
+//        publish(null);
     }
     public void setSelectionElement(Selection selectionElement) {
         this.selectionElement = selectionElement;

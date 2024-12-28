@@ -1,5 +1,7 @@
 package raf.draft.dsw.gui.swing.view;
 
+import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.RotateCommand;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.controller.states.StateManager;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
@@ -90,8 +92,9 @@ public class ProjectView extends JPanel implements ISubscriber {
             room.cloneCopiedElements();
     }
     public void rotateSelectedElements(int rotation){
-        if(room != null && room.isDimensionsSet())
-            room.rotateSelectedElements(rotation);
+        if(room == null || !room.isDimensionsSet()) return;
+        RotateCommand rotateCommand = new RotateCommand(room, rotation);
+        ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(rotateCommand);
     }
     public void copySelectedElements() {
         if(room != null && room.isDimensionsSet())

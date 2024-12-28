@@ -142,7 +142,7 @@ public class DraftTreeImplementation implements DraftTree {
         item.removeFromParent();
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
-        ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
+//        ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
     }
     public void removeNodeSilently(DraftTreeItem item) {
         if(item == null || item.getDraftNode() == null) return;
