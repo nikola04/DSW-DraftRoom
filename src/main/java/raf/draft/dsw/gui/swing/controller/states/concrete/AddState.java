@@ -1,13 +1,12 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.AddElementCommand;
 import raf.draft.dsw.gui.swing.controller.states.State;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
 import raf.draft.dsw.gui.swing.model.structures.elements.ElementFactory;
-import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import javax.swing.*;
@@ -21,7 +20,6 @@ public class AddState implements State{
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You can only place elements inside room.", MessageType.WARNING);
             return;
         }
-        DraftTreeItem roomTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(room);
         JComboBox<String> comboBox = new JComboBox<>(new String[]{"Bed", "Bath", "Boiler","Sink", "Door","Table","Toilet","Wardrobe","WashingMachine"});
         JPanel box = new JPanel(new BorderLayout());
         box.add(comboBox);
@@ -43,8 +41,8 @@ public class AddState implements State{
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Element is already placed there", MessageType.WARNING);
                 return;
             }
-            MainFrame.getInstance().getDraftTree().addChild(roomTreeItem, element);
-            room.addChild(element);
+            AddElementCommand addCommand = new AddElementCommand(room, element);
+            ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(addCommand);
         } catch (NumberFormatException ex) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);
         }

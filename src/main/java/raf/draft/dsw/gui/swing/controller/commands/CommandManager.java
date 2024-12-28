@@ -1,13 +1,12 @@
 package raf.draft.dsw.gui.swing.controller.commands;
 
 import raf.draft.dsw.core.ApplicationFramework;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
-    private List<AbstractCommand> commands = new ArrayList<>();
+    private final List<AbstractCommand> commands = new ArrayList<>();
     private int currentCommand = 0;
 
     public void addCommand(AbstractCommand command) {
