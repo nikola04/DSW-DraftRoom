@@ -20,6 +20,8 @@ public class MenuBar extends JMenuBar {
         editMenu.add(MainFrame.getInstance().getActionManager().getChangeNodePathAction());
         editMenu.add(MainFrame.getInstance().getActionManager().getChangeNodeAuthorAction());
         editMenu.add(MainFrame.getInstance().getActionManager().getDeleteNodeAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getUndoAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getRedoAction());
 
         add(fileMenu);
         add(editMenu);
