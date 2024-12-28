@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.EditElementCommand;
 import raf.draft.dsw.gui.swing.controller.states.State;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Room;
@@ -45,17 +46,17 @@ public class EditState implements State {
 
         if (result == JOptionPane.OK_OPTION) {
             try {
-                int x = Integer.parseInt(xField.getText());
-                int y = Integer.parseInt(yField.getText());
-                int width = Integer.parseInt(widthField.getText());
-                int height = Integer.parseInt(heightField.getText());
-                int rotateRatio = (int) rotateRatioSpinner.getValue();
-
                 int originalX = selectedElement.getLogicalX();
                 int originalY = selectedElement.getLogicalY();
                 int originalWidth = selectedElement.getLogicalWidth();
                 int originalHeight = selectedElement.getLogicalHeight();
                 int originalRotateRatio = selectedElement.getRotateRatio();
+
+                int x = Integer.parseInt(xField.getText());
+                int y = Integer.parseInt(yField.getText());
+                int width = Integer.parseInt(widthField.getText());
+                int height = Integer.parseInt(heightField.getText());
+                int rotateRatio = (int) rotateRatioSpinner.getValue();
 
                 selectedElement.setX(x);
                 selectedElement.setY(y);
@@ -69,10 +70,11 @@ public class EditState implements State {
                     selectedElement.setWidth(originalWidth);
                     selectedElement.setHeight(originalHeight);
                     selectedElement.setRotateRatio(originalRotateRatio);
-                    ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Position values not valid", MessageType.WARNING);
+                    ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Values not valid", MessageType.WARNING);
                     return;
                 }
-                roomView.repaint();
+                EditElementCommand editCommand = new EditElementCommand(roomView, selectedElement, originalX, originalY, originalWidth, originalHeight, originalRotateRatio);
+                ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(editCommand);
             } catch (NumberFormatException e) {
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Please enter valid Integers.", MessageType.WARNING);
             }
