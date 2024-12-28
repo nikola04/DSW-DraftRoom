@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
@@ -90,13 +91,9 @@ public class Room extends DraftNodeComposite implements IPublisher {
         publish(new EventModel(EventType.REPAINT, null));
     }
     public void deleteSelectedElements() {
-        for(RoomElement element : selectedElements) {
-            DraftTreeItem item = MainFrame.getInstance().getDraftTree().findTreeItem(element);
-            if(item != null) MainFrame.getInstance().getDraftTree().removeNodeSilently(item);
-            super.removeChild(element);
-        }
         if(!selectedElements.isEmpty()) {
-            publish(null);
+            DeleteCommand deleteCommand = new DeleteCommand(selectedElements, this);
+            ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(deleteCommand);
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
         }
         this.selectedElements.clear();

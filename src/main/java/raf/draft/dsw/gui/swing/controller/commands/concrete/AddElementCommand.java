@@ -27,6 +27,5 @@ public class AddElementCommand extends AbstractCommand {
     public void undoCommand() {
         DraftTreeItem treeItem = MainFrame.getInstance().getDraftTree().findTreeItem(element);
         MainFrame.getInstance().getDraftTree().removeNode(treeItem);
-        room.removeChild(element);
     }
 }
