@@ -25,7 +25,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private Selection selectionElement = null;
     private double pxConversionRatio = 1;
     private List<RoomElement> selectedElements = new ArrayList<>();
-    private List<RoomElement> copiedElements = new ArrayList<>();
+    private final List<RoomElement> copiedElements = new ArrayList<>();
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
