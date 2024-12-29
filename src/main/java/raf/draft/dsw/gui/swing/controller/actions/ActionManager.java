@@ -21,6 +21,9 @@ public class ActionManager {
     private EditElementAction editElementAction;
     private UndoAction undoAction;
     private RedoAction redoAction;
+    private OpenAction openAction;
+    private SaveAction saveAction;
+    private SaveAsAction saveAsAction;
 
     public ActionManager() {
         initialize();
@@ -46,6 +49,9 @@ public class ActionManager {
         this.editElementAction = new EditElementAction();
         this.undoAction = new UndoAction();
         this.redoAction = new RedoAction();
+        this.openAction = new OpenAction();
+        this.saveAction = new SaveAction();
+        this.saveAsAction = new SaveAsAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -73,4 +79,7 @@ public class ActionManager {
     public EditElementAction getEditElementAction() { return editElementAction; }
     public UndoAction getUndoAction() { return undoAction; }
     public RedoAction getRedoAction() { return redoAction; }
+    public OpenAction getOpenAction() { return openAction; }
+    public SaveAction getSaveAction() { return saveAction; }
+    public SaveAsAction getSaveAsAction() { return saveAsAction; }
 }
