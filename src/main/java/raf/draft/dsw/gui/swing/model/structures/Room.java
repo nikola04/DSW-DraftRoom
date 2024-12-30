@@ -1,5 +1,7 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.PasteCopiedCommand;
@@ -11,13 +13,13 @@ import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
-import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
-import raf.draft.dsw.gui.swing.view.MainFrame;
+import raf.draft.dsw.gui.swing.model.utils.ColorUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonTypeName("Room")
 public class Room extends DraftNodeComposite implements IPublisher {
     private final List<ISubscriber> subscribers = new ArrayList<>();
     private int width, height; //cm
@@ -30,12 +32,16 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
+    public Room() {
+        super(null, null);
+    }
     public void setDimensions(int width, int height, int panelWidth, int panelHeight) {
         this.width = width;
         this.height = height;
         this.scaleFactor = 1;
         this.pxConversionRatio = calculatePxRatio(panelWidth, panelHeight);
         this.dimensionsSet = true;
+        super.onAppliedChange();
         publish(new EventModel(EventType.DIMENSION_CHANGE, null));
     }
     private double calculatePxRatio(int panelWidth, int panelHeight) {
@@ -135,10 +141,12 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public boolean isDimensionsSet() {
         return dimensionsSet;
     }
+    @JsonIgnore
     public Selection getSelectionElement() {
         return selectionElement;
     }
 
+    @JsonIgnore
     public List<RoomElement> getSelectedElements() {
         return selectedElements;
     }
@@ -162,6 +170,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return children;
     }
 
+    @JsonIgnore
     public List<RoomElement> getElements() {
         List<RoomElement> elements = new ArrayList<>();
         for(DraftNode node : super.getChildren())
@@ -178,9 +187,10 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public void removeSubscriber(ISubscriber subscriber) {
         subscribers.remove(subscriber);
     }
+    @JsonIgnore
     public Color getColor() {
         if(this.getParent() instanceof Building building)
-            return building.getColor();
+            return ColorUtil.fromHex(building.getColor());
         return Color.WHITE;
     }
 
@@ -196,6 +206,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return height;
     }
 
+    @JsonIgnore
     public double getScaleFactor() {
         return scaleFactor;
     }

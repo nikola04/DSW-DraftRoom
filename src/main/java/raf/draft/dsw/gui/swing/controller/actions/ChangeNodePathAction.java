@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 public class ChangeNodePathAction extends AbstractRoomAction {
     public ChangeNodePathAction() {
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
         putValue(NAME, "Change Path");
         putValue(SMALL_ICON, loadIcon("/images/location.png"));
         putValue(SHORT_DESCRIPTION, "Change node path");

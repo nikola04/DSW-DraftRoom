@@ -10,6 +10,10 @@ public class Table extends RoomElement {
     public Table(Table source){
         super(source);
     }
+
+    public Table() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Table(this);

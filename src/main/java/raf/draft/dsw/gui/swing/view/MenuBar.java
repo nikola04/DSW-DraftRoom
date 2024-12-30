@@ -9,6 +9,9 @@ public class MenuBar extends JMenuBar {
         // File Menu
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
+        fileMenu.add(MainFrame.getInstance().getActionManager().getOpenAction());
+        fileMenu.add(MainFrame.getInstance().getActionManager().getSaveAction());
+        fileMenu.add(MainFrame.getInstance().getActionManager().getSaveAsAction());
         fileMenu.add(MainFrame.getInstance().getActionManager().getAboutUsAction());
         fileMenu.add(MainFrame.getInstance().getActionManager().getExitAction());
 
@@ -20,6 +23,8 @@ public class MenuBar extends JMenuBar {
         editMenu.add(MainFrame.getInstance().getActionManager().getChangeNodePathAction());
         editMenu.add(MainFrame.getInstance().getActionManager().getChangeNodeAuthorAction());
         editMenu.add(MainFrame.getInstance().getActionManager().getDeleteNodeAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getUndoAction());
+        editMenu.add(MainFrame.getInstance().getActionManager().getRedoAction());
 
         add(fileMenu);
         add(editMenu);

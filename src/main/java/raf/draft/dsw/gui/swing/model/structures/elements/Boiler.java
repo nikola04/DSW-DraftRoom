@@ -11,6 +11,9 @@ public class Boiler extends RoomElement {
         super(source);
     }
 
+    public Boiler() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Boiler(this);

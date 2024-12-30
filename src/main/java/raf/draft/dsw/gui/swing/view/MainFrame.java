@@ -4,7 +4,7 @@ import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.actions.ActionManager;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.tabs.TabPaneModel;
-import raf.draft.dsw.gui.swing.tree.DraftTree;
+import raf.draft.dsw.core.DraftTree;
 import raf.draft.dsw.gui.swing.tree.DraftTreeImplementation;
 import raf.draft.dsw.gui.swing.model.messages.Message;
 

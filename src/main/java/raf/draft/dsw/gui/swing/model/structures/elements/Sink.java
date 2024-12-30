@@ -11,6 +11,9 @@ public class Sink extends RoomElement {
         super(source);
     }
 
+    public Sink() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Sink(this);

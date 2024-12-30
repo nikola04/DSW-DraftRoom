@@ -9,6 +9,7 @@ public class ApplicationFramework {
     private static ApplicationFramework instance;
     protected DraftRoomRepository draftRoomRepository;
     protected GUI gui;
+    protected Serializer serializer;
     protected MessageGenerator messageGenerator;
 
     public static ApplicationFramework getInstance(){
@@ -20,8 +21,9 @@ public class ApplicationFramework {
     private ApplicationFramework(){
     }
 
-    public void initialize(GUI gui, DraftRoomRepository roomRepository) {
+    public void initialize(GUI gui, DraftRoomRepository roomRepository, Serializer serializer) {
         this.gui = gui;
+        this.serializer = serializer;
         this.draftRoomRepository = roomRepository;
         messageGenerator = new MessageGenerator();
 
@@ -41,6 +43,10 @@ public class ApplicationFramework {
 
     public GUI getGui() {
         return gui;
+    }
+
+    public Serializer getSerializer() {
+        return serializer;
     }
 
     public MessageGenerator getMessageGenerator() {

@@ -15,7 +15,8 @@ public class TabPaneChangeListener implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         int selectedIndex = MainFrame.getInstance().getTabPane().getSelectedIndex();
         if(selectedIndex == -1) return;
-        RoomView tab = MainFrame.getInstance().getTabPaneModel().getOpenedTabs().get(selectedIndex);
-        tabPaneModel.setActiveTab(tab);
+        RoomView roomView = MainFrame.getInstance().getTabPaneModel().getOpenedTabs().get(selectedIndex);
+        roomView.refresh();
+        tabPaneModel.setActiveTab(roomView.getRoom());
     }
 }

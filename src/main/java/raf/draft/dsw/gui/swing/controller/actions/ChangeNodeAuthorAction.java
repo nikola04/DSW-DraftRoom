@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 public class ChangeNodeAuthorAction extends AbstractRoomAction {
     public ChangeNodeAuthorAction() {
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
         putValue(NAME, "Change Author");
         putValue(SMALL_ICON, loadIcon("/images/lock.png"));
         putValue(SHORT_DESCRIPTION, "Change node author");

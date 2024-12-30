@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.tree;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.core.DraftTree;
 import raf.draft.dsw.gui.swing.model.structures.*;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;
@@ -27,11 +28,6 @@ public class DraftTreeImplementation implements DraftTree {
 
     public DraftTreeItem getSelectedNode() {
         return (DraftTreeItem) treeView.getLastSelectedPathComponent();
-    }
-
-    @Override
-    public DraftTreeView getTreeView() {
-        return this.treeView;
     }
 
     @Override
@@ -79,18 +75,14 @@ public class DraftTreeImplementation implements DraftTree {
         SwingUtilities.updateComponentTreeUI(treeView);
         if(child instanceof Room room){ // check if room is inside active project to update panel
             Project activeProject = MainFrame.getInstance().getTabPaneModel().getProject();
-            if((parent.getDraftNode() instanceof Project project && project.equals(activeProject)) || parent.getParentProject().equals(activeProject)){
+            if((parent.getDraftNode() instanceof Project project && project.equals(activeProject)) || parent.getDraftNode().findParentProject().equals(activeProject)){
                 MainFrame.getInstance().getTabPaneModel().addTab(room);
             }
         }
     }
 
     @Override
-    public void addChild(DraftTreeItem parent, RoomElement element) {
-        if(!(parent.getDraftNode() instanceof Room)) {
-            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You must select Room if you want to add element", MessageType.ERROR);
-            return;
-        }
+    public void addChild(DraftTreeItem parent, DraftNode element) {
         parent.add(new DraftTreeItem(element));
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
@@ -144,12 +136,26 @@ public class DraftTreeImplementation implements DraftTree {
         SwingUtilities.updateComponentTreeUI(treeView);
 //        ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted item successfully", MessageType.INFO);
     }
-    public void removeNodeSilently(DraftTreeItem item) {
-        if(item == null || item.getDraftNode() == null) return;
-        if(item.getDraftNode() instanceof ProjectExplorer) return;
-        item.removeFromParent();
+
+    @Override
+    public void loadProject(Project project) {
+        DraftTreeItem rootTreeItem = (DraftTreeItem) treeModel.getRoot();
+        addChildsRecursive(project, rootTreeItem);
+
+        DraftNode explorer = (rootTreeItem).getDraftNode();
+        explorer.addChild(project);
+        project.setParent(explorer);
+
         treeView.expandPath(treeView.getSelectionPath());
         SwingUtilities.updateComponentTreeUI(treeView);
+    }
+
+    private void addChildsRecursive(DraftNode node, DraftTreeItem parent){
+        DraftTreeItem childTreeItem = new DraftTreeItem(node);
+        parent.add(childTreeItem);
+        if(node instanceof DraftNodeComposite composite)
+            for(DraftNode child : composite.getChildren())
+                addChildsRecursive(child, childTreeItem);
     }
 
     public DraftTreeItem findTreeItem(DraftNode node) {
