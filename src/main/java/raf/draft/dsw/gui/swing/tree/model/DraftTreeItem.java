@@ -8,7 +8,7 @@ import raf.draft.dsw.gui.swing.model.structures.Room;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class DraftTreeItem extends DefaultMutableTreeNode {
-    private DraftNode node;
+    private final DraftNode node;
     public DraftTreeItem(DraftNode node) {
         this.node = node;
     }

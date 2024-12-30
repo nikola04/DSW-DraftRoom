@@ -17,6 +17,9 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
     public RoomElement(DraftNode parent) {
         super("Element " + RoomElement.getCounter(), parent);
     }
+    public RoomElement(){
+        super(null, null);
+    }
     public RoomElement(RoomElement source) {
         super("Element" + RoomElement.getCounter(), source.getParent());
         initialize(source.getLogicalX(), source.getLogicalY(), source.getLogicalWidth(), source.getLogicalHeight());
@@ -111,6 +114,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
         this.selected = selected;
     }
 
+    @JsonIgnore
     public boolean isRecognizable() {
         return isRecognizable;
     }

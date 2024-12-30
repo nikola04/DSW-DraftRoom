@@ -153,8 +153,8 @@ public class ProjectView extends JPanel implements ISubscriber {
             else if (event.getType() == EventType.PROJECT_AUTHOR)
                 updateProjectAuthorLabel();
             else if(event.getType() == EventType.TAB_SELECTED){
-                if(event.getValue() instanceof RoomView tab) {
-                    setRoom(tab.getRoom());
+                if(event.getValue() instanceof Room room) {
+                    setRoom(room);
                 }else if(event.getValue() == null)
                     setRoom(null);
                 refresh();

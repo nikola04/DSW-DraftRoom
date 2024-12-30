@@ -7,6 +7,7 @@ import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
+import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,14 @@ public class Project extends DraftNodeComposite implements IPublisher {
         this.path = null;
         this.changed = true;
     }
+
+    public Project() {
+        super(null, null);
+        this.author = null;
+        this.path = null;
+        this.changed = true;
+    }
+
     public void setName(String newName){
         this.name = newName;
         this.changed = true;
@@ -64,6 +73,7 @@ public class Project extends DraftNodeComposite implements IPublisher {
         return path;
     }
 
+    @JsonIgnore
     public boolean isChanged() {
         return changed;
     }

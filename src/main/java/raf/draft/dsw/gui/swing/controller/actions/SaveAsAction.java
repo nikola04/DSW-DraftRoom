@@ -3,6 +3,7 @@ package raf.draft.dsw.gui.swing.controller.actions;
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import javax.swing.*;
@@ -22,25 +23,31 @@ public class SaveAsAction extends AbstractRoomAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (MainFrame.getInstance().getDraftTree().getSelectedNode().getDraftNode() instanceof Project project) {
+        DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
+        if(selected == null) return;
+        if (selected.getDraftNode() instanceof Project project) {
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Choose project directory");
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.setDialogTitle("Save project as...");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fileChooser.setSelectedFile(new File(project.getName() + ".json"));
 
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection != JFileChooser.APPROVE_OPTION) return;
 
             try {
-                File dir = fileChooser.getSelectedFile();
-                if(!dir.isDirectory()) dir = dir.getParentFile();
-                String path = new File(dir, project.getName() + ".json").getCanonicalPath();
+                File file = fileChooser.getSelectedFile();
+                if (!file.getName().toLowerCase().endsWith(".json"))
+                    file = new File(file.getParentFile(), file.getName() + ".json");
+
+                String path = file.getCanonicalPath();
                 project.setPath(path);
                 ApplicationFramework.getInstance().getSerializer().saveProject(project);
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Project is saved successfully.", MessageType.INFO);
                 project.setChanged(false);
             } catch (IOException ex) {
-                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error choosing project directory.", MessageType.ERROR);
+                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error saving project file.", MessageType.ERROR);
             }
-
         }
+
     }
 }

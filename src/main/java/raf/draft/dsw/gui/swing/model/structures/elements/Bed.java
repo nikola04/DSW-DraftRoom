@@ -7,6 +7,9 @@ public class Bed extends RoomElement {
     public Bed(DraftNode parent) {
         super(parent);
     }
+    public Bed(){
+        super();
+    }
     public Bed(Bed source){
         super(source);
     }

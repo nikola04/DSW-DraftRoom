@@ -10,6 +10,10 @@ public class Door extends RoomElement {
     public Door(Door source){
         super(source);
     }
+
+    public Door() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Door(this);

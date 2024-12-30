@@ -11,6 +11,9 @@ public class Wardrobe extends RoomElement {
         super(source);
     }
 
+    public Wardrobe() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Wardrobe(this);

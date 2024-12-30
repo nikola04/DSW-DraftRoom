@@ -11,6 +11,9 @@ public class Toilet extends RoomElement {
         super(source);
     }
 
+    public Toilet() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new Toilet(this);

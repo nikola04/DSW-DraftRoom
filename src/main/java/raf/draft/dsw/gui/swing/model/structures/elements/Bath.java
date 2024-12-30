@@ -7,6 +7,9 @@ public class Bath extends RoomElement {
     public Bath(DraftNode parent) {
         super(parent);
     }
+    public Bath(){
+        super();
+    }
     public Bath(Bath source) {
         super(source);
     }

@@ -15,7 +15,7 @@ public class TabPaneModel implements IPublisher {
     private final List<ISubscriber> subscribers;
     private Project project;
     private final List<RoomView> openedTabs;
-    private RoomView activeTab;
+    private Room activeTab;
 
     public TabPaneModel() {
         subscribers = new ArrayList<>();
@@ -56,7 +56,7 @@ public class TabPaneModel implements IPublisher {
             publish(new EventModel(EventType.TAB_RENAME, tab));
         }
     }
-    public void setActiveTab(RoomView tab) {
+    public void setActiveTab(Room tab) {
         activeTab = tab;
         publish(new EventModel(EventType.TAB_SELECTED, activeTab));
     }
@@ -79,10 +79,6 @@ public class TabPaneModel implements IPublisher {
 
     public List<RoomView> getOpenedTabs() {
         return openedTabs;
-    }
-
-    public RoomView getActiveTab() {
-        return activeTab;
     }
 
     public Project getProject() {

@@ -11,6 +11,9 @@ public class WashingMachine extends RoomElement {
         super(source);
     }
 
+    public WashingMachine() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return new WashingMachine(this);
