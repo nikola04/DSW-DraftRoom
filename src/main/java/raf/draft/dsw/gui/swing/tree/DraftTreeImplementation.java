@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.tree;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.core.DraftTree;
 import raf.draft.dsw.gui.swing.model.structures.*;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.tree.view.DraftTreeView;

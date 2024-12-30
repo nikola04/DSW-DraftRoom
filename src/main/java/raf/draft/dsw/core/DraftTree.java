@@ -1,4 +1,4 @@
-package raf.draft.dsw.gui.swing.tree;
+package raf.draft.dsw.core;
 
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;

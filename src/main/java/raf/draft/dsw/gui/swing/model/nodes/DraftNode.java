@@ -1,7 +1,10 @@
 package raf.draft.dsw.gui.swing.model.nodes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public abstract class DraftNode {
     protected String name;
+    @JsonIgnore
     protected DraftNode parent;
 
     public DraftNode(String name, DraftNode parent) {

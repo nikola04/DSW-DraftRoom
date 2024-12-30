@@ -1,5 +1,6 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
 import raf.draft.dsw.gui.swing.model.events.EventModel;
@@ -14,24 +15,33 @@ public class Project extends DraftNodeComposite implements IPublisher {
     private final List<ISubscriber> subscribers = new ArrayList<>();
     private String author;
     private String path;
+    private boolean changed;
 
     public Project(String name, DraftNode parent) {
         super(name, parent);
         this.author = "/";
-        this.path = "/";
+        this.path = null;
+        this.changed = true;
     }
     public void setName(String newName){
         this.name = newName;
+        this.changed = true;
         publish(new EventModel(EventType.PROJECT_NAME, name));
     }
     public void setAuthor(String author) {
         this.author = author;
+        this.changed = true;
         publish(new EventModel(EventType.PROJECT_AUTHOR, author));
     }
     public void setPath(String path) {
         this.path = path;
     }
 
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+
+    @JsonIgnore
     public ArrayList<Room> getAllRooms() {
         ArrayList<Room> rooms = new ArrayList<>();
         for (DraftNode node : getChildren()) {
@@ -52,6 +62,10 @@ public class Project extends DraftNodeComposite implements IPublisher {
 
     public String getPath() {
         return path;
+    }
+
+    public boolean isChanged() {
+        return changed;
     }
 
     @Override

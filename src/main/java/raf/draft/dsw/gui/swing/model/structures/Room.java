@@ -1,5 +1,6 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.PasteCopiedCommand;
@@ -11,8 +12,6 @@ import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
-import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -162,6 +161,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return children;
     }
 
+    @JsonIgnore
     public List<RoomElement> getElements() {
         List<RoomElement> elements = new ArrayList<>();
         for(DraftNode node : super.getChildren())
@@ -178,6 +178,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public void removeSubscriber(ISubscriber subscriber) {
         subscribers.remove(subscriber);
     }
+    @JsonIgnore
     public Color getColor() {
         if(this.getParent() instanceof Building building)
             return building.getColor();

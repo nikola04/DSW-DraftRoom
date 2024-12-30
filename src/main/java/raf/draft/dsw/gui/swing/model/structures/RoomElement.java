@@ -1,5 +1,6 @@
 package raf.draft.dsw.gui.swing.model.structures;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeLeaf;
 import raf.draft.dsw.gui.swing.model.structures.elements.ClonePrototype;
@@ -34,6 +35,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
         this.height = height;
     }
     public abstract ClonePrototype clone();
+    @JsonIgnore
     public static int getCounter(){
         return counter++;
     }
@@ -50,6 +52,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
                 rotatedBounds.y < otherBottom && thisBottom > rect.y;
     }
 
+    @JsonIgnore
     public Rectangle getRotatedBounds() {
         if(Math.abs(rotateRatio) == 1 || Math.abs(rotateRatio) == 3)
             return new Rectangle(x + width / 2 - height / 2, y + height / 2 - width / 2, height, width);
@@ -57,27 +60,33 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
     }
 
     @Override
+    @JsonIgnore
     public Room getParent() {
         return (Room) super.getParent();
     }
 
+    @JsonIgnore
     public boolean isRotated(){
         int rotateRatio = Math.abs(this.getRotateRatio());
         return rotateRatio == 1 || rotateRatio == 3;
     }
 
+    @JsonIgnore
     public int getX() {
         return (int)(this.x * getParent().getPxConversionRatio());
     }
 
+    @JsonIgnore
     public int getY() {
         return (int)(this.y * getParent().getPxConversionRatio());
     }
 
+    @JsonIgnore
     public int getWidth() {
         return (int)(this.width * getParent().getPxConversionRatio());
     }
 
+    @JsonIgnore
     public int getHeight() {
         return (int)(this.height * getParent().getPxConversionRatio());
     }
@@ -93,6 +102,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
     public int getLogicalHeight(){
         return this.height;
     }
+    @JsonIgnore
     public boolean isSelected() {
         return selected;
     }
@@ -108,27 +118,27 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
     public void setX(int x) {
         this.x = x;
     }
-
+    public void setLogicalX(int logicalX) {
+        this.x = logicalX;
+    }
     public void setY(int y) {
         this.y = y;
+    }
+    public void setLogicalY(int logicalY) {
+        this.y = logicalY;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
-
+    public void setLogicalWidth(int logicalWidth) {
+        this.width = logicalWidth;
+    }
     public void setHeight(int height) {
         this.height = height;
     }
-
-    public void setAdjustedWidth(int dim) {
-        if(isRotated()) this.height = dim;
-        else this.width = dim;
-    }
-
-    public void setAdjustedHeight(int dim) {
-        if(isRotated()) this.width = dim;
-        this.height = dim;
+    public void setLogicalHeight(int logicalHeight) {
+        this.height = logicalHeight;
     }
 
     public void setRotateRatio(int rotateRatio) {
