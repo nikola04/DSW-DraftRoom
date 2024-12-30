@@ -25,6 +25,7 @@ public class MoveState implements State{
         elements = room.getSelectedElements();
         lastPoint = p;
         if(elements.isEmpty()) isMovingRoom = true;
+        else isMovingRoom = false;
         if(!isMovingRoom)
             for(RoomElement e : elements) {
                 originalPoints.put(e, new Point(e.getLogicalX(), e.getLogicalY()));
