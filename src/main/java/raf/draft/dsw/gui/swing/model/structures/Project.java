@@ -7,7 +7,6 @@ import raf.draft.dsw.gui.swing.model.events.EventModel;
 import raf.draft.dsw.gui.swing.model.events.EventType;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +33,24 @@ public class Project extends DraftNodeComposite implements IPublisher {
 
     public void setName(String newName){
         this.name = newName;
-        this.changed = true;
+        appliedChange();
         publish(new EventModel(EventType.PROJECT_NAME, name));
     }
     public void setAuthor(String author) {
         this.author = author;
-        this.changed = true;
+        appliedChange();
         publish(new EventModel(EventType.PROJECT_AUTHOR, author));
     }
     public void setPath(String path) {
         this.path = path;
+        appliedChange();
     }
 
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+    public void appliedChange(){
+        this.changed = true;
     }
 
     @JsonIgnore

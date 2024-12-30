@@ -75,7 +75,7 @@ public class DraftTreeImplementation implements DraftTree {
         SwingUtilities.updateComponentTreeUI(treeView);
         if(child instanceof Room room){ // check if room is inside active project to update panel
             Project activeProject = MainFrame.getInstance().getTabPaneModel().getProject();
-            if((parent.getDraftNode() instanceof Project project && project.equals(activeProject)) || parent.getParentProject().equals(activeProject)){
+            if((parent.getDraftNode() instanceof Project project && project.equals(activeProject)) || parent.getDraftNode().findParentProject().equals(activeProject)){
                 MainFrame.getInstance().getTabPaneModel().addTab(room);
             }
         }

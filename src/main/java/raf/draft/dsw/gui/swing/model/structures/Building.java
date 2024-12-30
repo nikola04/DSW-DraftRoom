@@ -32,6 +32,7 @@ public class Building extends DraftNodeComposite implements IPublisher {
 
     public void setName(String name){
         this.name = name;
+        super.onAppliedChange();
         publish(new EventModel(EventType.BUILDING_NAME, name));
     }
 

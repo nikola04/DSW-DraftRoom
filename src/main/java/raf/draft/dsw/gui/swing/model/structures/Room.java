@@ -41,6 +41,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         this.scaleFactor = 1;
         this.pxConversionRatio = calculatePxRatio(panelWidth, panelHeight);
         this.dimensionsSet = true;
+        super.onAppliedChange();
         publish(new EventModel(EventType.DIMENSION_CHANGE, null));
     }
     private double calculatePxRatio(int panelWidth, int panelHeight) {
@@ -205,6 +206,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         return height;
     }
 
+    @JsonIgnore
     public double getScaleFactor() {
         return scaleFactor;
     }

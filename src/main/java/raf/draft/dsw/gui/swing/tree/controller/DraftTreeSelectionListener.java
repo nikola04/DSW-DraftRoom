@@ -16,7 +16,7 @@ public class DraftTreeSelectionListener implements TreeSelectionListener {
     public void valueChanged(TreeSelectionEvent e) {
         TreePath path = e.getPath();
         DraftTreeItem item = (DraftTreeItem) path.getLastPathComponent();
-        Project selectedProject = item.getParentProject();
+        Project selectedProject = item.getDraftNode().findParentProject();
         if(selectedProject != null && selectedProject != MainFrame.getInstance().getTabPaneModel().getProject())
             MainFrame.getInstance().getTabPaneModel().setProject(selectedProject);
     }

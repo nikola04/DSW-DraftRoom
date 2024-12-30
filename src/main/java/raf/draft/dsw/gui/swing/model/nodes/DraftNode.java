@@ -50,7 +50,20 @@ public abstract class DraftNode {
         this.parent = parent;
     }
 
+    public void onAppliedChange() {
+        Project p = findParentProject();
+        if (p != null) p.appliedChange();
+    }
+    public Project findParentProject(){
+        return findProjectRecursive(this);
+    }
+    private Project findProjectRecursive(DraftNode node) {
+        if(node == null || node instanceof Project) return (Project) node;
+        return findProjectRecursive(node.getParent());
+    }
+
     public void setName(String name) {
         this.name = name;
+        onAppliedChange();
     }
 }

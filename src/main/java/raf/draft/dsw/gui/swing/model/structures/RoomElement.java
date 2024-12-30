@@ -121,12 +121,14 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
 
     public void setX(int x) {
         this.x = x;
+        super.onAppliedChange();
     }
     public void setLogicalX(int logicalX) {
         this.x = logicalX;
     }
     public void setY(int y) {
         this.y = y;
+        super.onAppliedChange();
     }
     public void setLogicalY(int logicalY) {
         this.y = logicalY;
@@ -134,12 +136,14 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
 
     public void setWidth(int width) {
         this.width = width;
+        super.onAppliedChange();
     }
     public void setLogicalWidth(int logicalWidth) {
         this.width = logicalWidth;
     }
     public void setHeight(int height) {
         this.height = height;
+        super.onAppliedChange();
     }
     public void setLogicalHeight(int logicalHeight) {
         this.height = logicalHeight;
@@ -147,6 +151,7 @@ public abstract class RoomElement extends DraftNodeLeaf implements ClonePrototyp
 
     public void setRotateRatio(int rotateRatio) {
         this.rotateRatio = rotateRatio % 4;
+        super.onAppliedChange();
     }
 
     public int getRotateRatio() {

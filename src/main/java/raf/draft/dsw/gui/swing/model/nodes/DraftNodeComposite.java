@@ -20,11 +20,13 @@ public class DraftNodeComposite extends DraftNode {
     @Override
     public void addChild(DraftNode node) {
         children.add(node);
+        super.onAppliedChange();
     }
 
     @Override
     public void removeChild(DraftNode node) {
         children.remove(node);
+        super.onAppliedChange();
     }
 
     public List<DraftNode> getChildren() {

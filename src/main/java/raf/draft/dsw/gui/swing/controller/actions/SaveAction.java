@@ -25,7 +25,8 @@ public class SaveAction extends AbstractRoomAction {
     public void actionPerformed(ActionEvent e) {
         DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
         if(selected == null) return;
-        if (selected.getDraftNode() instanceof Project project) {
+        if (selected.getDraftNode().findParentProject() != null) {
+            Project project = selected.getDraftNode().findParentProject();
             if (!project.isChanged()) return;
             String path = project.getPath();
             if(path == null) {
@@ -41,14 +42,11 @@ public class SaveAction extends AbstractRoomAction {
                     if(!dir.isDirectory()) dir = dir.getParentFile();
                     path = new File(dir, project.getName() + ".json").getCanonicalPath();
                     project.setPath(path);
-                    ApplicationFramework.getInstance().getSerializer().saveProject(project);
-                    project.setChanged(false);
                 } catch (IOException ex) {
                     ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error choosing project directory.", MessageType.ERROR);
                     return;
                 }
             }
-            project.setPath(path);
             ApplicationFramework.getInstance().getSerializer().saveProject(project);
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Project is saved successfully.", MessageType.INFO);
             project.setChanged(false);
