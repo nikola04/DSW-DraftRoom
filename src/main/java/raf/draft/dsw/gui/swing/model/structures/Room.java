@@ -15,7 +15,9 @@ import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
 import raf.draft.dsw.gui.swing.model.utils.ColorUtil;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,27 @@ public class Room extends DraftNodeComposite implements IPublisher {
     private double pxConversionRatio = 1;
     private List<RoomElement> selectedElements = new ArrayList<>();
     private final List<RoomElement> copiedElements = new ArrayList<>();
+    private boolean initialized = false;
     public Room(String name, DraftNode parent) {
         super(name, parent);
     }
     public Room() {
         super(null, null);
+    }
+    public void initialize(){
+        if(initialized) return;
+        initialized = true;
+    }
+    public boolean loadTemplate(File template) {
+        Room room = ApplicationFramework.getInstance().getSerializer().loadPattern(template);
+        if(room == null) return false;
+
+        this.width = room.getWidth();
+        this.height = room.getHeight();
+        this.pxConversionRatio = room.getPxConversionRatio();
+        super.setChildren(room.getChildren());
+        publish(null);
+        return true;
     }
     public void setDimensions(int width, int height, int panelWidth, int panelHeight) {
         this.width = width;
@@ -163,6 +181,11 @@ public class Room extends DraftNodeComposite implements IPublisher {
         publish(null);
     }
 
+    @JsonIgnore
+    public boolean isInitialized() {
+        return initialized;
+    }
+
     @Override
     public List<DraftNode> getChildren() {
         List<DraftNode> children = new ArrayList<>(super.getChildren());
@@ -215,6 +238,10 @@ public class Room extends DraftNodeComposite implements IPublisher {
         double min = 0.05;
         double max =  20;
         this.scaleFactor = Math.max(min, Math.min(scaleFactor, max));
+    }
+
+    public void setDimensionsSet(boolean dimensionsSet) {
+        this.dimensionsSet = dimensionsSet;
     }
 
     @Override

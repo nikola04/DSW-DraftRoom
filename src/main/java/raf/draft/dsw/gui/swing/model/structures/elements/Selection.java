@@ -9,6 +9,9 @@ public class Selection extends RoomElement {
         this.isRecognizable = false;
     }
 
+    public Selection() {
+    }
+
     @Override
     public ClonePrototype clone() {
         return null;

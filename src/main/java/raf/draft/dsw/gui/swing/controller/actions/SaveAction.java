@@ -25,8 +25,8 @@ public class SaveAction extends AbstractRoomAction {
     public void actionPerformed(ActionEvent e) {
         DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
         if(selected == null) return;
-        if (selected.getDraftNode().findParentProject() != null) {
-            Project project = selected.getDraftNode().findParentProject();
+        Project project = selected.getDraftNode().findParentProject();
+        if (project != null) {
             if (!project.isChanged()) return;
             String path = project.getPath();
             if(path == null) {

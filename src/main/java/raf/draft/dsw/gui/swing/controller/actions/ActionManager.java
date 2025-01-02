@@ -24,6 +24,7 @@ public class ActionManager {
     private OpenAction openAction;
     private SaveAction saveAction;
     private SaveAsAction saveAsAction;
+    private SavePatternAction savePatternAction;
 
     public ActionManager() {
         initialize();
@@ -52,6 +53,7 @@ public class ActionManager {
         this.openAction = new OpenAction();
         this.saveAction = new SaveAction();
         this.saveAsAction = new SaveAsAction();
+        this.savePatternAction = new SavePatternAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -82,4 +84,5 @@ public class ActionManager {
     public OpenAction getOpenAction() { return openAction; }
     public SaveAction getSaveAction() { return saveAction; }
     public SaveAsAction getSaveAsAction() { return saveAsAction; }
+    public SavePatternAction getSavePatternAction() { return savePatternAction; }
 }

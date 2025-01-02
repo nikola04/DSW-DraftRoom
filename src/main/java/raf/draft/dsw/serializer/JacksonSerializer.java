@@ -5,8 +5,8 @@ import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.core.Serializer;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.model.structures.Room;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -31,6 +31,25 @@ public class JacksonSerializer implements Serializer {
             objectMapper.writeValue(writer, project);
         } catch (IOException e) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error saving project.", MessageType.ERROR);
+        }
+    }
+
+    @Override
+    public void savePattern(Room room, String path) {
+        try (FileWriter writer = new FileWriter(path)) {
+            objectMapper.writeValue(writer, room);
+        } catch (IOException e) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error saving project.", MessageType.ERROR);
+        }
+    }
+
+    @Override
+    public Room loadPattern(File file) {
+        try (FileReader fileReader = new FileReader(file)) {
+            return objectMapper.readValue(fileReader, Room.class);
+        } catch (IOException e) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error loading project.", MessageType.ERROR);
+            return null;
         }
     }
 }
