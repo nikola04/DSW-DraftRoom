@@ -24,26 +24,29 @@ public class TabPaneChangeListener implements ChangeListener {
         roomView.refresh();
         Room room = roomView.getRoom();
         tabPaneModel.setActiveTab(room);
-        if(!room.isInitialized()) {
-            room.initialize();
-            int response = JOptionPane.showConfirmDialog(null, "Would you like to load the template?", "Load Template", JOptionPane.YES_NO_OPTION);
-            if (response != JOptionPane.YES_OPTION) return;
+        if(!room.isInitialized()) loadPattern(room);
+    }
 
-            String path = "src/resources/templates";
-            File dir = new File(path);
+    private void loadPattern(Room room){
+        room.initialize();
+        int response = JOptionPane.showConfirmDialog(null, "Would you like to load the template?", "Load Template", JOptionPane.YES_NO_OPTION);
+        if (response != JOptionPane.YES_OPTION) return;
+
+        String path = "src/resources/templates";
+        File dir = new File(path);
 //            if (!dir.exists() || !dir.isDirectory())
 //                dir = new File(getClass().getClassLoader().getResource("templates").getFile());
-            JFileChooser fileChooser = new JFileChooser(dir);
+        JFileChooser fileChooser = new JFileChooser(dir);
 
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            int result = fileChooser.showOpenDialog(null);
-            if (result != JFileChooser.APPROVE_OPTION) return;
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int result = fileChooser.showOpenDialog(null);
+        if (result != JFileChooser.APPROVE_OPTION) return;
 
-            File selectedFile = fileChooser.getSelectedFile();
-            boolean loaded = room.loadTemplate(selectedFile);
-            if(loaded) {
-                ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Successfully loaded template.", MessageType.INFO);
-            }
+        File selectedFile = fileChooser.getSelectedFile();
+        boolean loaded = room.loadTemplate(selectedFile);
+        MainFrame.getInstance().getDraftTree().loadRoomPattern(room);
+        if(loaded) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Successfully loaded template.", MessageType.INFO);
         }
     }
 }

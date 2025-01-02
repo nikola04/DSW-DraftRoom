@@ -1,12 +1,10 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.core.ApplicationFramework;
-import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteNodeCommand;
 import raf.draft.dsw.gui.swing.controller.states.State;
 import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.model.structures.RoomElement;
-import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
-import raf.draft.dsw.gui.swing.view.MainFrame;
 import raf.draft.dsw.gui.swing.view.RoomView;
 
 import java.awt.*;
@@ -19,7 +17,7 @@ public class DeleteState implements State {
         List<RoomElement> selected = room.overlappedElements(new Rectangle(p.x, p.y, 0, 0));
         if(selected.isEmpty()) return;
         RoomElement selectedElement = selected.getFirst();
-        DeleteCommand deleteCommand = new DeleteCommand(selectedElement, room);
+        DeleteNodeCommand deleteCommand = new DeleteNodeCommand(selectedElement, room);
         ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(deleteCommand);
     }
 

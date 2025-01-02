@@ -1,6 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.actions;
 
 import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.ChangeAuthorCommand;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Project;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
@@ -25,10 +26,10 @@ public class ChangeNodeAuthorAction extends AbstractRoomAction {
         if(selected.getDraftNode() instanceof Project project){
             String lastValue = project.getAuthor();
             Object nodeAuthorObj = JOptionPane.showInputDialog(null, "Enter new author:", "Enter Author", JOptionPane.PLAIN_MESSAGE, null, null, lastValue);
-            if(nodeAuthorObj == null)
-                return; // canceled
+            if(nodeAuthorObj == null) return;
             String newAuthor = nodeAuthorObj.toString();
-            project.setAuthor(newAuthor);
+            ChangeAuthorCommand command = new ChangeAuthorCommand(project, lastValue, newAuthor);
+            ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(command);
             return;
         }
         ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You can only change author on Projects", MessageType.WARNING);

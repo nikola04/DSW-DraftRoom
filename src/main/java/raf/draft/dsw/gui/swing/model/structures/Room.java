@@ -3,7 +3,7 @@ package raf.draft.dsw.gui.swing.model.structures;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import raf.draft.dsw.core.ApplicationFramework;
-import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteCommand;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteNodeCommand;
 import raf.draft.dsw.gui.swing.controller.commands.concrete.PasteCopiedCommand;
 import raf.draft.dsw.gui.swing.controller.observer.IPublisher;
 import raf.draft.dsw.gui.swing.controller.observer.ISubscriber;
@@ -14,8 +14,8 @@ import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
 import raf.draft.dsw.gui.swing.model.structures.elements.Selection;
 import raf.draft.dsw.gui.swing.model.utils.ColorUtil;
+import raf.draft.dsw.gui.swing.view.MainFrame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -49,6 +49,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         this.width = room.getWidth();
         this.height = room.getHeight();
         this.pxConversionRatio = room.getPxConversionRatio();
+        this.dimensionsSet = room.isDimensionsSet();
         super.setChildren(room.getChildren());
         publish(null);
         return true;
@@ -117,7 +118,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
     }
     public void deleteSelectedElements() {
         if(!selectedElements.isEmpty()) {
-            DeleteCommand deleteCommand = new DeleteCommand(selectedElements, this);
+            DeleteNodeCommand deleteCommand = new DeleteNodeCommand(selectedElements, this);
             ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(deleteCommand);
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("You have deleted elements successfully", MessageType.INFO);
         }
@@ -179,6 +180,12 @@ public class Room extends DraftNodeComposite implements IPublisher {
     public void addChild(DraftNode node) {
         super.addChild(node);
         publish(null);
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        MainFrame.getInstance().getTabPaneModel().renameTabByRoom(this, name);
     }
 
     @JsonIgnore

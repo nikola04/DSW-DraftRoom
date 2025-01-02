@@ -1,5 +1,6 @@
-package raf.draft.dsw.gui.swing.controller.actions;
+package raf.draft.dsw.gui.swing.controller.actions.room;
 
+import raf.draft.dsw.gui.swing.controller.actions.AbstractRoomAction;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import javax.swing.*;

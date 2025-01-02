@@ -1,13 +1,11 @@
-package raf.draft.dsw.gui.swing.controller.actions;
-import raf.draft.dsw.gui.swing.model.structures.RoomElement;
-import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
+package raf.draft.dsw.gui.swing.controller.actions.room;
+import raf.draft.dsw.gui.swing.controller.actions.AbstractRoomAction;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class DeleteElementAction extends AbstractRoomAction {
     public DeleteElementAction() {

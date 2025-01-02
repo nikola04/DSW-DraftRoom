@@ -2,6 +2,7 @@ package raf.draft.dsw.gui.swing.controller.actions;
 
 import raf.draft.dsw.core.ApplicationFramework;
 import raf.draft.dsw.gui.swing.model.structures.Project;
+import raf.draft.dsw.gui.swing.model.structures.ProjectExplorer;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
 import javax.swing.*;
@@ -27,6 +28,9 @@ public class OpenAction extends AbstractRoomAction {
             Project loadedProject = ApplicationFramework.getInstance().getSerializer().loadProject(file);
             if(loadedProject == null) return;
             MainFrame.getInstance().getDraftTree().loadProject(loadedProject);
+            ProjectExplorer explorer = ApplicationFramework.getInstance().getDraftRoomRepository().getProjectExplorer();
+            loadedProject.setParent(explorer);
+            explorer.addChild(loadedProject);
         }
     }
 }

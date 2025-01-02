@@ -1,5 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.actions;
 
+import raf.draft.dsw.gui.swing.controller.actions.room.*;
+
 public class ActionManager {
     private AboutUsAction aboutUsAction;
     private ExitAction exitAction;
