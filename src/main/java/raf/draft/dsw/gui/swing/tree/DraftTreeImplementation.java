@@ -97,7 +97,7 @@ public class DraftTreeImplementation implements DraftTree {
     }
 
     @Override
-    public void loadRoomPattern(Room room) {
+    public void loadRoomTemplate(Room room) {
         DraftTreeItem roomTreeItem = findTreeItem(room);
         for(DraftNode element : room.getElements()){
             DraftTreeItem childTreeItem = new DraftTreeItem(element);

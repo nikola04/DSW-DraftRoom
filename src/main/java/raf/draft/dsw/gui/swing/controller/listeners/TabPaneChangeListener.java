@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.File;
+import java.net.URL;
 
 public class TabPaneChangeListener implements ChangeListener {
     TabPaneModel tabPaneModel;
@@ -24,18 +25,21 @@ public class TabPaneChangeListener implements ChangeListener {
         roomView.refresh();
         Room room = roomView.getRoom();
         tabPaneModel.setActiveTab(room);
-        if(!room.isInitialized()) loadPattern(room);
+        if(!room.isInitialized()) loadTemplate(room);
     }
 
-    private void loadPattern(Room room){
+    private void loadTemplate(Room room){
         room.initialize();
+
         int response = JOptionPane.showConfirmDialog(null, "Would you like to load the template?", "Load Template", JOptionPane.YES_NO_OPTION);
         if (response != JOptionPane.YES_OPTION) return;
 
-        String path = "src/resources/templates";
-        File dir = new File(path);
-//            if (!dir.exists() || !dir.isDirectory())
-//                dir = new File(getClass().getClassLoader().getResource("templates").getFile());
+        URL templatesURL = getClass().getClassLoader().getResource("templates");
+        if(templatesURL == null) {
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("There are no templates saved.", MessageType.WARNING);
+            return;
+        }
+        File dir = new File(templatesURL.getFile());
         JFileChooser fileChooser = new JFileChooser(dir);
 
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -44,7 +48,7 @@ public class TabPaneChangeListener implements ChangeListener {
 
         File selectedFile = fileChooser.getSelectedFile();
         boolean loaded = room.loadTemplate(selectedFile);
-        MainFrame.getInstance().getDraftTree().loadRoomPattern(room);
+        MainFrame.getInstance().getDraftTree().loadRoomTemplate(room);
         if(loaded) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Successfully loaded template.", MessageType.INFO);
         }

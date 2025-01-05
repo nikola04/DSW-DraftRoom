@@ -8,6 +8,6 @@ import java.io.File;
 public interface Serializer {
     Project loadProject(File file);
     void saveProject(Project project);
-    void savePattern(Room room, String path);
-    Room loadPattern(File file);
+    void saveTemplate(Room room, String path);
+    Room loadTemplate(File file);
 }

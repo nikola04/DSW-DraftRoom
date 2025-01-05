@@ -43,7 +43,7 @@ public class Room extends DraftNodeComposite implements IPublisher {
         initialized = true;
     }
     public boolean loadTemplate(File template) {
-        Room room = ApplicationFramework.getInstance().getSerializer().loadPattern(template);
+        Room room = ApplicationFramework.getInstance().getSerializer().loadTemplate(template);
         if(room == null) return false;
 
         this.width = room.getWidth();

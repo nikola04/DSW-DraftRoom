@@ -3,8 +3,6 @@ package raf.draft.dsw.gui.swing.controller.commands.concrete;
 import raf.draft.dsw.gui.swing.controller.commands.AbstractCommand;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.model.nodes.DraftNodeComposite;
-import raf.draft.dsw.gui.swing.model.structures.Project;
-import raf.draft.dsw.gui.swing.model.structures.Room;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
@@ -19,7 +17,7 @@ public class AddNodeCommand extends AbstractCommand {
 
     @Override
     public void doCommand() {
-        DraftTreeItem parentTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(parent);;
+        DraftTreeItem parentTreeItem = MainFrame.getInstance().getDraftTree().findTreeItem(parent);
         MainFrame.getInstance().getDraftTree().addChild(parentTreeItem, child);
         parent.addChild(child);
     }

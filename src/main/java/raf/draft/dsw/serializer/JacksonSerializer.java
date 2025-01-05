@@ -35,20 +35,20 @@ public class JacksonSerializer implements Serializer {
     }
 
     @Override
-    public void savePattern(Room room, String path) {
+    public void saveTemplate(Room room, String path) {
         try (FileWriter writer = new FileWriter(path)) {
             objectMapper.writeValue(writer, room);
         } catch (IOException e) {
-            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error saving project.", MessageType.ERROR);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error saving template.", MessageType.ERROR);
         }
     }
 
     @Override
-    public Room loadPattern(File file) {
+    public Room loadTemplate(File file) {
         try (FileReader fileReader = new FileReader(file)) {
             return objectMapper.readValue(fileReader, Room.class);
         } catch (IOException e) {
-            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error loading project.", MessageType.ERROR);
+            ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Error loading template.", MessageType.ERROR);
             return null;
         }
     }

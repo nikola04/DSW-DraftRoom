@@ -138,6 +138,9 @@ public class ProjectView extends JPanel implements ISubscriber {
         updateProjectAuthorLabel();
         updateBuildingLabel();
     }
+    public Room getCurrentRoom() {
+        return room;
+    }
     @Override
     public void update(Object value) {
         if(value instanceof EventModel event) {
