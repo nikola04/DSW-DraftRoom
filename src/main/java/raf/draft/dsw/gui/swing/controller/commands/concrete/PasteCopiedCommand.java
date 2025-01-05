@@ -33,6 +33,7 @@ public class PasteCopiedCommand extends AbstractCommand {
         for (RoomElement clone : clones) {
             DraftTreeItem treeItem = MainFrame.getInstance().getDraftTree().findTreeItem(clone);
             MainFrame.getInstance().getDraftTree().removeNode(treeItem);
+            room.removeChild(clone);
         }
     }
 }

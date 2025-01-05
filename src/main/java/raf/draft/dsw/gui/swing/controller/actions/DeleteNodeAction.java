@@ -1,5 +1,8 @@
 package raf.draft.dsw.gui.swing.controller.actions;
 
+import raf.draft.dsw.core.ApplicationFramework;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.DeleteNodeCommand;
+import raf.draft.dsw.gui.swing.model.nodes.DraftNode;
 import raf.draft.dsw.gui.swing.tree.model.DraftTreeItem;
 import raf.draft.dsw.gui.swing.view.MainFrame;
 
@@ -19,6 +22,8 @@ public class DeleteNodeAction extends AbstractRoomAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
-        MainFrame.getInstance().getDraftTree().removeNode(selected);
+        DraftNode node = selected.getDraftNode();
+        DeleteNodeCommand command = new DeleteNodeCommand(node);
+        ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(command);
     }
 }

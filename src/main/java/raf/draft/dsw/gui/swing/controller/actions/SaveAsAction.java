@@ -25,8 +25,8 @@ public class SaveAsAction extends AbstractRoomAction {
     public void actionPerformed(ActionEvent e) {
         DraftTreeItem selected = MainFrame.getInstance().getDraftTree().getSelectedNode();
         if(selected == null) return;
-        if (selected.getDraftNode().findParentProject() != null) {
-            Project project = selected.getDraftNode().findParentProject();
+        Project project = selected.getDraftNode().findParentProject();
+        if (project != null) {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Save project as...");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

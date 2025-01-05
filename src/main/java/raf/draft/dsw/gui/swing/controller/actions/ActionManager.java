@@ -1,5 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.actions;
 
+import raf.draft.dsw.gui.swing.controller.actions.room.*;
+
 public class ActionManager {
     private AboutUsAction aboutUsAction;
     private ExitAction exitAction;
@@ -24,6 +26,7 @@ public class ActionManager {
     private OpenAction openAction;
     private SaveAction saveAction;
     private SaveAsAction saveAsAction;
+    private SaveTemplateAction saveTemplateAction;
 
     public ActionManager() {
         initialize();
@@ -52,6 +55,7 @@ public class ActionManager {
         this.openAction = new OpenAction();
         this.saveAction = new SaveAction();
         this.saveAsAction = new SaveAsAction();
+        this.saveTemplateAction = new SaveTemplateAction();
     }
     public AboutUsAction getAboutUsAction() {
         return aboutUsAction;
@@ -82,4 +86,5 @@ public class ActionManager {
     public OpenAction getOpenAction() { return openAction; }
     public SaveAction getSaveAction() { return saveAction; }
     public SaveAsAction getSaveAsAction() { return saveAsAction; }
+    public SaveTemplateAction getSavePatternAction() { return saveTemplateAction; }
 }

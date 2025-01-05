@@ -1,7 +1,7 @@
 package raf.draft.dsw.gui.swing.controller.states.concrete;
 
 import raf.draft.dsw.core.ApplicationFramework;
-import raf.draft.dsw.gui.swing.controller.commands.concrete.AddElementCommand;
+import raf.draft.dsw.gui.swing.controller.commands.concrete.AddNodeCommand;
 import raf.draft.dsw.gui.swing.controller.states.State;
 import raf.draft.dsw.gui.swing.model.messages.MessageType;
 import raf.draft.dsw.gui.swing.model.structures.Room;
@@ -41,7 +41,7 @@ public class AddState implements State{
                 ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Element is already placed there", MessageType.WARNING);
                 return;
             }
-            AddElementCommand addCommand = new AddElementCommand(room, element);
+            AddNodeCommand addCommand = new AddNodeCommand(room, element);
             ApplicationFramework.getInstance().getGui().getCommandManager().addCommand(addCommand);
         } catch (NumberFormatException ex) {
             ApplicationFramework.getInstance().getMessageGenerator().generateMessage("Enter valid integers", MessageType.ERROR);

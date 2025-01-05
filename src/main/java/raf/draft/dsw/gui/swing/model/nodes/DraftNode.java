@@ -26,6 +26,7 @@ import raf.draft.dsw.gui.swing.model.structures.elements.*;
         @JsonSubTypes.Type(value = Toilet.class, name = "Toilet"),
         @JsonSubTypes.Type(value = Wardrobe.class, name = "Wardrobe"),
         @JsonSubTypes.Type(value = WashingMachine.class, name = "WashingMachine"),
+        @JsonSubTypes.Type(value = Selection.class, name = "Selection"),
 })
 public abstract class DraftNode {
     protected String name;
