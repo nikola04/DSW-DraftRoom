@@ -68,7 +68,7 @@ public class DraftNodeComposite extends DraftNode {
             child.setParent(this);
             if(child instanceof Room r) {
                 r.initialize();
-                r.setDimensionsSet(true);
+//                r.setDimensionsSet(true);
             }
         }
     }
